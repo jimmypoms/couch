@@ -1,0 +1,1 @@
+#include "metadataplugin.h"

@@ -1,0 +1,14 @@
+.cproject
+.cproject.clean
+.externalToolBuilders
+.project
+.settings
+bin/
+build/
+*.pro.user
+couch.prof
+gmon.out
+lib/
+perf.data
+plugin/
+Makefile*
