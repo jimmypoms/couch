@@ -1,14 +1,22 @@
+### Eclipse
 .cproject
 .cproject.clean
 .externalToolBuilders
 .project
 .settings
-bin/
-build/
+
+### QtCreator
 *.pro.user
 couch.prof
-gmon.out
-lib/
-perf.data
-plugin/
+
+### Generated
 Makefile*
+bin/
+doc/
+build/
+lib/
+**/debug/
+**/release/
+
+### Misc
+*.Doxyfile
