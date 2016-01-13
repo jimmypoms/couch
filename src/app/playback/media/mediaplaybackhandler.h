@@ -7,6 +7,8 @@ class MediaPlaybackHandler : public PlaybackHandler
 {
 public:
     MediaPlaybackHandler();
+    virtual ~MediaPlaybackHandler() = default;
+
     int supports(const Source *source);
 };
 
