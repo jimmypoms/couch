@@ -58,7 +58,7 @@ private:
     void searchDatabase(const Movie *movie, const QString &id);
     void loadDatabase();
     void indexFile(Xapian::WritableDatabase &writer, Xapian::TermGenerator &indexer,
-            const QString &filePath, MovieMetadata* info);
+            const Source &source, MovieMetadata* info);
 
 private Q_SLOTS:
     void onSearchFinished(const Xapian::MSet &result, const QString &id);

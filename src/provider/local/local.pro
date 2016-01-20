@@ -32,7 +32,7 @@ DEFINES += COUCH_SERVICE_MOVIE_LIBRARY
 
 DEPENDPATH += $$CINCLUDEPATH
 INCLUDEPATH += $$CINCLUDEPATH
-LIBS += -L$$CLIBDESTDIR -lcouch -L$$CLIBDESTDIR/service -lxapian
+LIBS += -L$$CLIBDESTDIR -lcouch -L$$CLIBDESTDIR/service -lxapian -lmediainfo
 
 SOURCES += \
     src/movie/localmovieprovider.cpp \

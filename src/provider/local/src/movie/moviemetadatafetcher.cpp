@@ -8,17 +8,24 @@
 #include "moviemetadatafetcher.h"
 
 #include <qfile.h>
-#include <qfileinfo.h>
 #include <qglobal.h>
 #include <qiodevice.h>
+#include <qstring.h>
 #include <qurl.h>
 #include <qxmlstream.h>
 
 #include "couch/movie/moviemetadata.h"
+#include "couch/source.h"
 
-bool MovieMetadataFetcher::fetchNfoMetadata(MovieMetadata* metadata, const QString& path)
+using namespace MediaInfoDLL;
+
+MovieMetadataFetcher::MovieMetadataFetcher()
 {
-    QFileInfo fileInfo(path);
+    m_mediaInfoHandle.Option("Internet", "No");
+}
+
+bool MovieMetadataFetcher::fetchNfoMetadata(MovieMetadata* metadata, const QFileInfo &fileInfo)
+{
     QFile nfoFile(fileInfo.absolutePath() + "/" + fileInfo.completeBaseName() + ".nfo");
     if (!nfoFile.exists()) {
         return false;
@@ -138,18 +145,26 @@ QUrl MovieMetadataFetcher::readUrlTag(QXmlStreamReader& xml)
     return QUrl(xml.readElementText(QXmlStreamReader::SkipChildElements));
 }
 
-bool MovieMetadataFetcher::fetchFileMetadata(MovieMetadata* metadata, const QString& path)
+bool MovieMetadataFetcher::fetchFileMetadata(MovieMetadata* metadata, const QFileInfo &fileInfo)
 {
     return false;
 }
 
-MovieMetadata* MovieMetadataFetcher::fetch(const QString& filePath)
+MovieMetadata* MovieMetadataFetcher::fetch(Source *source)
 {
     MovieMetadata* metadata = new MovieMetadata();
-    if (fetchNfoMetadata(metadata, filePath)) {
+    m_mediaInfoHandle.Open(source->url().toLocalFile().toStdString());
+
+    std::string width = m_mediaInfoHandle.Get(Stream_Video, 0, "Width");
+    std::string height = m_mediaInfoHandle.Get(Stream_Video, 0, "Height");
+
+    QFileInfo fileInfo(source->url().toLocalFile());
+    source->setSizeBytes(fileInfo.size());
+    source->setQuality(QString::fromStdString(width + " x " + height));
+    if (fetchNfoMetadata(metadata, fileInfo)) {
         return metadata;
     }
-    if (fetchFileMetadata(metadata, filePath)) {
+    if (fetchFileMetadata(metadata, fileInfo)) {
         return metadata;
     }
     return metadata;

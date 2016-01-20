@@ -7,6 +7,8 @@
 
 #include "localmovieprovider.h"
 
+#include "moviemetadatafetcher.h"
+
 #include <qbytearray.h>
 #include <qdatastream.h>
 #include <qdebug.h>
@@ -35,8 +37,6 @@
 #include "couch/serializableclass.h"
 #include "couch/service.h"
 
-#include "moviemetadatafetcher.h"
-
 const QStringList LocalMovieProvider::s_fileNameFilters = {
         "*.mp4",
         "*.mkv",
@@ -52,12 +52,12 @@ const std::string LocalMovieProvider::s_prefixActor = "A";
 const std::string LocalMovieProvider::s_prefixGenre = "G";
 
 LocalMovieProvider::LocalMovieProvider(Service* parent) :
-                MovieProvider(parent, "local"),
+        MovieProvider(parent, "local"),
                 m_isIndexing(false),
-                m_database(
-                        QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-                                + "/database/movie"),
-                m_library("/misc/movies"), m_reader(m_database.toStdString())
+                m_database(QStandardPaths::writableLocation(QStandardPaths::DataLocation)
+                        + "/database/movie"),
+                m_library("/misc/movies"),
+                m_reader(m_database.toStdString())
 {
     connect(this, &LocalMovieProvider::searchFinished, this, &LocalMovieProvider::onSearchFinished);
     qRegisterMetaType<Xapian::MSet>("Xapian::MSet");
@@ -79,8 +79,12 @@ void LocalMovieProvider::loadDatabase()
     m_isIndexing = true;
     while (it.hasNext()) {
         QString filePath = it.next();
-        MovieMetadata* metadata = fetcher.fetch(filePath);
-        indexFile(writer, indexer, filePath, metadata);
+
+        Source source;
+        source.setUrl(QUrl::fromLocalFile(filePath));
+        MovieMetadata* metadata = fetcher.fetch(&source);
+        source.setItemMetadata(metadata);
+        indexFile(writer, indexer, source, metadata);
     }
     writer.commit();
     m_isIndexing = false;
@@ -88,14 +92,11 @@ void LocalMovieProvider::loadDatabase()
 }
 
 void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer, Xapian::TermGenerator& indexer,
-        const QString& filePath, MovieMetadata* metadata)
+        const Source &source, MovieMetadata* metadata)
 {
     if (metadata->title().isEmpty()) {
         return;
     }
-    Source source;
-    source.setUrl(QUrl::fromLocalFile(filePath));
-    source.setItemMetadata(metadata);
 
     QByteArray data;
     QDataStream dataStream(&data, QIODevice::ReadWrite);
