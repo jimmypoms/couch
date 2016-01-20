@@ -200,5 +200,6 @@ Item {
     }
     onVisibleChanged: if (visible) {
         autohide.reset()
+        playButton.forceActiveFocus();
     }
 }
