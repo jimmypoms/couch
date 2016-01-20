@@ -9,9 +9,6 @@
 
 #include "couch/playbackhandler.h"
 
-/**
- * TODO: delete network reply and check for invalid pointer
- */
 class YoutubePlaybackHandler : public PlaybackHandler
 {
 

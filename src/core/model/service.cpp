@@ -12,7 +12,7 @@
 #include "source.h"
 
 Service::Service(QObject *parent, QString name) :
-        QObject(parent), m_name(name)
+        QObject(parent), m_name(name), m_maxItemCacheSize(500)
 {
 }
 
@@ -50,6 +50,9 @@ void Service::reduceSources()
             }
             auto item = createItem(source);
             m_items.append(std::shared_ptr<Item>(item));
+            if (m_items.size() > m_maxItemCacheSize) {
+                m_items.pop_front();
+            }
             item->addSource(provider, source);
             list.append(m_items.last());
         } else {

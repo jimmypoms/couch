@@ -1,14 +1,16 @@
 #include "movieservice.h"
 
-#include "movie.h"
-#include "moviefilter.h"
-#include "movieprovider.h"
-
+#include <qlist.h>
+#include <qobject.h>
 #include <memory>
 #include <unordered_map>
 
-#include "../model/source.h"
 #include "../model/couchitemlist.h"
+#include "../model/couchsourcelist.h"
+#include "../model/provider.h"
+#include "../model/source.h"
+
+#include "movie.h"
 
 MovieService::MovieService(QObject *parent) :
     Service(parent, "movies"), m_metadataCache("movies/metadata")
@@ -32,7 +34,6 @@ Item* MovieService::createItem(const Source *source)
 
 CouchItemList* MovieService::load(MovieFilter *filter)
 {
-    // TODO: cleanup items
     CouchItemList* list = new CouchItemList(this);
     connect(this, &Service::itemsReady, list, &CouchItemList::addItems);
     for (const QObject *object : providers()) {
@@ -48,7 +49,6 @@ CouchItemList* MovieService::load(MovieFilter *filter)
 
 CouchItemList* MovieService::loadItem(Movie *movie)
 {
-    // TODO: cleanup items
     CouchItemList* list = new CouchItemList(this);
     connect(this, &Service::itemsReady, list, &CouchItemList::addItems);
     for (const QObject *object : providers()) {

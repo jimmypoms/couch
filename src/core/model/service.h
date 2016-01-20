@@ -30,6 +30,8 @@ private:
     QList<QObject*> m_providers;
     QList<std::shared_ptr<Item> > m_items;
 
+    int m_maxItemCacheSize;
+
     virtual Item* createItem(const Source *source) = 0;
 
 public Q_SLOTS:
