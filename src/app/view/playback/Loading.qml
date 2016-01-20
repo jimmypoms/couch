@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
 Rectangle {
-    color: "transparent"
+    color: "black"
 
     Item {
         width: parent.width * 0.5

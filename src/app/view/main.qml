@@ -33,30 +33,32 @@ ApplicationWindow {
             id: loadingView
             anchors.fill: parent
             opacity: 0
-            visible: false
             enabled: false
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 500
+                }
+            }
         }
         Player {
             id: playerView
             anchors.fill: parent
             opacity: 0
-            visible: false
             enabled: false
 
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 500
+                }
+            }
             onBackClicked: {
                 player.stop();
             }
         }
-        Rectangle {
-            id: curtain
-            anchors.fill: parent
-            color: "black"
-            opacity: 0.5
-        }
         CouchTabView {
             id: tabView
             focus: true
-            visible: true
             anchors.fill: parent
             tabbarBackground: Item {
                 Rectangle {
@@ -70,6 +72,11 @@ ApplicationWindow {
                 }
             }
             rightCorner: CouchWindowControls {
+            }
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 500
+                }
             }
             tabbarDelegate: Item {
                 width: Math.max(implicitWidth + dp(10), application.width * 0.15)
@@ -128,49 +135,29 @@ ApplicationWindow {
             }
         }
 
-        function hideBackground() {
-            backgroundView.visible = false;
-            backgroundView.enabled = false;
-        }
-        function showBackground() {
-            backgroundView.visible = true;
-            backgroundView.enabled = true;
-        }
         function hidePlayer() {
-            showBackground();
             playerView.opacity = 0;
-            playerView.visible = false;
             playerView.enabled = false;
         }
         function showPlayer() {
-            hideBackground();
             playerView.opacity = 1;
-            playerView.visible = true;
             playerView.enabled = true;
             playerView.forceActiveFocus();
         }
         function hideLoading() {
             loadingView.opacity = 0;
-            loadingView.visible = false;
             loadingView.enabled = false;
         }
         function showLoading() {
-            showBackground();
             loadingView.opacity = 1;
-            loadingView.visible = true;
             loadingView.enabled = true;
             loadingView.forceActiveFocus();
         }
         function hideMenu() {
-            curtain.opacity = 0;
-            curtain.enabled = false;
             tabView.opacity = 0;
             tabView.enabled = false;
         }
         function showMenu() {
-            showBackground();
-            curtain.opacity = 0.5;
-            curtain.enabled = true;
             tabView.opacity = 1;
             tabView.enabled = true;
             tabView.forceActiveFocus();

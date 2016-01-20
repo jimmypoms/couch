@@ -10,13 +10,12 @@ ParticleSystem {
         id: r
         z: -1
         anchors.fill: parent
-        color: "black"
     }
 
     /*
     Emitter {
         anchors.fill: parent
-        Q_EMITRate: root.width * root.height / 500000
+        emitRate: root.width * root.height / 500000
         lifeSpan: 30000
         size: dp(100)
         sizeVariation: dp(50)
@@ -67,4 +66,11 @@ ParticleSystem {
         "
     }
     */
+
+    Rectangle {
+        id: curtain
+        anchors.fill: parent
+        color: "black"
+        opacity: 0.5
+    }
 }
