@@ -6,8 +6,8 @@
 #include <qscreen.h>
 #include <qurl.h>
 
-#include "couch/movie/movieprovider.h"
 #include "couch/movie/movieservice.h"
+#include "couch/provider.h"
 
 #include "couch.h"
 #include "pluginloader.h"
