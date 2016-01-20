@@ -3,10 +3,6 @@ TARGET = vodo
 
 CONFIG(debug, debug|release) {
     CBUILDDIR = ../../../build/debug
-    QMAKE_CFLAGS+=-pg
-    QMAKE_CXXFLAGS+=-pg
-    QMAKE_LFLAGS+=-pg
-    LIBS += -lprofiler
 } else {
     CBUILDDIR = ../../../build/release
 }
