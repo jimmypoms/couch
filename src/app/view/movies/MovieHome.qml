@@ -83,17 +83,15 @@ FocusScope {
             Layout.topMargin: dp(5)
             Layout.alignment: Qt.AlignTop | Qt.AlignLeft
         }
-        CouchListView {
+        CouchGridView {
             id: newestList
             leftMargin: listMargin
             rightMargin: listMargin
             Layout.fillWidth: true
+            Layout.fillHeight: true
             Layout.preferredHeight: smallDelegateHeight
             Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 
-            Keys.onDownPressed: {
-                watchlistList.forceActiveFocus();
-            }
             Keys.onUpPressed: {
                 popularList.forceActiveFocus();
             }
@@ -102,52 +100,14 @@ FocusScope {
                 order: MovieFilter.Newest
             }
 
-            property var itemList: movies.load(newestFilter)
+            property var itemList: movies.load(popularFilter)
             loading: itemList.loading
             items: itemList
-            delegate: MovieDelegateSmall {
-                width: smallDelegateWidth
-                height: smallDelegateHeight
-                z: activeFocus ? 2 : 1
-                onClicked: {
-                    itemClicked(modelData);
-                }
-                Keys.onEnterPressed: {
-                    itemClicked(modelData);
-                }
-                Keys.onReturnPressed: {
-                    itemClicked(modelData);
-                }
-            }
-        }
-
-        Text {
-            text: qsTr("watchlist")
-            color: "white"
-            font.weight: Font.Light
-            font.pointSize: fp(10)
-
-            Layout.fillWidth: true
-            Layout.preferredHeight: dp(40)
-            Layout.leftMargin: dp(5)
-            Layout.topMargin: dp(5)
-            Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-        }
-        CouchGridView {
-            id: watchlistList
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-
-            Keys.onUpPressed: {
-                newestList.forceActiveFocus();
-            }
-
             cellWidth: smallDelegateWidth
             cellHeight: smallDelegateHeight
             delegate: MovieDelegateSmall {
-                width: GridView.view.cellWidth
-                height: GridView.view.cellHeight
+                width: smallDelegateWidth
+                height: smallDelegateHeight
                 z: activeFocus ? 2 : 1
                 onClicked: {
                     itemClicked(modelData);

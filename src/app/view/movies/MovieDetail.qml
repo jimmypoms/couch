@@ -319,29 +319,10 @@ FocusScope {
                     Keys.onLeftPressed: {
                     }
                     Keys.onRightPressed: {
-                        watchlistButton.forceActiveFocus();
-                    }
-                }
-
-                CouchButton {
-                    id: watchlistButton
-                    text: qsTr("add to watchlist")
-
-                    Layout.preferredHeight: dp(50)
-                    Layout.preferredWidth: dp(200)
-                    Layout.alignment: Qt.AlignBottom | Qt.AlignRight
-
-                    color: "chocolate"
-                    onClicked: {
-                        //TODO
-                    }
-                    Keys.onLeftPressed: {
-                        sources.forceActiveFocus()
-                    }
-                    Keys.onRightPressed: {
                         trailerButton.forceActiveFocus();
                     }
                 }
+
                 CouchButton {
                     id: trailerButton
                     text: qsTr("trailer")
@@ -361,7 +342,7 @@ FocusScope {
                         player.play(trailer);
                     }
                     Keys.onLeftPressed: {
-                        watchlistButton.forceActiveFocus()
+                        sources.forceActiveFocus()
                     }
                 }
             }

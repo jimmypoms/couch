@@ -11,6 +11,8 @@ FocusScope {
     property alias cellWidth: gridView.cellWidth
     property alias cellHeight: gridView.cellHeight
     property alias items: gridView.model
+    property real leftMargin: 0
+    property real rightMargin: 0
     property bool loading: false
 
     Item {
@@ -57,6 +59,8 @@ FocusScope {
         GridView {
             id: gridView
             anchors.fill: parent
+            anchors.leftMargin: scope.leftMargin
+            anchors.rightMargin: scope.rightMargin
 
             focus: true
 
