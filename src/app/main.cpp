@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     MovieService movieService;
     couch.addService(&movieService);
     PluginLoader<MovieProviderInterface> providerLoader;
-    providerLoader.load("provider/movie", [&movieService](QObject *p) {
+    providerLoader.load("provider", [&movieService](QObject *p) {
         movieService.addProvider(p);
     });
 

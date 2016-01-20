@@ -26,7 +26,7 @@ CONFIG += c++11
 CONFIG += plugin
 CONFIG += debug_and_release
 CONFIG += no_keywords
-DESTDIR = $$CLIBDESTDIR/provider/movie
+DESTDIR = $$CLIBDESTDIR/provider
 
 DEFINES += COUCH_SERVICE_MOVIE_LIBRARY
 
