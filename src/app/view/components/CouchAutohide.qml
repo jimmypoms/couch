@@ -4,10 +4,11 @@ Item {
     id: autohide
     property bool inhibit: false
     property bool shouldHide: false
+    property int interval: 3000
 
     Timer {
         id: autohideTimer
-        interval: 2000
+        interval: autohide.interval
         repeat: false
         running: true
 
