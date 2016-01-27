@@ -9,6 +9,7 @@
 
 class Item;
 class Source;
+class CouchPlayer;
 
 class Service : public QObject
 {
@@ -31,6 +32,7 @@ private:
     QList<std::shared_ptr<Item> > m_items;
 
     int m_maxItemCacheSize;
+    CouchPlayer* m_player;
 
     virtual Item* createItem(const Source *source) = 0;
 
@@ -42,6 +44,9 @@ public:
     virtual ~Service() = default;
 
     const QString &name() const;
+
+    const CouchPlayer* player() const;
+    void setPlayer(CouchPlayer* player);
 
     void addProvider(QObject* provider);
     const QList<QObject*> &providers() const;

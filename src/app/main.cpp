@@ -8,13 +8,13 @@
 
 #include "couch/movie/movieservice.h"
 #include "couch/provider.h"
+#include "couch/couchplayer.h"
 
 #include "couch.h"
 #include "pluginloader.h"
 
 #include "playback/media/mediaplaybackhandler.h"
 #include "playback/youtube/youtubeplaybackhandler.h"
-#include "player/couchplayer.h"
 
 int main(int argc, char *argv[])
 {
@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
     player.addPlaybackHandler(&youtubeHandler);
 
     MovieService movieService;
+    movieService.setPlayer(&player);
     couch.addService(&movieService);
     PluginLoader<MovieProviderInterface> providerLoader;
     providerLoader.load("provider", [&movieService](QObject *p) {

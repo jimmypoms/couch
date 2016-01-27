@@ -29,13 +29,11 @@ LIBS += -L$$CLIBDESTDIR -lcouch
 
 SOURCES += main.cpp \
     couch.cpp \
-    player/couchplayer.cpp \
     playback/media/mediaplaybackhandler.cpp \
     playback/youtube/youtubeplaybackhandler.cpp
 
 HEADERS += \
     couch.h \
-    player/couchplayer.h \
     playback/media/mediaplaybackhandler.h \
     playback/youtube/youtubeplaybackhandler.h
 

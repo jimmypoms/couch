@@ -4,8 +4,8 @@
 #include <qlogging.h>
 #include <qobject.h>
 
-#include "couch/item.h"
-#include "couch/source.h"
+#include "../model/item.h"
+#include "../model/source.h"
 
 CouchPlayer::CouchPlayer(QObject *parent) :
         QObject(parent), m_mediaPlayer(new QMediaPlayer()), m_handler(nullptr),
@@ -88,7 +88,7 @@ qint64 CouchPlayer::position() const
     return 0;
 }
 
-void CouchPlayer::play(Source *source)
+void CouchPlayer::play(const Source *source)
 {
     load(source);
     if (m_handler) {
@@ -127,12 +127,12 @@ void CouchPlayer::next()
     // TODO:
 }
 
-Source* CouchPlayer::currentSource() const
+const Source* CouchPlayer::currentSource() const
 {
     return m_currentSource;
 }
 
-Item* CouchPlayer::currentItem() const
+const Item* CouchPlayer::currentItem() const
 {
     return m_currentItem;
 }

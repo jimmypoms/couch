@@ -8,8 +8,7 @@
 #include "couch/movie/movie.h"
 #include "couch/movie/moviefilter.h"
 #include "couch/source.h"
-
-#include "player/couchplayer.h"
+#include "couch/couchplayer.h"
 
 Couch::Couch(QObject *parent) :
         QObject(parent)

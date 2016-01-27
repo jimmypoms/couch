@@ -11,6 +11,8 @@
 #include "itemmetadata.h"
 #include "source.h"
 
+#include "../multimedia/couchplayer.h"
+
 Service::Service(QObject *parent, QString name) :
         QObject(parent), m_name(name), m_maxItemCacheSize(500)
 {
@@ -19,6 +21,16 @@ Service::Service(QObject *parent, QString name) :
 const QString &Service::name() const
 {
     return m_name;
+}
+
+const CouchPlayer* Service::player() const
+{
+    return m_player;
+}
+
+void Service::setPlayer(CouchPlayer* player)
+{
+    m_player = player;
 }
 
 const QList<QObject*> &Service::providers() const

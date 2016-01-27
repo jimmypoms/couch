@@ -7,11 +7,17 @@
 #include <qobjectdefs.h>
 #include <memory>
 
-#include "couch/playbackhandler.h"
+#include "../multimedia/playbackhandler.h"
 
 class Item;
 
-class CouchPlayer : public QObject
+#if defined(COUCH_LIBRARY)
+#  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
+#else
+#  define COUCH_LIBRARY_EXPORT Q_DECL_IMPORT
+#endif
+
+class COUCH_LIBRARY_EXPORT CouchPlayer : public QObject
 {
 Q_OBJECT
 
@@ -24,8 +30,8 @@ Q_PROPERTY(QMediaObject* mediaObject READ getMediaObject CONSTANT)
 Q_PROPERTY(QString error READ errorString)
 Q_PROPERTY(PlaybackStatus playbackStatus READ playbackStatus NOTIFY playbackStatusChanged)
 Q_PROPERTY(SourceStatus sourceStatus READ sourceStatus NOTIFY sourceStatusChanged)
-Q_PROPERTY(Source* currentSource READ currentSource NOTIFY currentSourceChanged)
-Q_PROPERTY(Item* currentItem READ currentItem NOTIFY currentItemChanged)
+Q_PROPERTY(const Source* currentSource READ currentSource NOTIFY currentSourceChanged)
+Q_PROPERTY(const Item* currentItem READ currentItem NOTIFY currentItemChanged)
 
 public:
     enum PlaybackStatus
@@ -80,8 +86,8 @@ private:
     SourceStatus m_sourceStatus;
     Error m_lastError;
 
-    Source *m_currentSource;
-    Item *m_currentItem;
+    const Source *m_currentSource;
+    const Item *m_currentItem;
 
     void setPlaybackStatus(PlaybackStatus status);
     void setSourceStatus(SourceStatus status);
@@ -98,8 +104,8 @@ public:
     PlaybackStatus playbackStatus() const;
     SourceStatus sourceStatus() const;
 
-    Source* currentSource() const;
-    Item* currentItem() const;
+    const Source* currentSource() const;
+    const Item* currentItem() const;
 
     void load(const Source *source);
 
@@ -111,7 +117,7 @@ private Q_SLOTS:
     void onHandlerError(QMediaPlayer::Error error);
 
 public Q_SLOTS:
-    void play(Source *source);
+    void play(const Source *source);
     void stop();
     void pause();
     void seek(qint64 position);

@@ -41,13 +41,13 @@ QHash<int, QByteArray> CouchItemList::roleNames() const
 }
 
 int CouchItemList::rowCount(const QModelIndex& parent) const
-        {
+{
     Q_UNUSED(parent);
     return m_items.count();
 }
 
 QVariant CouchItemList::data(const QModelIndex& index, int role) const
-        {
+{
     if (index.row() < 0 || index.row() >= m_items.count()) {
         return QVariant();
     }
