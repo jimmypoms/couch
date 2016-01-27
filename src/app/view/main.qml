@@ -234,21 +234,22 @@ ApplicationWindow {
 
     Component.onCompleted: {
         var services = couch.services,
-            serviceCount = services.length;
+            serviceCount = services.length,
+            component;
         if (serviceCount === 0) {
-            var component = Qt.createComponent("components/CouchInfoBox.qml");
+            component = Qt.createComponent("components/CouchInfoBox.qml");
             var info = component.createObject(tabView, {
                 text: qsTr("no services loaded"),
                 'anchors.fill': tabView
             });
-            if (info == null) {
+            if (info === null) {
                 console.log("Error creating object: "+component.errorString());
             }
         }
 
         for (var i = 0; i < serviceCount; ++ i) {
             var service = services[i];
-            var component = Qt.createComponent(service.name + "/main.qml");
+            component = Qt.createComponent(service.name + "/main.qml");
 
             var tab = tabView.addTab(qsTr(service.name), component);
         }
@@ -281,7 +282,7 @@ ApplicationWindow {
         if (hours < 10) {hours = '0'+hours;}
         if (minutes < 10) {minutes = '0'+minutes;}
         if (seconds < 10) {seconds = '0'+seconds;}
-        if (hours != '00') {
+        if (hours !== '00') {
             return hours+':'+minutes+':'+seconds;
         }
         return minutes+':'+seconds;
@@ -289,7 +290,7 @@ ApplicationWindow {
 
     function formatMinutes(minutes) {
         var hours   = Math.floor(minutes / 60);
-        var minutes = Math.floor(minutes - (hours * 60));
+        minutes = Math.floor(minutes - (hours * 60));
 
         if (hours < 10) {hours = '0'+hours}
         if (minutes < 10) {minutes = '0'+minutes}

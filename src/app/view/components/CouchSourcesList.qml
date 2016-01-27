@@ -4,7 +4,7 @@ import org.couch.sourcelist 1.0
 
 import "../components"
 
-Item {
+FocusScope {
     property alias sourceList: list.model
     property alias name: button.text
     property bool loading: false

@@ -43,7 +43,7 @@ CouchNavigation {
                 text: qsTr("no providers loaded"),
                 'anchors.fill': movieTabView
             });
-            if (info == null) {
+            if (info === null) {
                 console.log("Error creating object: "+component.errorString());
             }
         }

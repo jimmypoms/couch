@@ -52,7 +52,7 @@ FocusScope {
 
         Text {
             anchors.horizontalCenter: gridView.horizontalCenter
-            visible: gridView.count == 0 && !scope.loading
+            visible: gridView.count === 0 && !scope.loading
             text: qsTr("no results found")
 
             color: "white"
@@ -68,11 +68,11 @@ FocusScope {
 
             focus: true
             GridLayout {
-                property currentIndex: 0
+                property int currentIndex: 0
                 Repeater {
                     id: model
                 }
-                onCurrentIndex: {
+                onCurrentIndexChanged: {
                     itemAt(currentIndex).forceActiveFocus();
                 }
             }

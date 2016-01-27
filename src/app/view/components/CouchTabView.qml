@@ -25,7 +25,7 @@ FocusScope {
     property color tabbarSelectedColor: "#193441"
     property color tabbarBackgroundColor: "#193441"
     property real tabbarSelectedOpacity: 0.5
-    property variant tabbarFontWeight: Font.Light
+    property int tabbarFontWeight: Font.Light
     property double tabbarFontPointSize: fp(9)
     property int currentIndex: 0
 

@@ -12,6 +12,12 @@ FocusScope {
     signal backClicked()
     signal itemClicked()
 
+    onVisibleChanged: {
+        if (visible) {
+            sourcesView.forceActiveFocus();
+        }
+    }
+
     Rectangle {
         id: header
         color: highlightColor
@@ -309,40 +315,56 @@ FocusScope {
             RowLayout {
                 anchors.fill: parent
 
-                MovieSources {
-                    id: sources
+                CouchRow {
+                    id: sourcesView
                     focus: true
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignBottom
 
-                    Keys.onLeftPressed: {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+
+                    model: movies.providers
+                    delegate: CouchSourcesList {
+                        name: modelData.name
+                        sourceList: movie.sources(modelData)
+                        loading: sourceList ? sourceList.loading : false
+
+                        Layout.preferredWidth: dp(200)
+                        Layout.alignment: Qt.AlignBottom | Qt.AlignLeft
+                        Layout.fillHeight: true
                     }
-                    Keys.onRightPressed: {
-                        trailerButton.forceActiveFocus();
+
+                    Keys.onPressed: {
+                        if (event.key === Qt.Key_Right && actionsView.focusableChildren) {
+                            actionsView.forceActiveFocus();
+                            event.accepted = true;
+                        }
                     }
                 }
 
-                CouchButton {
-                    id: trailerButton
-                    text: qsTr("trailer")
-                    visible: movie.metadata.trailer.toString().length !== 0
+                CouchRow {
+                    id: actionsView
 
-                    Layout.preferredHeight: dp(50)
-                    Layout.preferredWidth: dp(200)
-                    Layout.alignment: Qt.AlignBottom | Qt.AlignRight
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
 
-                    color: "chocolate"
-                    Source {
-                        id: trailer
-                        name: movie.metadata.title + ' - Trailer'
-                        url: movie.metadata.trailer
+                    property var actionList: movies.actions(movie)
+                    model: actionList
+                    delegate: CouchButton {
+                        text: modelData.text
+                        visible: modelData.enabled
+
+                        Layout.alignment: Qt.AlignBottom | Qt.AlignRight
+                        Layout.preferredHeight: dp(50)
+                        Layout.preferredWidth: dp(200)
+
+                        color: "chocolate"
+                        onClicked: {
+                            modelData.trigger();
+                        }
                     }
-                    onClicked: {
-                        player.play(trailer);
-                    }
+
                     Keys.onLeftPressed: {
-                        sources.forceActiveFocus()
+                        sourcesView.forceActiveFocus()
                     }
                 }
             }
