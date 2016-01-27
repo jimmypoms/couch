@@ -28,6 +28,9 @@ Q_PROPERTY(qint64 duration READ duration NOTIFY durationChanged)
 Q_PROPERTY(qint64 position READ position WRITE seek NOTIFY positionChanged)
 Q_PROPERTY(QMediaObject* mediaObject READ getMediaObject CONSTANT)
 Q_PROPERTY(QString error READ errorString)
+Q_PROPERTY(bool playing READ playing NOTIFY playbackStatusChanged)
+Q_PROPERTY(bool paused READ paused NOTIFY playbackStatusChanged)
+Q_PROPERTY(bool stopped READ stopped NOTIFY playbackStatusChanged)
 Q_PROPERTY(PlaybackStatus playbackStatus READ playbackStatus NOTIFY playbackStatusChanged)
 Q_PROPERTY(SourceStatus sourceStatus READ sourceStatus NOTIFY sourceStatusChanged)
 Q_PROPERTY(Source* currentSource READ currentSource NOTIFY currentSourceChanged)
@@ -60,6 +63,7 @@ public:
         AccessDeniedError,
         HandlerMissingError,
         ServiceMissingError,
+        NoSourceError,
         UnknownError
     };
 
@@ -108,6 +112,9 @@ public:
     Item* currentItem() const;
 
     void load(const Source *source);
+    bool playing();
+    bool paused();
+    bool stopped();
 
 private Q_SLOTS:
     void onHandlerLoadingStatusChanged(int percentFilled);
@@ -118,6 +125,8 @@ private Q_SLOTS:
 
 public Q_SLOTS:
     void play(Source *source);
+    void play();
+    void togglePlay();
     void stop();
     void pause();
     void seek(qint64 position);

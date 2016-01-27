@@ -17,6 +17,10 @@ Item {
         }
     }
 
+    onEnabledChanged: if (enabled) {
+        autohide.reset()
+        playButton.forceActiveFocus();
+    }
     MouseArea {
         id: headerMouseArea
         hoverEnabled: true
@@ -117,7 +121,7 @@ Item {
                     focus: true
                     focusColor: "grey"
                     anchors.verticalCenter: parent.verticalCenter
-                    source: "../images/icon-play.svg"
+                    source: player.playing ? "../images/icon-pause.svg" : "../images/icon-play.svg"
                     Layout.fillHeight: true
                     Layout.preferredWidth: dp(60)
 
@@ -129,6 +133,9 @@ Item {
                     Keys.onUpPressed: {
                         autohide.reset();
                         progressSlider.forceActiveFocus();
+                    }
+                    onClicked: {
+                        player.togglePlay();
                     }
                 }
                 CouchIconButton {
@@ -197,9 +204,5 @@ Item {
             event.accepted = true;
         }
         autohide.reset();
-    }
-    onVisibleChanged: if (visible) {
-        autohide.reset()
-        playButton.forceActiveFocus();
     }
 }

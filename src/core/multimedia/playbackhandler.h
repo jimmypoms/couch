@@ -110,9 +110,11 @@ public:
 
     virtual void play()
     {
-        connectPlayerError();
-        m_mediaPlayer->setMedia(m_source->url());
-        connectPlayerSignals();
+        if (m_mediaPlayer->state() != QMediaPlayer::PausedState) {
+            connectPlayerError();
+            m_mediaPlayer->setMedia(m_source->url());
+            connectPlayerSignals();
+        }
         m_mediaPlayer->play();
     }
 

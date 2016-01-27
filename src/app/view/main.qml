@@ -37,7 +37,7 @@ ApplicationWindow {
 
             Behavior on opacity {
                 NumberAnimation {
-                    duration: 500
+                    duration: 300
                 }
             }
         }
@@ -49,7 +49,7 @@ ApplicationWindow {
 
             Behavior on opacity {
                 NumberAnimation {
-                    duration: 500
+                    duration: 300
                 }
             }
             onBackClicked: {
@@ -75,7 +75,7 @@ ApplicationWindow {
             }
             Behavior on opacity {
                 NumberAnimation {
-                    duration: 500
+                    duration: 300
                 }
             }
             tabbarDelegate: Item {
@@ -176,7 +176,7 @@ ApplicationWindow {
         function pause() {
             console.log("pausing state");
             hideLoading();
-            showMenu();
+            hideMenu();
             showPlayer();
         }
         function stop() {

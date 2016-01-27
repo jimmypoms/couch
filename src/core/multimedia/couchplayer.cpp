@@ -100,11 +100,31 @@ void CouchPlayer::play(Source *source)
     }
 }
 
+void CouchPlayer::play()
+{
+    if (!m_currentSource) {
+        Q_EMIT error(Error::NoSourceError);
+        return;
+    }
+    m_handler->play();
+}
+
+void CouchPlayer::togglePlay()
+{
+    if (playing()) {
+        pause();
+    } else {
+        play();
+    }
+}
+
 void CouchPlayer::stop()
 {
     if (m_handler) {
         m_handler->stop();
     }
+    m_currentSource = nullptr;
+    m_currentItem = nullptr;
     m_handler = nullptr;
 }
 
@@ -160,6 +180,21 @@ void CouchPlayer::load(const Source *source)
     m_handler->load(source);
     qDebug() << "source url" << source->url().toString() << "set to play with handler:"
             << m_handler->name();
+}
+
+bool CouchPlayer::playing()
+{
+    return m_playbackStatus == PlaybackStatus::Playing;
+}
+
+bool CouchPlayer::paused()
+{
+    return m_playbackStatus == PlaybackStatus::Paused;
+}
+
+bool CouchPlayer::stopped()
+{
+    return m_playbackStatus == PlaybackStatus::Stopped;
 }
 
 void CouchPlayer::onHandlerLoadingStatusChanged(int percentFilled)

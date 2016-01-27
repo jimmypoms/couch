@@ -43,24 +43,18 @@ void YoutubePlaybackHandler::load(const Source *source)
 
 void YoutubePlaybackHandler::play()
 {
+    if (m_mediaPlayer->state() == QMediaPlayer::PausedState) {
+        m_mediaPlayer->play();
+        return;
+    }
+
     m_shouldPlay = true;
     if (m_replyFinished) {
         m_shouldPlay = false;
         m_replyFinished = false;
 
-        connect(m_mediaPlayer,
-                static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
-                this, &PlaybackHandler::error);
-        connect(m_mediaPlayer, &QMediaPlayer::durationChanged, this,
-                &PlaybackHandler::durationChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::positionChanged, this,
-                &PlaybackHandler::positionChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::bufferStatusChanged, this,
-                &PlaybackHandler::bufferStatusChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, this,
-                &PlaybackHandler::mediaStatusChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::stateChanged, this,
-                &PlaybackHandler::stateChanged);
+        connectPlayerError();
+        connectPlayerSignals();
 
         m_mediaPlayer->play();
     }
