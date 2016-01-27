@@ -85,7 +85,7 @@ ApplicationWindow {
                 Rectangle {
                     anchors.fill: parent
                     visible: ! styleData.selected
-                    color: "#193441"
+                    color: backgroundColor
                 }
                 Rectangle {
                     anchors.fill: parent
@@ -194,6 +194,20 @@ ApplicationWindow {
 
         states: [
             State {
+                name: "buffering"
+                when: (player.sourceStatus == CouchPlayer.Buffering)
+                StateChangeScript {
+                    script: application.buffer()
+                }
+            },
+            State {
+                name: "loading"
+                when: (player.sourceStatus == CouchPlayer.Loading)
+                StateChangeScript {
+                    script: application.load()
+                }
+            },
+            State {
                 name: "playing"
                 when: (player.playbackStatus == CouchPlayer.Playing)
                 StateChangeScript {
@@ -212,20 +226,6 @@ ApplicationWindow {
                 when: (player.playbackStatus == CouchPlayer.Stopped)
                 StateChangeScript {
                     script: application.stop()
-                }
-            },
-            State {
-                name: "buffering"
-                when: (player.sourceStatus == CouchPlayer.Buffering)
-                StateChangeScript {
-                    script: application.buffer()
-                }
-            },
-            State {
-                name: "loading"
-                when: (player.sourceStatus == CouchPlayer.Loading)
-                StateChangeScript {
-                    script: application.load()
                 }
             }
         ]

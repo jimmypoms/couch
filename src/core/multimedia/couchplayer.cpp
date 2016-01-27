@@ -123,6 +123,8 @@ void CouchPlayer::stop()
     if (m_handler) {
         m_handler->stop();
     }
+    setPlaybackStatus(PlaybackStatus::Stopped);
+    setSourceStatus(SourceStatus::NoSource);
     m_currentSource = nullptr;
     m_currentItem = nullptr;
     m_handler = nullptr;

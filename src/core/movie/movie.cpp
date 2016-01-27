@@ -5,8 +5,18 @@
 #include <qstring.h>
 
 Movie::Movie(Service* service) :
-        Item(service)
+        Item(service), m_trailerSource(nullptr)
 {
+}
+
+Source* Movie::trailerSource()
+{
+    if (!m_trailerSource && !metadata()->trailer().isEmpty()) {
+        m_trailerSource = new Source(this);
+        m_trailerSource->setName(title() + " - Trailer");
+        m_trailerSource->setUrl(metadata()->trailer());
+    }
+    return m_trailerSource;
 }
 
 QString Movie::genreToString(Genre genre)

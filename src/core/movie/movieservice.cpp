@@ -69,16 +69,14 @@ CouchActionList* MovieService::actions(Movie* movie)
     CouchActionList* list = new CouchActionList(this);
     QList<std::shared_ptr<CouchAction> > actions;
     if (!movie->metadata()->trailer().isEmpty()) {
-        Source* trailer = new Source();
-        trailer->setName(movie->title() + " - Trailer");
-        trailer->setParent(list);
-        trailer->setUrl(movie->metadata()->trailer());
-
-        CouchPlayAction* action = new CouchPlayAction(trailer);
-        action->setText("trailer");
-        connect(action, &CouchAction::triggered, this, &Service::onActionTriggered);
-        action->setParent(list);
-        actions.append(std::shared_ptr<CouchAction>(action));
+        Source* trailer = movie->trailerSource();
+        if (trailer) {
+            CouchPlayAction* action = new CouchPlayAction(trailer);
+            action->setText("trailer");
+            connect(action, &CouchAction::triggered, this, &Service::onActionTriggered);
+            action->setParent(list);
+            actions.append(std::shared_ptr<CouchAction>(action));
+        }
     }
     list->addActions(actions);
     return list;

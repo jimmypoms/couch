@@ -25,6 +25,7 @@ YoutubePlaybackHandler::YoutubePlaybackHandler() :
 
 void YoutubePlaybackHandler::load(const Source *source)
 {
+    Q_EMIT mediaStatusChanged(QMediaPlayer::LoadingMedia);
     QNetworkRequest request(QUrl(source->url()));
     request.setRawHeader("User-Agent", "Mozilla/5.0");
     request.setRawHeader("Accept",

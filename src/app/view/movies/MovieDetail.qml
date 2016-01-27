@@ -19,14 +19,58 @@ FocusScope {
     }
 
     Rectangle {
+        id: backdrop
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: header.bottom
+        anchors.bottom: parent.bottom
+        color: backgroundColor
+
+        Image {
+            id: image
+            anchors.fill: parent
+            anchors.topMargin: -dp(80)
+            clip: true
+            opacity: 0
+
+            source: movie.metadata.backdrop
+            fillMode: Image.PreserveAspectCrop
+            asynchronous: true
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 200
+                }
+            }
+            onStatusChanged: {
+                if (status === Image.Ready) {
+                    image.opacity = 0.2;
+                }
+                if (status === Image.Loading) {
+                    image.opacity = 0;
+                }
+            }
+        }
+    }
+
+    Item {
         id: header
-        color: highlightColor
-        opacity: highlightOpacity
 
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         height: dp(40)
+
+        Rectangle {
+            color: backgroundColor
+            opacity: 0.5
+            anchors.fill: parent
+        }
+        Rectangle {
+            color: highlightColor
+            opacity: highlightOpacity
+            anchors.fill: parent
+        }
     }
 
     Row {
@@ -55,39 +99,6 @@ FocusScope {
             color: "white"
             font.weight: Font.Normal
             font.pointSize: fp(12)
-        }
-    }
-
-    Rectangle {
-        id: backdrop
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: header.bottom
-        anchors.bottom: parent.bottom
-        color: backgroundColor
-
-        Image {
-            id: image
-            anchors.fill: parent
-            opacity: 0
-
-            source: movie.metadata.poster.toString() ? movie.metadata.poster : movie.metadata.image
-            fillMode: Image.PreserveAspectCrop
-            asynchronous: true
-
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: 200
-                }
-            }
-            onStatusChanged: {
-                if (status === Image.Ready) {
-                    image.opacity = 0.2;
-                }
-                if (status === Image.Loading) {
-                    image.opacity = 0;
-                }
-            }
         }
     }
 

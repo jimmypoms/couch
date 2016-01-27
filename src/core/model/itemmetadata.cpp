@@ -140,3 +140,11 @@ void ItemMetadata::merge(const ItemMetadata* metadata)
     }
     Q_EMIT merged();
 }
+
+const QUrl& ItemMetadata::backdrop() const
+{
+    if (!m_poster.isEmpty()) {
+        return poster();
+    }
+    return image();
+}

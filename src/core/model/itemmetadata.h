@@ -24,6 +24,7 @@ Q_PROPERTY(double popularity READ popularity WRITE setPopularity NOTIFY populari
 Q_PROPERTY(QUrl link READ link WRITE setLink NOTIFY linkChanged)
 Q_PROPERTY(QUrl image READ image WRITE setImage NOTIFY imageChanged)
 Q_PROPERTY(QUrl poster READ poster WRITE setPoster NOTIFY posterChanged)
+Q_PROPERTY(QUrl backdrop READ backdrop NOTIFY posterChanged)
 Q_PROPERTY(double rating READ rating WRITE setRating NOTIFY ratingChanged)
 Q_PROPERTY(int year READ year WRITE setYear NOTIFY yearChanged)
 
@@ -74,6 +75,8 @@ public:
 
     const QUrl& poster() const;
     void setPoster(const QUrl& poster);
+
+    const QUrl& backdrop() const;
 
     double rating() const;
     void setRating(double rating);

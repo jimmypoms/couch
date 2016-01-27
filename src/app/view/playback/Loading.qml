@@ -1,52 +1,87 @@
 import QtQuick 2.0
 
-Rectangle {
-    color: "black"
+import "../components"
 
-    Item {
-        width: parent.width * 0.5
-        height: parent.height * 0.5
-        anchors.centerIn: parent
+FocusScope {
+    Rectangle {
+        color: backgroundColor
+        anchors.fill: parent
+
+        onEnabledChanged: if (enabled) {
+            cancelButton.forceActiveFocus();
+        }
 
         Image {
-            id: detailImage
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            anchors.margins: dp(5)
-            smooth: false
-            fillMode: Image.PreserveAspectFit
-            horizontalAlignment: Image.AlignLeft
-            source: couch.currentItem ? couch.currentItem.metadata.image : ""
+            id: image
+            anchors.fill: parent
+            opacity: 0
+
+            source: player.currentItem ? player.currentItem.metadata.backdrop : ''
+            fillMode: Image.PreserveAspectCrop
+            asynchronous: true
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 200
+                }
+            }
+            onStatusChanged: {
+                if (status === Image.Ready) {
+                    image.opacity = 0.2;
+                }
+                if (status === Image.Loading) {
+                    image.opacity = 0;
+                }
+            }
         }
 
-        Text {
-            id: title
-            text: couch.currentItem ? couch.currentItem.metadata.title : ""
-            color: "white"
-            font.weight: Font.Normal
-            font.pointSize: fp(24)
+        Item {
+            width: parent.width * 0.5
+            height: parent.height * 0.5
+            anchors.centerIn: parent
 
-            anchors.left: detailImage.right
-            anchors.right: parent.right
-            anchors.bottom: loadingText.top
-            anchors.margins: dp(10)
+            Text {
+                id: title
+                text: player.currentSource ? player.currentSource.name : ''
+                color: "white"
+                font.weight: Font.Normal
+                font.pointSize: fp(24)
 
-            wrapMode: Text.WordWrap
-            elide: Text.ElideRight
-        }
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: dp(10)
 
-        Text {
-            id: loadingText
-            anchors.left: detailImage.right
-            anchors.bottom: parent.bottom
-            anchors.margins: dp(10)
+                wrapMode: Text.WordWrap
+                elide: Text.ElideRight
+            }
 
-            text: qsTr("loading...")
+            Text {
+                id: loadingText
+                anchors.top: title.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: dp(10)
 
-            color: "white"
-            font.weight: Font.Normal
-            font.pointSize: fp(11)
+                text: qsTr("loading...")
+
+                color: "white"
+                font.weight: Font.Normal
+                font.pointSize: fp(11)
+            }
+
+            CouchButton {
+                id: cancelButton
+                text: qsTr("cancel")
+                color: "orange"
+
+                anchors.top: loadingText.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: dp(10)
+
+                height: dp(50)
+                width: dp(200)
+
+                onClicked: player.stop()
+            }
         }
     }
 }

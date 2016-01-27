@@ -19,6 +19,9 @@ Q_OBJECT
 
 Q_ENUMS(Genre)
 
+private:
+    Source *m_trailerSource;
+
 public:
     enum Genre
     {
@@ -36,6 +39,7 @@ public:
     explicit Movie(Service* service);
 
     MovieMetadata *metadata() const;
+    Source *trailerSource();
     static QString genreToString(Movie::Genre genre);
 };
 
