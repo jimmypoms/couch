@@ -28,14 +28,14 @@ Q_SIGNALS:
     void sourceChanged();
 
 private:
-    const Source* m_source;
+    Source* m_source;
 
 public:
     CouchPlayAction(Source* source, QObject *parent = 0);
     virtual ~CouchPlayAction() = default;
 
-    const Source* source() const;
-    void setSource(const Source* source);
+    Source* source() const;
+    void setSource(Source* source);
 };
 
 #endif /* COUCHPLAYACTION_H_ */

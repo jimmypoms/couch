@@ -88,7 +88,7 @@ qint64 CouchPlayer::position() const
     return 0;
 }
 
-void CouchPlayer::play(const Source *source)
+void CouchPlayer::play(Source *source)
 {
     load(source);
     if (m_handler) {
@@ -127,12 +127,12 @@ void CouchPlayer::next()
     // TODO:
 }
 
-const Source* CouchPlayer::currentSource() const
+Source* CouchPlayer::currentSource() const
 {
     return m_currentSource;
 }
 
-const Item* CouchPlayer::currentItem() const
+Item* CouchPlayer::currentItem() const
 {
     return m_currentItem;
 }
