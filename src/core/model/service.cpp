@@ -1,20 +1,21 @@
 #include "service.h"
 
-#include <qdebug.h>
-#include <qlogging.h>
-#include <qurl.h>
-#include <algorithm>
-
 #include "couchitemlist.h"
+#include "couchplayaction.h"
 #include "couchsourcelist.h"
 #include "item.h"
 #include "itemmetadata.h"
 #include "source.h"
 
+#include <qdebug.h>
+#include <qlogging.h>
+#include <qurl.h>
+#include <algorithm>
+
 #include "../multimedia/couchplayer.h"
 
 Service::Service(QObject *parent, QString name) :
-        QObject(parent), m_name(name), m_maxItemCacheSize(500)
+        QObject(parent), m_name(name), m_maxItemCacheSize(500), m_player(nullptr)
 {
 }
 
@@ -81,3 +82,12 @@ void Service::reduceSources()
     delete sourcesList;
 }
 
+void Service::onActionTriggered()
+{
+    CouchAction* action = qobject_cast<CouchAction*>(sender());
+    CouchPlayAction* playAction = qobject_cast<CouchPlayAction*>(action);
+    if (playAction) {
+        m_player->play(playAction->source());
+        return;
+    }
+}

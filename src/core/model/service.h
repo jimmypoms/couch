@@ -23,7 +23,6 @@ Q_SIGNALS:
     void warning(const QString &msg);
 
     void providersChanged();
-
     void itemsReady(const QList<std::shared_ptr<Item> > &items, const QString &id);
 
 private:
@@ -32,12 +31,15 @@ private:
     QList<std::shared_ptr<Item> > m_items;
 
     int m_maxItemCacheSize;
-    CouchPlayer* m_player;
 
     virtual Item* createItem(const Source *source) = 0;
 
+protected:
+    CouchPlayer* m_player;
+
 public Q_SLOTS:
     void reduceSources();
+    void onActionTriggered();
 
 public:
     explicit Service(QObject *parent, QString name);

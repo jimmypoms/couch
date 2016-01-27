@@ -5,6 +5,8 @@
 
 #include "../model/item.h"
 
+class MovieMetadata;
+
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
 #else
@@ -32,6 +34,8 @@ public:
     };
 
     explicit Movie(Service* service);
+
+    MovieMetadata *metadata() const;
     static QString genreToString(Movie::Genre genre);
 };
 

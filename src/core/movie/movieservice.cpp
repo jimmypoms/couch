@@ -1,16 +1,18 @@
 #include "movieservice.h"
 
+#include "movie.h"
+
 #include <qlist.h>
 #include <qobject.h>
 #include <memory>
 #include <unordered_map>
 
+#include "../model/couchactionlist.h"
 #include "../model/couchitemlist.h"
+#include "../model/couchplayaction.h"
 #include "../model/couchsourcelist.h"
 #include "../model/provider.h"
 #include "../model/source.h"
-
-#include "movie.h"
 
 MovieService::MovieService(QObject *parent) :
     Service(parent, "movies"), m_metadataCache("movies/metadata")
@@ -59,5 +61,24 @@ CouchItemList* MovieService::loadItem(Movie *movie)
 
         connect(sourceList, &CouchSourceList::sourcesLoaded, this, &Service::reduceSources);
     }
+    return list;
+}
+
+CouchActionList* MovieService::actions(Movie* movie)
+{
+    CouchActionList* list = new CouchActionList(this);
+    QList<std::shared_ptr<CouchAction> > actions;
+    if (!movie->metadata()->trailer().isEmpty()) {
+        Source* trailer = new Source();
+        trailer->setName("trailer");
+        trailer->setParent(list);
+        trailer->setUrl(movie->metadata()->trailer());
+
+        CouchPlayAction* action = new CouchPlayAction(trailer);
+        connect(action, &CouchAction::triggered, this, &Service::onActionTriggered);
+        action->setParent(list);
+        actions.append(std::shared_ptr<CouchAction>(action));
+    }
+    list->addActions(actions);
     return list;
 }

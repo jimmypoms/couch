@@ -1,5 +1,7 @@
 #include "movie.h"
 
+#include "moviemetadata.h"
+
 #include <qstring.h>
 
 Movie::Movie(Service* service) :
@@ -30,4 +32,9 @@ QString Movie::genreToString(Genre genre)
             return "documentary";
     }
     return "unknown";
+}
+
+MovieMetadata* Movie::metadata() const
+{
+    return static_cast<MovieMetadata*>(Item::metadata());
 }
