@@ -41,6 +41,51 @@ protected:
     QMediaPlayer *m_mediaPlayer;
     const Source *m_source;
 
+    void connectPlayerError()
+    {
+        connect(m_mediaPlayer,
+                static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
+                this, &PlaybackHandler::onPlayerError);
+    }
+    void disconnectPlayerError()
+    {
+        disconnect(m_mediaPlayer,
+            static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
+            this, &PlaybackHandler::onPlayerError);
+    }
+    void connectPlayerSignals()
+    {
+        connect(m_mediaPlayer, &QMediaPlayer::durationChanged,
+            this, &PlaybackHandler::durationChanged);
+        connect(m_mediaPlayer, &QMediaPlayer::positionChanged,
+            this, &PlaybackHandler::positionChanged);
+        connect(m_mediaPlayer, &QMediaPlayer::bufferStatusChanged,
+            this, &PlaybackHandler::bufferStatusChanged);
+        connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged,
+            this, &PlaybackHandler::mediaStatusChanged);
+        connect(m_mediaPlayer, &QMediaPlayer::stateChanged,
+            this, &PlaybackHandler::stateChanged);
+    }
+    void disconnectPlayerSignals()
+    {
+        disconnect(m_mediaPlayer, &QMediaPlayer::stateChanged, this,
+            &PlaybackHandler::stateChanged);
+        disconnect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, this,
+            &PlaybackHandler::mediaStatusChanged);
+        disconnect(m_mediaPlayer, &QMediaPlayer::bufferStatusChanged, this,
+            &PlaybackHandler::bufferStatusChanged);
+        disconnect(m_mediaPlayer, &QMediaPlayer::positionChanged, this,
+            &PlaybackHandler::positionChanged);
+        disconnect(m_mediaPlayer, &QMediaPlayer::durationChanged, this,
+            &PlaybackHandler::durationChanged);
+    }
+public Q_SLOTS:
+    void onPlayerError(QMediaPlayer::Error e)
+    {
+        disconnectPlayerSignals();
+        disconnectPlayerError();
+        Q_EMIT error(e);
+    }
 public:
     explicit PlaybackHandler(QString name) :
             m_name(name), m_mediaPlayer(nullptr), m_source(nullptr)
@@ -65,41 +110,17 @@ public:
 
     virtual void play()
     {
-        connect(m_mediaPlayer,
-                static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error), this, &PlaybackHandler::error);
-
+        connectPlayerError();
         m_mediaPlayer->setMedia(m_source->url());
-
-        connect(m_mediaPlayer, &QMediaPlayer::durationChanged,
-            this, &PlaybackHandler::durationChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::positionChanged,
-            this, &PlaybackHandler::positionChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::bufferStatusChanged,
-            this, &PlaybackHandler::bufferStatusChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged,
-            this, &PlaybackHandler::mediaStatusChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::stateChanged,
-            this, &PlaybackHandler::stateChanged);
-
+        connectPlayerSignals();
         m_mediaPlayer->play();
     }
 
     virtual void stop()
     {
         m_mediaPlayer->stop();
-
-        disconnect(m_mediaPlayer,
-            static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error), this, &PlaybackHandler::error);
-        disconnect(m_mediaPlayer, &QMediaPlayer::stateChanged, this,
-            &PlaybackHandler::stateChanged);
-        disconnect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, this,
-            &PlaybackHandler::mediaStatusChanged);
-        disconnect(m_mediaPlayer, &QMediaPlayer::bufferStatusChanged, this,
-            &PlaybackHandler::bufferStatusChanged);
-        disconnect(m_mediaPlayer, &QMediaPlayer::positionChanged, this,
-            &PlaybackHandler::positionChanged);
-        disconnect(m_mediaPlayer, &QMediaPlayer::durationChanged, this,
-            &PlaybackHandler::durationChanged);
+        disconnectPlayerSignals();
+        disconnectPlayerError();
     }
 
     virtual void pause()

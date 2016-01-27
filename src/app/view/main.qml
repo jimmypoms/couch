@@ -121,10 +121,9 @@ ApplicationWindow {
         Notifications {
             id: notifications
             anchors.top: parent.top
-            anchors.topMargin: dp(100)
+            anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            height: dp(80)
-            width: parent.width * 0.7
+            width: parent.width * 0.5
         }
 
         Connections {
