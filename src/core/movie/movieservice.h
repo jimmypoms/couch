@@ -33,9 +33,10 @@ public:
     explicit MovieService(QObject *parent = 0);
     virtual ~MovieService() = default;
 
-    Q_INVOKABLE CouchItemList *load(MovieFilter *filter);
-    Q_INVOKABLE CouchItemList *loadItem(Movie *movie);
-    Q_INVOKABLE CouchActionList *actions(Movie *movie);
+    Q_INVOKABLE
+    CouchItemList *load(MovieFilter *filter);Q_INVOKABLE
+    CouchItemList *loadItem(Movie *movie);Q_INVOKABLE
+    CouchActionList *actions(Movie *movie);
 };
 
 #endif // MOVIESERVICE_H

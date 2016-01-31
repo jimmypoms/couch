@@ -59,7 +59,8 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
 public Q_SLOTS:
-    void addActions(const QList<std::shared_ptr<CouchAction> > &actions, const QString &id = "");
+    void addActions(const QList<std::shared_ptr<CouchAction> > &actions,
+            const QString &id = "");
     void insert(int row, const std::shared_ptr<CouchAction> &action);
     void append(const QList<std::shared_ptr<CouchAction> > &actions);
     void append(const std::shared_ptr<CouchAction> &action);

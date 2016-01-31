@@ -24,9 +24,9 @@ class MovieMetadata;
 class Service;
 namespace Xapian
 {
-    class MSet;
-    class TermGenerator;
-    class WritableDatabase;
+class MSet;
+class TermGenerator;
+class WritableDatabase;
 } /* namespace Xapian */
 
 class LocalMovieProvider : public MovieProvider

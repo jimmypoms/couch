@@ -73,7 +73,7 @@ CouchSourceList *Item::sources(QObject* provider)
 }
 
 bool Item::isLoaded(const QObject* provider) const
-        {
+{
     if (m_loaded.contains(provider)) {
         return m_loaded[provider];
     }

@@ -20,10 +20,10 @@ Couch::Couch(QObject *parent) :
 
     qmlRegisterUncreatableType<CouchItemList>("org.couch.itemlist", 1, 0, "CouchItemList",
             "impossible to create itemlist from qml");
-    qmlRegisterUncreatableType<CouchSourceList>("org.couch.sourcelist", 1, 0, "CouchSourceList",
-            "impossible to create sourcelist from qml");
-    qmlRegisterUncreatableType<CouchActionList>("org.couch.actionlist", 1, 0, "CouchActionList",
-            "impossible to create actionlist from qml");
+    qmlRegisterUncreatableType<CouchSourceList>("org.couch.sourcelist", 1, 0,
+            "CouchSourceList", "impossible to create sourcelist from qml");
+    qmlRegisterUncreatableType<CouchActionList>("org.couch.actionlist", 1, 0,
+            "CouchActionList", "impossible to create actionlist from qml");
 
     qmlRegisterUncreatableType<ItemMetadata>("org.couch.metadata", 1, 0, "Metadata",
             "impossible to create metadata from qml");

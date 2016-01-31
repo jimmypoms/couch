@@ -42,8 +42,7 @@ const QStringList LocalMovieProvider::s_fileNameFilters = {
         "*.mkv",
         "*.avi",
         "*.mpg",
-        "*.mpeg"
-};
+        "*.mpeg"};
 const std::string LocalMovieProvider::s_prefixTitle = "S";
 const std::string LocalMovieProvider::s_prefixTagline = "T";
 const std::string LocalMovieProvider::s_prefixYear = "Y";
@@ -52,14 +51,14 @@ const std::string LocalMovieProvider::s_prefixActor = "A";
 const std::string LocalMovieProvider::s_prefixGenre = "G";
 
 LocalMovieProvider::LocalMovieProvider(Service* parent) :
-        MovieProvider(parent, "local"),
-                m_isIndexing(false),
-                m_database(QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-                        + "/database/movie"),
-                m_library("/misc/movies"),
+        MovieProvider(parent, "local"), m_isIndexing(false),
+                m_database(
+                        QStandardPaths::writableLocation(QStandardPaths::DataLocation)
+                                + "/database/movie"), m_library("/misc/movies"),
                 m_reader(m_database.toStdString())
 {
-    connect(this, &LocalMovieProvider::searchFinished, this, &LocalMovieProvider::onSearchFinished);
+    connect(this, &LocalMovieProvider::searchFinished, this,
+            &LocalMovieProvider::onSearchFinished);
     qRegisterMetaType<Xapian::MSet>("Xapian::MSet");
     QDir().mkpath(m_database);
 
@@ -91,8 +90,8 @@ void LocalMovieProvider::loadDatabase()
     qDebug() << "finished indexing files";
 }
 
-void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer, Xapian::TermGenerator& indexer,
-        const Source &source, MovieMetadata* metadata)
+void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer,
+        Xapian::TermGenerator& indexer, const Source &source, MovieMetadata* metadata)
 {
     if (metadata->title().isEmpty()) {
         return;
@@ -134,7 +133,8 @@ void LocalMovieProvider::searchDatabase(const MovieFilter *filter, const QString
         qp.add_prefix("", s_prefixActor);
         qp.add_prefix("", s_prefixDirector);
         Xapian::Query filterQuery = qp.parse_query(filter->text().toStdString(),
-                Xapian::QueryParser::FLAG_DEFAULT | Xapian::QueryParser::FLAG_SPELLING_CORRECTION
+                Xapian::QueryParser::FLAG_DEFAULT
+                        | Xapian::QueryParser::FLAG_SPELLING_CORRECTION
                         | Xapian::QueryParser::FLAG_PARTIAL);
         query = Xapian::Query(Xapian::Query::OP_AND, query, filterQuery);
     }

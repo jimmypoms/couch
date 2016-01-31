@@ -44,46 +44,46 @@ protected:
     void connectPlayerError()
     {
         connect(m_mediaPlayer,
-                static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
+                (static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error)),
                 this, &PlaybackHandler::onPlayerError);
     }
     void disconnectPlayerError()
     {
         disconnect(m_mediaPlayer,
-            static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
-            this, &PlaybackHandler::onPlayerError);
+                (static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error)),
+                this, &PlaybackHandler::onPlayerError);
     }
     void connectLoadingSignals()
     {
-        connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged,
-            this, &PlaybackHandler::mediaStatusChanged);
+        connect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, this,
+                &PlaybackHandler::mediaStatusChanged);
     }
     void disconnectLoadingSignals()
     {
         disconnect(m_mediaPlayer, &QMediaPlayer::mediaStatusChanged, this,
-            &PlaybackHandler::mediaStatusChanged);
+                &PlaybackHandler::mediaStatusChanged);
     }
     void connectPlayerSignals()
     {
-        connect(m_mediaPlayer, &QMediaPlayer::durationChanged,
-            this, &PlaybackHandler::durationChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::positionChanged,
-            this, &PlaybackHandler::positionChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::bufferStatusChanged,
-            this, &PlaybackHandler::bufferStatusChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::stateChanged,
-            this, &PlaybackHandler::stateChanged);
+        connect(m_mediaPlayer, &QMediaPlayer::durationChanged, this,
+                &PlaybackHandler::durationChanged);
+        connect(m_mediaPlayer, &QMediaPlayer::positionChanged, this,
+                &PlaybackHandler::positionChanged);
+        connect(m_mediaPlayer, &QMediaPlayer::bufferStatusChanged, this,
+                &PlaybackHandler::bufferStatusChanged);
+        connect(m_mediaPlayer, &QMediaPlayer::stateChanged, this,
+                &PlaybackHandler::stateChanged);
     }
     void disconnectPlayerSignals()
     {
         disconnect(m_mediaPlayer, &QMediaPlayer::stateChanged, this,
-            &PlaybackHandler::stateChanged);
+                &PlaybackHandler::stateChanged);
         disconnect(m_mediaPlayer, &QMediaPlayer::bufferStatusChanged, this,
-            &PlaybackHandler::bufferStatusChanged);
+                &PlaybackHandler::bufferStatusChanged);
         disconnect(m_mediaPlayer, &QMediaPlayer::positionChanged, this,
-            &PlaybackHandler::positionChanged);
+                &PlaybackHandler::positionChanged);
         disconnect(m_mediaPlayer, &QMediaPlayer::durationChanged, this,
-            &PlaybackHandler::durationChanged);
+                &PlaybackHandler::durationChanged);
     }
 public Q_SLOTS:
     void onPlayerError(QMediaPlayer::Error e)

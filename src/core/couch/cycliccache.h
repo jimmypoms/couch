@@ -28,14 +28,14 @@
 
 namespace std
 {
-    template<>
-    struct hash<QString> : public unary_function<QString, size_t>
+template<>
+struct hash<QString> : public unary_function<QString, size_t>
+{
+    size_t operator()(QString v) const
     {
-        size_t operator()(QString v) const
-        {
-            return qHash(v);
-        }
-    };
+        return qHash(v);
+    }
+};
 }
 
 template<class Key, class T>
@@ -68,7 +68,8 @@ class COUCH_LIBRARY_EXPORT CyclicCache : public std::unordered_map<Key, std::sha
                 insert(k, v);
             }
             qDebug()
-                    << QString("%1 items loaded for cache '%2'").arg(QString::number(size), name);
+                    << QString("%1 items loaded for cache '%2'").arg(QString::number(size),
+                            name);
         }
         file.close();
     }
@@ -99,7 +100,8 @@ public:
             cyclic_cache_container_type(), name(name), maxSize(size)
     {
         static_assert(std::is_base_of<SerializableClass, T>::value, "T is not a SerializableClass");
-        QDir fileDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache");
+        QDir fileDir(
+                QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/cache");
         cacheFilePath = fileDir.absoluteFilePath(name);
 
         load();
@@ -116,7 +118,7 @@ public:
             cyclic_cache_container_type::erase(cyclic_cache_container_type::begin());
         }
         std::shared_ptr<T> vPtr(v);
-        cyclic_cache_container_type::insert( {k, vPtr});
+        cyclic_cache_container_type::insert({k, vPtr});
         return vPtr;
     }
 };

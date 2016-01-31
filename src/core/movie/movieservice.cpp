@@ -15,7 +15,7 @@
 #include "../model/source.h"
 
 MovieService::MovieService(QObject *parent) :
-    Service(parent, "movies"), m_metadataCache("movies/metadata")
+        Service(parent, "movies"), m_metadataCache("movies/metadata")
 {
 }
 
@@ -23,7 +23,8 @@ Item* MovieService::createItem(const Source *source)
 {
     Movie *movie = new Movie(this);
     movie->setTitle(source->itemMetadata()->title());
-    QString key = source->itemMetadata()->title() + QString::number(source->itemMetadata()->year());
+    QString key = source->itemMetadata()->title()
+            + QString::number(source->itemMetadata()->year());
     auto i = m_metadataCache.find(key);
     if (i != m_metadataCache.end()) {
         movie->setMetadata(i->second);
@@ -32,7 +33,6 @@ Item* MovieService::createItem(const Source *source)
     }
     return movie;
 }
-
 
 CouchItemList* MovieService::load(MovieFilter *filter)
 {

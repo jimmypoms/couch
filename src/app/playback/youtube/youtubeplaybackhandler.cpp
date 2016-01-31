@@ -18,8 +18,8 @@
 QString YoutubePlaybackHandler::s_supportedHost("www.youtube.com");
 
 YoutubePlaybackHandler::YoutubePlaybackHandler() :
-        PlaybackHandler("youtube"), m_nam(this), m_preferredQuality(Quality::MP4_720p),
-                m_shouldPlay(false), m_replyFinished(false)
+        PlaybackHandler("youtube"), m_nam(this), m_preferredQuality(Quality::MP4_720p), m_shouldPlay(
+                false), m_replyFinished(false)
 {
 }
 
@@ -38,8 +38,7 @@ void YoutubePlaybackHandler::load(const Source *source)
     connect(reply, &QNetworkReply::finished, this, &YoutubePlaybackHandler::onNetworkResponse);
     connect(reply,
             static_cast<void (QNetworkReply::*)(
-                    QNetworkReply::NetworkError)>(&QNetworkReply::error),
-            this, &YoutubePlaybackHandler::onNetworkError);
+                    QNetworkReply::NetworkError)>(&QNetworkReply::error), this, &YoutubePlaybackHandler::onNetworkError);
 }
 
 void YoutubePlaybackHandler::play()
@@ -120,9 +119,7 @@ QString YoutubePlaybackHandler::findPreferredUrl()
 
 QString YoutubePlaybackHandler::findPreferredUrl(const QMap<int, QString>& urlMap, Quality q)
 {
-    // Choose a url according to preferred quality
     QString p_url;
-    //Quality q = preferred_quality;
 
     if (q == MP4_1080p) {
         p_url = urlMap.value(MP4_1080p, QString());

@@ -49,13 +49,13 @@ QHash<int, QByteArray> CouchSourceList::roleNames() const
 }
 
 int CouchSourceList::rowCount(const QModelIndex& parent) const
-        {
+{
     Q_UNUSED(parent);
     return m_sources.count();
 }
 
 QVariant CouchSourceList::data(const QModelIndex& index, int role) const
-        {
+{
     if (index.row() < 0 || index.row() >= m_sources.count()) {
         return QVariant();
     }
