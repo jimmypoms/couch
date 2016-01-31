@@ -20,12 +20,6 @@ FocusScope {
         id: container
         anchors.fill: parent
 
-        CouchIndicator {
-            anchors.fill: listView
-            visible: scope.loading
-            running: scope.loading
-        }
-
         Text {
             anchors.horizontalCenter: listView.horizontalCenter
             anchors.verticalCenter: listView.verticalCenter
@@ -72,6 +66,14 @@ FocusScope {
             highlightMoveDuration: 150
             populate: addTransition
             add: addTransition
+            footer: Item {
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                CouchIndicator {
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: scope.loading
+                }
+            }
         }
     }
 }

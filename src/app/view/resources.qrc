@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>loading.qml</file>
         <file>animations/BounceAnimation.qml</file>
         <file>components/CouchWindowControls.qml</file>
         <file>components/CouchInfoBox.qml</file>
@@ -12,7 +11,6 @@
         <file>components/CouchButton.qml</file>
         <file>components/CouchListView.qml</file>
         <file>components/CouchGridView.qml</file>
-        <file>components/CouchGridViewBig.qml</file>
         <file>components/CouchComboBox.qml</file>
         <file>components/CouchIconButton.qml</file>
         <file>components/CouchTabView.qml</file>

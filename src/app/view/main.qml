@@ -89,12 +89,6 @@ ApplicationWindow {
                 }
                 Rectangle {
                     anchors.fill: parent
-                    visible: ! styleData.selected
-                    color: "black"
-                    opacity: 0.5
-                }
-                Rectangle {
-                    anchors.fill: parent
                     color: styleData.selected && styleData.item ? styleData.item.highlightColor : "transparent"
                     opacity: styleData.item ? styleData.item.highlightOpacity : 1
                 }

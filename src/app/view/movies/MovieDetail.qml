@@ -62,11 +62,6 @@ FocusScope {
         height: dp(40)
 
         Rectangle {
-            color: backgroundColor
-            opacity: 0.5
-            anchors.fill: parent
-        }
-        Rectangle {
             color: highlightColor
             opacity: highlightOpacity
             anchors.fill: parent

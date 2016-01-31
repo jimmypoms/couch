@@ -19,12 +19,6 @@ FocusScope {
         id: container
         anchors.fill: parent
 
-        CouchIndicator {
-            anchors.centerIn: parent
-            visible: scope.loading
-            running: scope.loading
-        }
-
         Text {
             anchors.centerIn: parent
             visible: gridView.count == 0 && !scope.loading
@@ -66,6 +60,15 @@ FocusScope {
 
             populate: addTransition
             add: addTransition
+            footer: Item {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                CouchIndicator {
+                    anchors.topMargin: dp(10)
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    visible: scope.loading
+                }
+            }
         }
     }
 }
