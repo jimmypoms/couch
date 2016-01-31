@@ -8,6 +8,11 @@
 #ifndef NETWORKPROVIDER_H_
 #define NETWORKPROVIDER_H_
 
+#include "couchrequest.h"
+#include "couchsourcelist.h"
+#include "provider.h"
+#include "source.h"
+
 #include <qdebug.h>
 #include <qlist.h>
 #include <qlogging.h>
@@ -19,11 +24,6 @@
 #include <qsignalmapper.h>
 #include <qstring.h>
 #include <qurl.h>
-
-#include "couchrequest.h"
-#include "couchsourcelist.h"
-#include "provider.h"
-#include "source.h"
 
 class NetworkProviderImpl : public QObject
 {

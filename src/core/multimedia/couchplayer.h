@@ -1,13 +1,13 @@
 #ifndef COUCHPLAYER_H
 #define COUCHPLAYER_H
 
+#include "playbackhandler.h"
+
 #include <qglobal.h>
 #include <qlist.h>
 #include <qmediaplayer.h>
 #include <qobjectdefs.h>
 #include <memory>
-
-#include "../multimedia/playbackhandler.h"
 
 class Item;
 

@@ -10,6 +10,7 @@
 
 #include <qobject.h>
 #include <qobjectdefs.h>
+#include <qstring.h>
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT

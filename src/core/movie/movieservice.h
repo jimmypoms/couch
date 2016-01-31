@@ -34,8 +34,12 @@ public:
     virtual ~MovieService() = default;
 
     Q_INVOKABLE
-    CouchItemList *load(MovieFilter *filter);Q_INVOKABLE
-    CouchItemList *loadItem(Movie *movie);Q_INVOKABLE
+    CouchItemList *load(MovieFilter *filter);
+
+    Q_INVOKABLE
+    CouchItemList *loadItem(Movie *movie);
+
+    Q_INVOKABLE
     CouchActionList *actions(Movie *movie);
 };
 

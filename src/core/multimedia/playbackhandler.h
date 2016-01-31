@@ -1,6 +1,8 @@
 #ifndef PLAYBACKHANDLER_H
 #define PLAYBACKHANDLER_H
 
+#include "playbackhandlerinterface.h"
+
 #include <qglobal.h>
 #include <qmediaplayer.h>
 #include <qmimedatabase.h>
@@ -10,8 +12,6 @@
 #include <qurl.h>
 
 #include "../model/source.h"
-
-#include "playbackhandlerinterface.h"
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT

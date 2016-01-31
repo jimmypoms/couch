@@ -1,6 +1,8 @@
 #ifndef CYCLICCACHE_H
 #define CYCLICCACHE_H
 
+#include "serializableclass.h"
+
 #include <qdatastream.h>
 #include <qdebug.h>
 #include <qdir.h>
@@ -17,8 +19,6 @@
 #include <memory>
 #include <type_traits>
 #include <unordered_map>
-
-#include "serializableclass.h"
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT

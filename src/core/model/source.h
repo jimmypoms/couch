@@ -1,11 +1,11 @@
 #ifndef SOURCE_H
 #define SOURCE_H
 
+#include "itemmetadata.h"
+
 #include <qobjectdefs.h>
 #include <qstring.h>
 #include <qurl.h>
-
-#include "itemmetadata.h"
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT

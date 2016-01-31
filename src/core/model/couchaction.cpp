@@ -7,10 +7,6 @@
 
 #include "couchaction.h"
 
-#include <qdebug.h>
-#include <qlogging.h>
-#include <qstring.h>
-
 CouchAction::CouchAction(QObject *parent) :
         QObject(parent), m_text(), m_enabled(true)
 {

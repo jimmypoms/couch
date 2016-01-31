@@ -7,13 +7,13 @@
 
 #include "couchitemlist.h"
 
+#include "item.h"
+#include "service.h"
+
 #include <qglobal.h>
 #include <quuid.h>
 #include <qvariant.h>
 #include <algorithm>
-
-#include "item.h"
-#include "service.h"
 
 CouchItemList::CouchItemList(const Service *service, QString id) :
         m_id(id), m_loadingCount(service->providers().count()), m_loaded(0)

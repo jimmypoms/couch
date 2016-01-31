@@ -13,7 +13,6 @@
 #include <qglobal.h>
 #include <quuid.h>
 #include <qvariant.h>
-#include <algorithm>
 
 CouchActionList::CouchActionList(const Service* service, QString id) :
         m_id(id), m_loadingCount(service->providers().count()), m_loaded(0)

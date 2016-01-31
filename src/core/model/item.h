@@ -1,13 +1,13 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include "couchsourcelist.h"
+#include "itemmetadata.h"
+
 #include <qhash.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
 #include <memory>
-
-#include "couchsourcelist.h"
-#include "itemmetadata.h"
 
 class Service;
 

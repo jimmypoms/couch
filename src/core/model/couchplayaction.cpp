@@ -7,8 +7,6 @@
 
 #include "couchplayaction.h"
 
-#include "source.h"
-
 CouchPlayAction::CouchPlayAction(Source *source, QObject *parent) :
         CouchAction(parent), m_source(source)
 {

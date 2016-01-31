@@ -1,10 +1,10 @@
 #include "item.h"
 
-#include <qlist.h>
-#include <algorithm>
-
 #include "service.h"
 #include "source.h"
+
+#include <qlist.h>
+#include <algorithm>
 
 Item::Item(Service* service) :
         QObject(service), m_service(service), m_emptySourceList(new CouchSourceList())
