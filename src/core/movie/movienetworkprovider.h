@@ -5,8 +5,8 @@
  *      Author: jimmypoms
  */
 
-#ifndef CORE_MOVIE_MOVIENETWORKPROVIDER_H_
-#define CORE_MOVIE_MOVIENETWORKPROVIDER_H_
+#ifndef MOVIENETWORKPROVIDER_H_
+#define MOVIENETWORKPROVIDER_H_
 
 #include "movie.h"
 #include "moviefilter.h"
@@ -40,4 +40,4 @@ public:
     const QString &name() const;
 };
 
-#endif /* CORE_MOVIE_MOVIENETWORKPROVIDER_H_ */
+#endif /* MOVIENETWORKPROVIDER_H_ */

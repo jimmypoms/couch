@@ -5,8 +5,8 @@
  *      Author: jimmypoms
  */
 
-#ifndef CORE_MOVIE_MOVIEPROVIDER_H_
-#define CORE_MOVIE_MOVIEPROVIDER_H_
+#ifndef MOVIEPROVIDER_H_
+#define MOVIEPROVIDER_H_
 
 #include <qobject.h>
 #include <qobjectdefs.h>
@@ -38,4 +38,4 @@ public:
     const QString &name() const;
 };
 
-#endif /* CORE_MOVIE_MOVIEPROVIDER_H_ */
+#endif /* MOVIEPROVIDER_H_ */
