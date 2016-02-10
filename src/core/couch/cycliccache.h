@@ -51,6 +51,9 @@ class COUCH_LIBRARY_EXPORT CyclicCache : public std::unordered_map<Key, std::sha
     void load()
     {
         QFile file(cacheFilePath);
+        if (!file.exists()) {
+            QDir(cacheFilePath).mkpath("..");
+        }
 
         file.open(QIODevice::ReadWrite);
 

@@ -32,7 +32,7 @@ public:
     }
     virtual ~PluginLoader() = default;
 
-    void load(QString subDir, std::function<void(IFace*)> a)
+    void load(const QString &subDir, std::function<void(IFace*)> a)
     {
         QDir pluginsDir(QCoreApplication::applicationDirPath());
 #if defined(Q_OS_WIN)
@@ -71,7 +71,7 @@ public:
         }
     }
 
-    void load(QString subDir, std::function<void(QObject*)> a)
+    void load(const QString &subDir, std::function<void(QObject*)> a)
     {
         QDir pluginsDir(QCoreApplication::applicationDirPath());
 #if defined(Q_OS_WIN)

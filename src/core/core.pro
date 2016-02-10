@@ -47,7 +47,13 @@ SOURCES += \
     movie/moviemetadata.cpp \
     movie/movieservice.cpp \
     movie/movieprovider.cpp \
-    movie/movienetworkprovider.cpp
+    movie/movienetworkprovider.cpp \
+    music/artist.cpp \
+    music/musicfilter.cpp \
+    music/musicmetadata.cpp \
+    music/musicservice.cpp \
+    music/musicprovider.cpp \
+    music/musicnetworkprovider.cpp
 
 HEADERS += \
     couch/cycliccache.h \
@@ -74,7 +80,13 @@ HEADERS += \
     movie/moviemetadata.h \
     movie/movieservice.h \
     movie/movieprovider.h \
-    movie/movienetworkprovider.h
+    movie/movienetworkprovider.h \
+    music/artist.h \
+    music/musicfilter.h \
+    music/musicmetadata.h \
+    music/musicservice.h \
+    music/musicprovider.h \
+    music/musicnetworkprovider.h
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

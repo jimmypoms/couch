@@ -1,3 +1,9 @@
+#include "couch.h"
+#include "pluginloader.h"
+
+#include "playback/media/mediaplaybackhandler.h"
+#include "playback/youtube/youtubeplaybackhandler.h"
+
 #include <qglobal.h>
 #include <qguiapplication.h>
 #include <qlist.h>
@@ -6,15 +12,10 @@
 #include <qscreen.h>
 #include <qurl.h>
 
-#include "couch/movie/movieservice.h"
-#include "couch/provider.h"
 #include "couch/couchplayer.h"
-
-#include "couch.h"
-#include "pluginloader.h"
-
-#include "playback/media/mediaplaybackhandler.h"
-#include "playback/youtube/youtubeplaybackhandler.h"
+#include "couch/movie/movieservice.h"
+#include "couch/music/musicservice.h"
+#include "couch/provider.h"
 
 int main(int argc, char *argv[])
 {
@@ -34,9 +35,23 @@ int main(int argc, char *argv[])
     MovieService movieService;
     movieService.setPlayer(&player);
     couch.addService(&movieService);
-    PluginLoader<MovieProviderInterface> providerLoader;
-    providerLoader.load("provider", [&movieService](QObject *p) {
-        movieService.addProvider(p);
+    PluginLoader<MovieProviderInterface> movieProviderLoader;
+    movieProviderLoader.load("provider", [&movieService](QObject *p) {
+        MovieProviderInterface *interface = qobject_cast<MovieProviderInterface *>(p);
+        if (interface) {
+            movieService.addProvider(p);
+        }
+    });
+
+    MusicService musicService;
+    musicService.setPlayer(&player);
+    couch.addService(&musicService);
+    PluginLoader<MusicProviderInterface> musicProviderLoader;
+    musicProviderLoader.load("provider", [&musicService](QObject *p) {
+        MusicProviderInterface *interface = qobject_cast<MusicProviderInterface *>(p);
+        if (interface) {
+            musicService.addProvider(p);
+        }
     });
 
     qreal screenPixelDensity = QGuiApplication::primaryScreen()->physicalDotsPerInch()

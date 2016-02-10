@@ -36,9 +36,17 @@
         <file>movies/MovieDetail.qml</file>
         <file>movies/MovieGrid.qml</file>
         <file>movies/MovieHome.qml</file>
+        <file>music/main.qml</file>
+        <file>music/MusicTabView.qml</file>
+        <file>music/MusicDelegateBig.qml</file>
+        <file>music/MusicDelegateSmall.qml</file>
+        <file>music/MusicDetail.qml</file>
+        <file>music/MusicGrid.qml</file>
+        <file>music/MusicHome.qml</file>
         <file>images/icon-minus.svg</file>
         <file>images/icon-plus.svg</file>
         <file>images/placeholder-movie.svg</file>
+        <file>images/placeholder-music.svg</file>
         <file>images/icon-search.svg</file>
         <file>images/icon-play.svg</file>
         <file>images/icon-next.svg</file>

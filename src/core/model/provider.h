@@ -5,6 +5,8 @@
 
 #include "../movie/movie.h"
 #include "../movie/moviefilter.h"
+#include "../music/artist.h"
+#include "../music/musicfilter.h"
 
 class CouchSourceList;
 class QString;
@@ -24,5 +26,8 @@ public:
 
 typedef Provider<Movie, MovieFilter> MovieProviderInterface;
 Q_DECLARE_INTERFACE(MovieProviderInterface, "org.couch.provider.movie")
+
+typedef Provider<Artist, MusicFilter> MusicProviderInterface;
+Q_DECLARE_INTERFACE(MusicProviderInterface, "org.couch.provider.music")
 
 #endif /* PROVIDERINTERFACE_H_ */

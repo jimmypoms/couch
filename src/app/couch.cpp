@@ -8,6 +8,8 @@
 #include "couch/itemmetadata.h"
 #include "couch/movie/movie.h"
 #include "couch/movie/moviefilter.h"
+#include "couch/music/artist.h"
+#include "couch/music/musicfilter.h"
 #include "couch/source.h"
 #include "couch/couchplayer.h"
 
@@ -17,6 +19,7 @@ Couch::Couch(QObject *parent) :
     qmlRegisterType<Filter>("org.couch.filter", 1, 0, "Filter");
     qmlRegisterType<Source>("org.couch.source", 1, 0, "Source");
     qmlRegisterType<MovieFilter>("org.couch.filter.movie", 1, 0, "MovieFilter");
+    qmlRegisterType<MusicFilter>("org.couch.filter.music", 1, 0, "MusicFilter");
 
     qmlRegisterUncreatableType<CouchItemList>("org.couch.itemlist", 1, 0, "CouchItemList",
             "impossible to create itemlist from qml");
@@ -31,6 +34,8 @@ Couch::Couch(QObject *parent) :
             "impossible to create items from qml");
     qmlRegisterUncreatableType<Movie>("org.couch.item.movie", 1, 0, "Movie",
             "impossible to create movies from qml");
+    qmlRegisterUncreatableType<Artist>("org.couch.item.artist", 1, 0, "Artist",
+            "impossible to create artists from qml");
 
     qmlRegisterUncreatableType<Service>("org.couch.service", 1, 0, "Service",
             "impossible to create service form qml");
