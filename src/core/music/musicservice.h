@@ -8,7 +8,7 @@
 #ifndef MUSICSERVICE_H_
 #define MUSICSERVICE_H_
 
-#include "musicmetadata.h"
+#include "artistmetadata.h"
 
 #include <qobjectdefs.h>
 #include <qstring.h>
@@ -32,7 +32,7 @@ class COUCH_LIBRARY_EXPORT MusicService : public Service
 Q_OBJECT
 
 private:
-    CyclicCache<QString, MusicMetadata> m_metadataCache;
+    CyclicCache<QString, ArtistMetadata> m_metadataCache;
 
     Item* createItem(const Source *source);
 

@@ -5,8 +5,8 @@
  *      Author: jimmypoms
  */
 
-#ifndef MUSICMETADATA_H_
-#define MUSICMETADATA_H_
+#ifndef ARTISTMETADATA_H_
+#define ARTISTMETADATA_H_
 
 #include "../model/itemmetadata.h"
 
@@ -16,11 +16,11 @@
 #  define COUCH_LIBRARY_EXPORT Q_DECL_IMPORT
 #endif
 
-class COUCH_LIBRARY_EXPORT MusicMetadata : public ItemMetadata
+class COUCH_LIBRARY_EXPORT ArtistMetadata : public ItemMetadata
 {
 public:
-    explicit MusicMetadata(QObject *parent = 0);
-    virtual ~MusicMetadata() = default;
+    explicit ArtistMetadata(QObject *parent = 0);
+    virtual ~ArtistMetadata() = default;
 };
 
-#endif /* MUSICMETADATA_H_ */
+#endif /* ARTISTMETADATA_H_ */

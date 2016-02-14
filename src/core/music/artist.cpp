@@ -7,14 +7,14 @@
 
 #include "artist.h"
 
-#include "musicmetadata.h"
+#include "artistmetadata.h"
 
 Artist::Artist(Service *service) :
         Item(service)
 {
 }
 
-MusicMetadata* Artist::metadata() const
+ArtistMetadata* Artist::metadata() const
 {
-    return static_cast<MusicMetadata*>(Item::metadata());
+    return static_cast<ArtistMetadata*>(Item::metadata());
 }

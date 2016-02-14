@@ -5,9 +5,9 @@
  *      Author: jimmypoms
  */
 
-#include "musicmetadata.h"
+#include "artistmetadata.h"
 
-MusicMetadata::MusicMetadata(QObject *parent) :
+ArtistMetadata::ArtistMetadata(QObject *parent) :
         ItemMetadata(parent)
 {
 }

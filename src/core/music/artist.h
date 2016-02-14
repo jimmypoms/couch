@@ -12,7 +12,7 @@
 
 #include "../model/item.h"
 
-class MusicMetadata;
+class ArtistMetadata;
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
@@ -28,7 +28,7 @@ public:
     explicit Artist(Service *service);
     virtual ~Artist() = default;
 
-    MusicMetadata *metadata() const;
+    ArtistMetadata *metadata() const;
 };
 
 #endif /* ARTIST_H_ */

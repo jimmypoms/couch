@@ -49,8 +49,8 @@ SOURCES += \
     movie/movieprovider.cpp \
     movie/movienetworkprovider.cpp \
     music/artist.cpp \
+    music/artistmetadata.cpp \
     music/musicfilter.cpp \
-    music/musicmetadata.cpp \
     music/musicservice.cpp \
     music/musicprovider.cpp \
     music/musicnetworkprovider.cpp
@@ -82,8 +82,8 @@ HEADERS += \
     movie/movieprovider.h \
     movie/movienetworkprovider.h \
     music/artist.h \
+    music/artistmetadata.h \
     music/musicfilter.h \
-    music/musicmetadata.h \
     music/musicservice.h \
     music/musicprovider.h \
     music/musicnetworkprovider.h
