@@ -17,11 +17,9 @@ class COUCH_LIBRARY_EXPORT ItemMetadata : public SerializableClass
 {
 Q_OBJECT
 
-Q_PROPERTY(QString id READ id WRITE setId NOTIFY idChanged)
 Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
 Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
 Q_PROPERTY(double popularity READ popularity WRITE setPopularity NOTIFY popularityChanged)
-Q_PROPERTY(QUrl link READ link WRITE setLink NOTIFY linkChanged)
 Q_PROPERTY(QUrl image READ image WRITE setImage NOTIFY imageChanged)
 Q_PROPERTY(QUrl poster READ poster WRITE setPoster NOTIFY posterChanged)
 Q_PROPERTY(QUrl backdrop READ backdrop NOTIFY posterChanged)
@@ -29,11 +27,9 @@ Q_PROPERTY(double rating READ rating WRITE setRating NOTIFY ratingChanged)
 Q_PROPERTY(int year READ year WRITE setYear NOTIFY yearChanged)
 
 Q_SIGNALS:
-    void idChanged();
     void titleChanged();
     void descriptionChanged();
     void popularityChanged();
-    void linkChanged();
     void imageChanged();
     void posterChanged();
     void ratingChanged();
@@ -41,11 +37,9 @@ Q_SIGNALS:
     void merged();
 
 private:
-    QString m_id;
     QString m_title;
     QString m_description;
     double m_popularity;
-    QUrl m_link;
     QUrl m_image;
     QUrl m_poster;
     double m_rating;
@@ -55,9 +49,6 @@ public:
     explicit ItemMetadata(QObject *parent = 0);
     virtual ~ItemMetadata() = default;
 
-    const QString& id() const;
-    void setId(const QString& id);
-
     const QString& title() const;
     void setTitle(const QString& title);
 
@@ -66,9 +57,6 @@ public:
 
     double popularity() const;
     void setPopularity(double popularity);
-
-    const QUrl& link() const;
-    void setLink(const QUrl& link);
 
     const QUrl& image() const;
     void setImage(const QUrl& image);

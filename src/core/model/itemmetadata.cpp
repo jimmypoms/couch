@@ -21,19 +21,6 @@ void ItemMetadata::setDescription(const QString& description)
     }
 }
 
-const QString& ItemMetadata::id() const
-{
-    return m_id;
-}
-
-void ItemMetadata::setId(const QString& id)
-{
-    if (m_id != id) {
-        m_id = id;
-        Q_EMIT idChanged();
-    }
-}
-
 const QUrl& ItemMetadata::image() const
 {
     return m_image;
@@ -44,19 +31,6 @@ void ItemMetadata::setImage(const QUrl& image)
     if (m_image != image) {
         m_image = image;
         Q_EMIT imageChanged();
-    }
-}
-
-const QUrl& ItemMetadata::link() const
-{
-    return m_link;
-}
-
-void ItemMetadata::setLink(const QUrl& link)
-{
-    if (m_link != link) {
-        m_link = link;
-        Q_EMIT linkChanged();
     }
 }
 
