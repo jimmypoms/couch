@@ -21,18 +21,18 @@ class COUCH_LIBRARY_EXPORT Item : public QObject
 {
 Q_OBJECT
 
-Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 Q_PROPERTY(ItemMetadata* metadata READ metadata NOTIFY metadataChanged)
 
 Q_SIGNALS:
-    void titleChanged();
+    void nameChanged();
     void metadataChanged();
     void sourcesChanged();
 
 private:
     Service* m_service;
 
-    QString m_title;
+    QString m_name;
     std::shared_ptr<ItemMetadata> m_metadata;
     CouchSourceList* m_emptySourceList;
     QHash<const QObject*, CouchSourceList*> m_sources;
@@ -42,8 +42,8 @@ public:
     explicit Item(Service* service);
     virtual ~Item() = default;
 
-    const QString &title() const;
-    void setTitle(const QString &title);
+    const QString &name() const;
+    void setName(const QString &name);
 
     bool isLoaded(const QObject* provider) const;
     void setLoaded(const QObject* provider, bool loaded);

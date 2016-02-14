@@ -17,16 +17,16 @@ Item::Item(Service* service) :
     }
 }
 
-const QString &Item::title() const
+const QString &Item::name() const
 {
-    return m_title;
+    return m_name;
 }
 
-void Item::setTitle(const QString &t)
+void Item::setName(const QString &name)
 {
-    if (m_title != t) {
-        m_title = t;
-        Q_EMIT titleChanged();
+    if (m_name != name) {
+        m_name = name;
+        Q_EMIT nameChanged();
     }
 }
 

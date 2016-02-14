@@ -17,7 +17,7 @@ class COUCH_LIBRARY_EXPORT ItemMetadata : public SerializableClass
 {
 Q_OBJECT
 
-Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
 Q_PROPERTY(double popularity READ popularity WRITE setPopularity NOTIFY popularityChanged)
 Q_PROPERTY(QUrl image READ image WRITE setImage NOTIFY imageChanged)
@@ -27,7 +27,7 @@ Q_PROPERTY(double rating READ rating WRITE setRating NOTIFY ratingChanged)
 Q_PROPERTY(int year READ year WRITE setYear NOTIFY yearChanged)
 
 Q_SIGNALS:
-    void titleChanged();
+    void nameChanged();
     void descriptionChanged();
     void popularityChanged();
     void imageChanged();
@@ -37,7 +37,7 @@ Q_SIGNALS:
     void merged();
 
 private:
-    QString m_title;
+    QString m_name;
     QString m_description;
     double m_popularity;
     QUrl m_image;
@@ -49,8 +49,8 @@ public:
     explicit ItemMetadata(QObject *parent = 0);
     virtual ~ItemMetadata() = default;
 
-    const QString& title() const;
-    void setTitle(const QString& title);
+    const QString& name() const;
+    void setName(const QString& name);
 
     const QString& description() const;
     void setDescription(const QString& description);
@@ -76,7 +76,7 @@ public:
 
     bool operator==(const ItemMetadata& other) noexcept
     {
-        return m_year == other.m_year && m_title == other.m_title;
+        return m_year == other.m_year && m_name == other.m_name;
     }
 };
 

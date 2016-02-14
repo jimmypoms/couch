@@ -22,8 +22,8 @@ MovieService::MovieService(QObject *parent) :
 Item* MovieService::createItem(const Source *source)
 {
     Movie *movie = new Movie(this);
-    movie->setTitle(source->itemMetadata()->title());
-    QString key = source->itemMetadata()->title()
+    movie->setName(source->itemMetadata()->name());
+    QString key = source->itemMetadata()->name()
             + QString::number(source->itemMetadata()->year());
     auto i = m_metadataCache.find(key);
     if (i != m_metadataCache.end()) {

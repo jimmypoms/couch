@@ -106,7 +106,7 @@ QList<Source*> VodoProvider::parseReply(QNetworkReply* reply) const
         metadata->setRuntime(json.value("Runtime").toString().toInt());
         metadata->setDescription(json.value("Synopsis").toString().trimmed());
         metadata->setTagline(json.value("Tagline").toString().trimmed());
-        metadata->setTitle(json.value("MovieTitleClean").toString());
+        metadata->setName(json.value("MovieTitleClean").toString());
         metadata->setYear(json.value("MovieYear").toString().toInt());
         metadata->setGenres(json.value("Genre").toString().split(','));
 

@@ -13,7 +13,7 @@ Source* Movie::trailerSource()
 {
     if (!m_trailerSource && !metadata()->trailer().isEmpty()) {
         m_trailerSource = new Source(this);
-        m_trailerSource->setName(title() + " - Trailer");
+        m_trailerSource->setName(name() + " - Trailer");
         m_trailerSource->setUrl(metadata()->trailer());
     }
     return m_trailerSource;

@@ -57,7 +57,7 @@ Item {
         }
 
         Text {
-            text: itemContainer.item.title
+            text: itemContainer.item.name
             color: "white"
             font.weight: Font.Light
             font.pointSize: labelContainer.height ? labelContainer.height * 0.11 : fp(10)

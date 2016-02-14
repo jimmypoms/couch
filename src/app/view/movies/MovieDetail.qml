@@ -90,7 +90,7 @@ FocusScope {
         Text {
             id: title
             anchors.verticalCenter: parent.verticalCenter
-            text: movie.metadata.title
+            text: movie.metadata.name
             color: "white"
             font.weight: Font.Normal
             font.pointSize: fp(12)

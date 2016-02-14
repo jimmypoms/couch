@@ -53,7 +53,7 @@ void MovieMetadataFetcher::readMovieTag(QXmlStreamReader &xml, MovieMetadata* me
         } else if (xml.name() == "fanart") {
             readFanartTag(xml, metadata);
         } else if (xml.name() == "title") {
-            metadata->setTitle(readStringTag(xml));
+            metadata->setName(readStringTag(xml));
         } else if (xml.name() == "tagline") {
             metadata->setTagline(readStringTag(xml));
         } else if (xml.name() == "year") {

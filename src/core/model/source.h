@@ -68,7 +68,7 @@ public:
             return m_name;
         }
         if (m_itemMetadata) {
-            return m_itemMetadata->title();
+            return m_itemMetadata->name();
         }
         return m_name;
     }

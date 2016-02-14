@@ -93,7 +93,7 @@ void LocalMovieProvider::loadDatabase()
 void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer,
         Xapian::TermGenerator& indexer, const Source &source, MovieMetadata* metadata)
 {
-    if (metadata->title().isEmpty()) {
+    if (metadata->name().isEmpty()) {
         return;
     }
 
@@ -105,7 +105,7 @@ void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer,
     Xapian::Document doc;
     doc.set_data(data.toStdString());
     indexer.set_document(doc);
-    indexer.index_text(metadata->title().toStdString(), 1, s_prefixTitle);
+    indexer.index_text(metadata->name().toStdString(), 1, s_prefixTitle);
     indexer.index_text(metadata->tagline().toStdString(), 1, s_prefixTagline);
     indexer.index_text(std::to_string(metadata->year()), 1, s_prefixYear);
     for (const QString &actor : metadata->actors()) {
@@ -162,7 +162,7 @@ void LocalMovieProvider::searchDatabase(const Movie *movie, const QString &id)
     qp.add_prefix("title", s_prefixTitle);
     qp.add_prefix("actor", s_prefixActor);
     qp.add_prefix("director", s_prefixDirector);
-    Xapian::Query query = qp.parse_query(movie->title().toStdString(),
+    Xapian::Query query = qp.parse_query(movie->name().toStdString(),
             Xapian::QueryParser::FLAG_DEFAULT | Xapian::QueryParser::FLAG_SPELLING_CORRECTION,
             s_prefixTitle);
     Xapian::Enquire enquire(m_reader);

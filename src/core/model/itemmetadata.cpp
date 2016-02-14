@@ -60,16 +60,16 @@ void ItemMetadata::setRating(double rating)
     }
 }
 
-const QString& ItemMetadata::title() const
+const QString& ItemMetadata::name() const
 {
-    return m_title;
+    return m_name;
 }
 
-void ItemMetadata::setTitle(const QString& title)
+void ItemMetadata::setName(const QString& name)
 {
-    if (m_title != title) {
-        m_title = title;
-        Q_EMIT titleChanged();
+    if (m_name != name) {
+        m_name = name;
+        Q_EMIT nameChanged();
     }
 }
 
