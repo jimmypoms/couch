@@ -27,19 +27,15 @@ CouchGridView {
 
     signal itemClicked(variant item)
 
-    delegate: MovieDelegateBig {
-        id: movieDelegate
+    delegate: CouchItemDelegate {
         width: GridView.view.cellWidth
         height: GridView.view.cellHeight
-        z: activeFocus ? 2 : 1
+
+        placeholder: "../images/placeholder-movie.svg"
+        containerColor: highlightColor
+        item: modelData
         onClicked: {
-            itemClicked(modelData);
-        }
-        Keys.onEnterPressed: {
-            itemClicked(modelData);
-        }
-        Keys.onReturnPressed: {
-            itemClicked(modelData);
+            itemClicked(item);
         }
     }
 

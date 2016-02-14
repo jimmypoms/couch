@@ -22,6 +22,7 @@
         <file>components/CouchTab.qml</file>
         <file>components/CouchTabBar.qml</file>
         <file>components/CouchAutohide.qml</file>
+        <file>components/CouchItemDelegate.qml</file>
         <file>playback/Loading.qml</file>
         <file>playback/Player.qml</file>
         <file>playback/PlayerOverlay.qml</file>
@@ -31,15 +32,11 @@
         <file>content/Notifications.qml</file>
         <file>movies/main.qml</file>
         <file>movies/MovieTabView.qml</file>
-        <file>movies/MovieDelegateBig.qml</file>
-        <file>movies/MovieDelegateSmall.qml</file>
         <file>movies/MovieDetail.qml</file>
         <file>movies/MovieGrid.qml</file>
         <file>movies/MovieHome.qml</file>
         <file>music/main.qml</file>
         <file>music/MusicTabView.qml</file>
-        <file>music/MusicDelegateBig.qml</file>
-        <file>music/MusicDelegateSmall.qml</file>
         <file>music/MusicDetail.qml</file>
         <file>music/MusicGrid.qml</file>
         <file>music/MusicHome.qml</file>

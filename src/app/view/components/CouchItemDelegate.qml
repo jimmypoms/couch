@@ -5,7 +5,19 @@ import "../components"
 Item {
     id: itemContainer
 
-    signal clicked()
+    property var item: {}
+    property string placeholder: ''
+    property color containerColor: '#383F42'
+
+    z: activeFocus ? 2 : 1
+    signal clicked(var item)
+
+    Keys.onEnterPressed: {
+        clicked(item);
+    }
+    Keys.onReturnPressed: {
+        clicked(item);
+    }
 
     Rectangle {
         id: content
@@ -18,8 +30,8 @@ Item {
         CouchPlaceholderImage {
             id: previewImage
             anchors.fill: parent
-            source: modelData.metadata ? modelData.metadata.image : ''
-            placeholder: "../images/placeholder-movie.svg"
+            source: itemContainer.item.metadata ? itemContainer.item.metadata.image : ''
+            placeholder: itemContainer.placeholder
             smooth: true
         }
 
@@ -28,13 +40,13 @@ Item {
             anchors.right: parent.right
             anchors.left: parent.left
             anchors.bottom: parent.bottom
-            height: parent.height * 0.35
-            color: "#383F42"
+            height: Math.min(parent.height * 0.35, dp(100))
+            color: '#383F42'
         }
 
         Rectangle {
             anchors.fill: labelContainer
-            color: "red"
+            color: itemContainer.containerColor
             opacity: itemContainer.activeFocus ? 0.5 : 0
 
             Behavior on opacity {
@@ -45,16 +57,16 @@ Item {
         }
 
         Text {
-            text: modelData.title
+            text: itemContainer.item.title
             color: "white"
             font.weight: Font.Light
-            font.pointSize: fp(8)
+            font.pointSize: labelContainer.height ? labelContainer.height * 0.11 : fp(10)
 
             anchors.top: labelContainer.top
             anchors.left: labelContainer.left
             anchors.right: labelContainer.right
             anchors.bottom: labelContainer.bottom
-            anchors.margins: dp(10)
+            anchors.margins: labelContainer.height * 0.07
 
             wrapMode: Text.WordWrap
             elide: Text.ElideRight
@@ -88,13 +100,13 @@ Item {
             itemContainer.forceActiveFocus()
         }
         onClicked: {
-            itemContainer.clicked();
+            itemContainer.clicked(itemContainer.item);
         }
     }
 
     states: State {
         name: "active"; when: itemContainer.activeFocus
-        PropertyChanges { target: content; scale: 1.2 }
+        PropertyChanges { target: content; scale: 1.15 }
     }
 
     transitions: Transition {

@@ -27,17 +27,14 @@ CouchGridView {
 
     signal itemClicked(variant item)
 
-    delegate: MusicDelegateBig {
+    delegate: CouchItemDelegate {
         width: GridView.view.cellWidth
         height: GridView.view.cellHeight
-        z: activeFocus ? 2 : 1
+
+        placeholder: "../images/placeholder-music.svg"
+        containerColor: highlightColor
+        item: modelData
         onClicked: {
-            itemClicked(modelData);
-        }
-        Keys.onEnterPressed: {
-            itemClicked(modelData);
-        }
-        Keys.onReturnPressed: {
             itemClicked(modelData);
         }
     }

@@ -55,18 +55,15 @@ FocusScope {
             property var itemList: movies.load(popularFilter)
             loading: itemList.loading
             items: itemList
-            delegate: MovieDelegateBig {
+            delegate: CouchItemDelegate {
                 width: bigDelegateWidth
                 height: bigDelegateHeight
-                z: activeFocus ? 2 : 1
+
+                placeholder: "../images/placeholder-movie.svg"
+                containerColor: highlightColor
+                item: modelData
                 onClicked: {
-                    itemClicked(modelData);
-                }
-                Keys.onEnterPressed: {
-                    itemClicked(modelData);
-                }
-                Keys.onReturnPressed: {
-                    itemClicked(modelData);
+                    itemClicked(item);
                 }
             }
         }
@@ -105,17 +102,14 @@ FocusScope {
             items: itemList
             cellWidth: smallDelegateWidth
             cellHeight: smallDelegateHeight
-            delegate: MovieDelegateSmall {
+            delegate: CouchItemDelegate {
                 width: smallDelegateWidth
                 height: smallDelegateHeight
-                z: activeFocus ? 2 : 1
+
+                placeholder: "../images/placeholder-movie.svg"
+                containerColor: highlightColor
+                item: modelData
                 onClicked: {
-                    itemClicked(modelData);
-                }
-                Keys.onEnterPressed: {
-                    itemClicked(modelData);
-                }
-                Keys.onReturnPressed: {
                     itemClicked(modelData);
                 }
             }
