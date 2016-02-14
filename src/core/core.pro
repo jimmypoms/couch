@@ -50,6 +50,10 @@ SOURCES += \
     movie/movienetworkprovider.cpp \
     music/artist.cpp \
     music/artistmetadata.cpp \
+    music/album.cpp \
+    music/albummetadata.cpp \
+    music/track.cpp \
+    music/trackmetadata.cpp \
     music/musicfilter.cpp \
     music/musicservice.cpp \
     music/musicprovider.cpp \
@@ -83,6 +87,10 @@ HEADERS += \
     movie/movienetworkprovider.h \
     music/artist.h \
     music/artistmetadata.h \
+    music/album.h \
+    music/albummetadata.h \
+    music/track.h \
+    music/trackmetadata.h \
     music/musicfilter.h \
     music/musicservice.h \
     music/musicprovider.h \
