@@ -179,6 +179,7 @@ FocusScope {
 
             ColumnLayout {
                 Layout.alignment: Qt.AlignTop
+                Layout.preferredWidth: parent.width * 0.5
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
