@@ -23,9 +23,38 @@ class COUCH_LIBRARY_EXPORT Album : public QObject
 {
 Q_OBJECT
 
+Q_ENUMS(Genre)
+
 public:
+    enum Genre
+    {
+        All,
+        Blues,
+        Jazz,
+        Funk,
+        Pop,
+        Rock,
+        Clasical,
+        Heavy,
+        Punk,
+        Indie,
+        Alternative,
+        Soul,
+        RnB,
+        HipHop,
+        Rap,
+        Country,
+        Folk,
+        Latin,
+        House,
+        Dance,
+        Raggae,
+    };
+
     explicit Album(Artist *parent);
     virtual ~Album() = default;
+
+    static QString genreToString(Album::Genre genre);
 };
 
 #endif /* ALBUM_H_ */

@@ -7,6 +7,7 @@
 #include <qglobal.h>
 #include <qguiapplication.h>
 #include <qlist.h>
+#include <qobject.h>
 #include <qqmlapplicationengine.h>
 #include <qqmlcontext.h>
 #include <qscreen.h>

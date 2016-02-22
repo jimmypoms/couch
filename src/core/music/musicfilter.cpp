@@ -8,9 +8,20 @@
 #include "musicfilter.h"
 
 MusicFilter::MusicFilter(QObject *parent) :
-        Filter(parent)
+        Filter(parent), m_genre(Album::Genre::All)
 {
-    // TODO Auto-generated constructor stub
+}
 
+Album::Genre MusicFilter::genre() const
+{
+    return m_genre;
+}
+
+void MusicFilter::setGenre(Album::Genre genre)
+{
+    if (m_genre != genre) {
+        m_genre = genre;
+        Q_EMIT genreChanged();
+    }
 }
 

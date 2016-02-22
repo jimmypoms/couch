@@ -22,9 +22,21 @@ class AlbumMetadata : public ArtistMetadata
 {
 Q_OBJECT
 
+Q_PROPERTY(QStringList genres READ genres WRITE setGenres NOTIFY genresChanged)
+
+Q_SIGNALS:
+    void genresChanged();
+
+private:
+    QStringList m_genres;
+
 public:
     explicit AlbumMetadata(QObject *parent = 0);
     virtual ~AlbumMetadata() = default;
+
+    const QStringList& genres() const;
+    void setGenres(const QStringList& genres);
+    void addGenre(const QString& genre);
 };
 
 #endif /* ALBUMMETADATA_H_ */
