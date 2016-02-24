@@ -4,6 +4,7 @@
 .externalToolBuilders
 .project
 .settings
+.pmd
 
 ### QtCreator
 *.pro.user
