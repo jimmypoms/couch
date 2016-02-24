@@ -23,12 +23,14 @@
 #include <qstringlist.h>
 #include <qtconcurrentrun.h>
 #include <qurl.h>
+#include <sys/time.h>
 #include <xapian/document.h>
 #include <xapian/enquire.h>
 #include <xapian/query.h>
 #include <xapian/queryparser.h>
 #include <xapian/stem.h>
 #include <xapian/termgenerator.h>
+#include <ctime>
 
 #include "couch/couchsourcelist.h"
 #include "couch/movie/movie.h"
@@ -75,9 +77,15 @@ void LocalMovieProvider::loadDatabase(Xapian::WritableDatabase &writer)
 
     QDirIterator it(m_library, s_fileNameFilters, QDir::Files, QDirIterator::Subdirectories);
     MovieMetadataFetcher fetcher;
+
+    std::clock_t start;
+    double duration;
     qDebug() << "starting indexing of files in library path:" << m_library;
     m_isIndexing = true;
+    int count = 0;
+    start = std::clock();
     while (it.hasNext()) {
+        ++count;
         QString filePath = it.next();
 
         Source source;
@@ -87,8 +95,10 @@ void LocalMovieProvider::loadDatabase(Xapian::WritableDatabase &writer)
         indexFile(writer, indexer, source, metadata);
     }
     writer.commit();
+    duration = (std::clock() - start) / (double) CLOCKS_PER_SEC;
     m_isIndexing = false;
-    qDebug() << "finished indexing files";
+    qDebug() << "finished indexing" << count << "files in path:" << m_library
+            << duration << 's';
 }
 
 void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer,

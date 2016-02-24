@@ -7,7 +7,9 @@
 
 #include "trackmetadatafetcher.h"
 
+#include <qchar.h>
 #include <qstring.h>
+#include <qstringlist.h>
 #include <string>
 
 #include "couch/music/trackmetadata.h"
@@ -25,12 +27,11 @@ TrackMetadata* TrackMetadataFetcher::fetch(Source *source)
     TrackMetadata* metadata = new TrackMetadata();
     m_mediaInfoHandle.Open(source->url().toLocalFile().toStdString());
 
-    std::string bitRate = m_mediaInfoHandle.Get(Stream_Audio, 0, "BitRate");
-    std::string bitRateMode = m_mediaInfoHandle.Get(Stream_Audio, 0, "BitRate_Mode");
+    std::string bitRate = m_mediaInfoHandle.Get(Stream_Audio, 0, "OverallBitRate/String");
 
     QFileInfo fileInfo(source->url().toLocalFile());
     source->setSizeBytes(fileInfo.size());
-    source->setQuality(QString::fromStdString(bitRate + " x " + bitRateMode));
+    source->setQuality(QString::fromStdString(bitRate));
     if (fetchFileMetadata(metadata, fileInfo)) {
         return metadata;
     }
@@ -40,5 +41,18 @@ TrackMetadata* TrackMetadataFetcher::fetch(Source *source)
 bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata* metadata,
         const QFileInfo &fileInfo)
 {
-    return false;
+    metadata->setArtist(
+            QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Performer")));
+    metadata->setAlbum(
+            QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Album")));
+    metadata->setName(
+            QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Track")));
+    metadata->setDescription(
+            QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Description")));
+    QStringList genres = QString::fromStdString(
+            m_mediaInfoHandle.Get(Stream_General, 0, "Genre")).split(';');
+    metadata->setGenres(genres);
+    metadata->setYear(
+            QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Recorded_Date")).toInt());
+    return true;
 }
