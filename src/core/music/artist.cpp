@@ -9,8 +9,8 @@
 
 #include "artistmetadata.h"
 
-Artist::Artist(Service *service) :
-        Item(service)
+Artist::Artist(QObject *parent) :
+        Item(parent)
 {
 }
 

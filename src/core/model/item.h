@@ -9,8 +9,6 @@
 #include <qstring.h>
 #include <memory>
 
-class Service;
-
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
 #else
@@ -30,8 +28,6 @@ Q_SIGNALS:
     void sourcesChanged();
 
 private:
-    Service* m_service;
-
     QString m_name;
     std::shared_ptr<ItemMetadata> m_metadata;
     CouchSourceList* m_emptySourceList;
@@ -39,7 +35,7 @@ private:
     QHash<const QObject*, bool> m_loaded;
 
 public:
-    explicit Item(Service* service);
+    explicit Item(QObject* parent);
     virtual ~Item() = default;
 
     const QString &name() const;

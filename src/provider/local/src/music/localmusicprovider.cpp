@@ -38,7 +38,6 @@
 #include "couch/music/musicfilter.h"
 #include "couch/music/trackmetadata.h"
 #include "couch/serializableclass.h"
-#include "couch/service.h"
 
 const QStringList LocalMusicProvider::s_fileNameFilters = {
         "*.mp3",
@@ -52,7 +51,7 @@ const std::string LocalMusicProvider::s_prefixArtist = "A";
 const std::string LocalMusicProvider::s_prefixYear = "Y";
 const std::string LocalMusicProvider::s_prefixGenre = "G";
 
-LocalMusicProvider::LocalMusicProvider(Service* parent) :
+LocalMusicProvider::LocalMusicProvider(QObject* parent) :
         MusicProvider(parent, "local"), m_isIndexing(false),
                 m_database(
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
@@ -97,8 +96,8 @@ void LocalMusicProvider::loadDatabase(Xapian::WritableDatabase &writer)
     writer.commit();
     duration = (std::clock() - start) / (double) CLOCKS_PER_SEC;
     m_isIndexing = false;
-    qDebug() << "finished indexing" << count << "files in path:" << m_library
-            << duration << 's';
+    qDebug() << "finished indexing" << count << "files in path:" << m_library << duration
+            << 's';
 }
 
 void LocalMusicProvider::indexFile(Xapian::WritableDatabase& writer,

@@ -60,7 +60,7 @@ private Q_SLOTS:
     void onSearchFinished(const Xapian::MSet &result, const QString &id);
 
 public:
-    explicit LocalMusicProvider(Service* parent = 0);
+    explicit LocalMusicProvider(QObject* parent = 0);
     virtual ~LocalMusicProvider() = default;
 
 public Q_SLOTS:

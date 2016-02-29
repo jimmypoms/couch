@@ -8,15 +8,14 @@
 #include "couchitemlist.h"
 
 #include "item.h"
-#include "service.h"
 
 #include <qglobal.h>
 #include <quuid.h>
 #include <qvariant.h>
 #include <algorithm>
 
-CouchItemList::CouchItemList(const Service *service, QString id) :
-        m_id(id), m_loadingCount(service->providers().count()), m_loaded(0)
+CouchItemList::CouchItemList(int loadingCount, QString id) :
+        m_id(id), m_loadingCount(loadingCount), m_loaded(0)
 {
     if (m_id.isEmpty()) {
         m_id = QUuid::createUuid().toString();

@@ -2,10 +2,12 @@
 
 #include "moviemetadata.h"
 
+#include "../model/source.h"
+
 #include <qstring.h>
 
-Movie::Movie(Service* service) :
-        Item(service), m_trailerSource(nullptr)
+Movie::Movie(QObject* parent) :
+        Item(parent), m_trailerSource(nullptr)
 {
 }
 

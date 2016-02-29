@@ -23,9 +23,8 @@
 #include "couch/filter.h"
 #include "couch/movie/movie.h"
 #include "couch/movie/moviemetadata.h"
-#include "couch/service.h"
 
-VodoProvider::VodoProvider(Service* parent) :
+VodoProvider::VodoProvider(QObject* parent) :
         MovieNetworkProvider(parent, "vodo")
 {
 }

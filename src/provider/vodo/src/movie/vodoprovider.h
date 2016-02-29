@@ -15,8 +15,6 @@
 #include "couch/movie/movienetworkprovider.h"
 #include "couch/source.h"
 
-class CouchRequest;
-
 class VodoProvider : public MovieNetworkProvider
 {
 Q_OBJECT
@@ -25,7 +23,7 @@ Q_PLUGIN_METADATA(IID "org.couch.provider.movie")
 Q_INTERFACES(MovieProviderInterface)
 
 public:
-    explicit VodoProvider(Service* parent = 0);
+    explicit VodoProvider(QObject* parent = 0);
     virtual ~VodoProvider() = default;
 
     QString orderToString(MovieFilter::Order order) const;

@@ -37,7 +37,6 @@
 #include "couch/movie/moviefilter.h"
 #include "couch/movie/moviemetadata.h"
 #include "couch/serializableclass.h"
-#include "couch/service.h"
 
 const QStringList LocalMovieProvider::s_fileNameFilters = {
         "*.mp4",
@@ -52,7 +51,7 @@ const std::string LocalMovieProvider::s_prefixDirector = "D";
 const std::string LocalMovieProvider::s_prefixActor = "A";
 const std::string LocalMovieProvider::s_prefixGenre = "G";
 
-LocalMovieProvider::LocalMovieProvider(Service* parent) :
+LocalMovieProvider::LocalMovieProvider(QObject* parent) :
         MovieProvider(parent, "local"), m_isIndexing(false),
                 m_database(
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
@@ -97,8 +96,8 @@ void LocalMovieProvider::loadDatabase(Xapian::WritableDatabase &writer)
     writer.commit();
     duration = (std::clock() - start) / (double) CLOCKS_PER_SEC;
     m_isIndexing = false;
-    qDebug() << "finished indexing" << count << "files in path:" << m_library
-            << duration << 's';
+    qDebug() << "finished indexing" << count << "files in path:" << m_library << duration
+            << 's';
 }
 
 void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer,

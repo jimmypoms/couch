@@ -6,7 +6,6 @@
 
 #include <qglobal.h>
 #include <qguiapplication.h>
-#include <qlist.h>
 #include <qobject.h>
 #include <qqmlapplicationengine.h>
 #include <qqmlcontext.h>
@@ -59,9 +58,9 @@ int main(int argc, char *argv[])
             * QGuiApplication::primaryScreen()->devicePixelRatio();
 
     QQmlApplicationEngine engine;
-    for (Service *s : couch.services()) {
-        engine.rootContext()->setContextProperty(s->name(), s);
-    }
+    engine.rootContext()->setContextProperty(movieService.name(), &movieService);
+    engine.rootContext()->setContextProperty(musicService.name(), &musicService);
+
     engine.rootContext()->setContextProperty("couch", &couch);
     engine.rootContext()->setContextProperty("player", &player);
     engine.rootContext()->setContextProperty("screenPixelDensity", screenPixelDensity);

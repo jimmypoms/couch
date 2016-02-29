@@ -21,7 +21,7 @@
 class Movie;
 class MovieFilter;
 class MovieMetadata;
-class Service;
+
 namespace Xapian
 {
 class MSet;
@@ -64,7 +64,7 @@ private Q_SLOTS:
     void onSearchFinished(const Xapian::MSet &result, const QString &id);
 
 public:
-    explicit LocalMovieProvider(Service* parent = 0);
+    explicit LocalMovieProvider(QObject* parent = 0);
     virtual ~LocalMovieProvider() = default;
 
 public Q_SLOTS:

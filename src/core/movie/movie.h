@@ -36,7 +36,7 @@ public:
         Documentary
     };
 
-    explicit Movie(Service* service);
+    explicit Movie(QObject* parent);
 
     MovieMetadata *metadata() const;
     Source *trailerSource();

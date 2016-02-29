@@ -19,7 +19,6 @@
 #include <memory>
 
 class Item;
-class Service;
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
@@ -47,7 +46,7 @@ private:
     std::atomic_int m_loaded;
 
 public:
-    CouchItemList(const Service* service, QString id = "");
+    CouchItemList(int loadingCount, QString id = "");
     virtual ~CouchItemList() = default;
 
     const QString &id() const;

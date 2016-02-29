@@ -19,7 +19,6 @@
 #include <memory>
 
 class Item;
-class Service;
 class CouchAction;
 
 #if defined(COUCH_LIBRARY)
@@ -48,7 +47,7 @@ private:
     std::atomic_int m_loaded;
 
 public:
-    CouchActionList(const Service* service, QString id = "");
+    CouchActionList(int loadingCount, QString id = "");
     virtual ~CouchActionList() = default;
 
     const QString &id() const;
@@ -64,6 +63,7 @@ public Q_SLOTS:
     void insert(int row, const std::shared_ptr<CouchAction> &action);
     void append(const QList<std::shared_ptr<CouchAction> > &actions);
     void append(const std::shared_ptr<CouchAction> &action);
+    QList<std::shared_ptr<CouchAction> > actions() const;
 };
 
 #endif /* COUCHACTIONLIST_H_ */

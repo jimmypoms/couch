@@ -25,7 +25,7 @@ class COUCH_LIBRARY_EXPORT Artist : public Item
 Q_OBJECT
 
 public:
-    explicit Artist(Service *service);
+    explicit Artist(QObject *parent);
     virtual ~Artist() = default;
 
     ArtistMetadata *metadata() const;

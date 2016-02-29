@@ -2,16 +2,16 @@
 
 #include <qqml.h>
 
-#include "couch/couchitemlist.h"
-#include "couch/couchsourcelist.h"
 #include "couch/couchactionlist.h"
+#include "couch/couchitemlist.h"
+#include "couch/couchplayer.h"
+#include "couch/couchsourcelist.h"
 #include "couch/itemmetadata.h"
 #include "couch/movie/movie.h"
 #include "couch/movie/moviefilter.h"
 #include "couch/music/artist.h"
 #include "couch/music/musicfilter.h"
 #include "couch/source.h"
-#include "couch/couchplayer.h"
 
 Couch::Couch(QObject *parent) :
         QObject(parent)
@@ -37,25 +37,17 @@ Couch::Couch(QObject *parent) :
     qmlRegisterUncreatableType<Artist>("org.couch.item.artist", 1, 0, "Artist",
             "impossible to create artists from qml");
 
-    qmlRegisterUncreatableType<Service>("org.couch.service", 1, 0, "Service",
-            "impossible to create service form qml");
     qmlRegisterUncreatableType<CouchPlayer>("org.couch.player", 1, 0, "CouchPlayer",
             "impossible to create player form qml");
 }
 
-void Couch::addService(Service* service)
+void Couch::addService(QObject* service)
 {
     service->setParent(this);
     m_services.append(service);
 }
 
-const QList<Service*>& Couch::services() const
+const QList<QObject*>& Couch::services() const
 {
     return m_services;
 }
-
-QQmlListProperty<Service> Couch::qmlServices()
-{
-    return QQmlListProperty<Service>(this, m_services);
-}
-

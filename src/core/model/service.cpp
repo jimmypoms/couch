@@ -1,52 +1,50 @@
 #include "service.h"
 
-#include "couchitemlist.h"
 #include "couchplayaction.h"
-#include "couchsourcelist.h"
 #include "item.h"
 #include "itemmetadata.h"
 #include "source.h"
 
+#include <multimedia/couchplayer.h>
 #include <qdebug.h>
 #include <qlogging.h>
+#include <qobject.h>
 #include <qurl.h>
 #include <algorithm>
 
-#include "../multimedia/couchplayer.h"
-
-Service::Service(QObject *parent, QString name) :
+ServiceImpl::ServiceImpl(QObject *parent, const QString &name) :
         QObject(parent), m_name(name), m_maxItemCacheSize(500), m_player(nullptr)
 {
 }
 
-const QString &Service::name() const
+const QString &ServiceImpl::name() const
 {
     return m_name;
 }
 
-const CouchPlayer* Service::player() const
-{
-    return m_player;
-}
-
-void Service::setPlayer(CouchPlayer* player)
-{
-    m_player = player;
-}
-
-const QList<QObject*> &Service::providers() const
+const QList<QObject*> &ServiceImpl::providers() const
 {
     return m_providers;
 }
 
-void Service::addProvider(QObject* provider)
+void ServiceImpl::addProvider(QObject* provider)
 {
     provider->setParent(this);
     m_providers.append(provider);
     Q_EMIT providersChanged();
 }
 
-void Service::reduceSources()
+const CouchPlayer* ServiceImpl::player() const
+{
+    return m_player;
+}
+
+void ServiceImpl::setPlayer(CouchPlayer* player)
+{
+    m_player = player;
+}
+
+void ServiceImpl::reduceSources()
 {
     CouchSourceList* sourcesList = qobject_cast<CouchSourceList*>(sender());
     const QObject* provider = sourcesList->provider();
@@ -82,7 +80,7 @@ void Service::reduceSources()
     delete sourcesList;
 }
 
-void Service::onActionTriggered()
+void ServiceImpl::onActionTriggered()
 {
     CouchAction* action = qobject_cast<CouchAction*>(sender());
     CouchPlayAction* playAction = qobject_cast<CouchPlayAction*>(action);

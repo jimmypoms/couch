@@ -8,14 +8,13 @@
 #include "couchactionlist.h"
 
 #include "couchaction.h"
-#include "service.h"
 
 #include <qglobal.h>
 #include <quuid.h>
 #include <qvariant.h>
 
-CouchActionList::CouchActionList(const Service* service, QString id) :
-        m_id(id), m_loadingCount(service->providers().count()), m_loaded(0)
+CouchActionList::CouchActionList(int loadingCount, QString id) :
+        m_id(id), m_loadingCount(loadingCount), m_loaded(0)
 {
     if (m_id.isEmpty()) {
         m_id = QUuid::createUuid().toString();
@@ -97,4 +96,9 @@ void CouchActionList::append(const QList<std::shared_ptr<CouchAction> >& actions
 void CouchActionList::append(const std::shared_ptr<CouchAction>& action)
 {
     insert(rowCount(), action);
+}
+
+QList<std::shared_ptr<CouchAction> > CouchActionList::actions() const
+{
+    return m_actions;
 }
