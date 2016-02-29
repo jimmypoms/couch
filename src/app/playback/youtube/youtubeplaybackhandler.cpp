@@ -18,8 +18,8 @@
 QString YoutubePlaybackHandler::s_supportedHost("www.youtube.com");
 
 YoutubePlaybackHandler::YoutubePlaybackHandler() :
-        PlaybackHandler("youtube"), m_nam(this), m_preferredQuality(Quality::MP4_720p), m_shouldPlay(
-                false), m_replyFinished(false)
+        PlaybackHandler("youtube"), m_nam(this), m_preferredQuality(Quality::MP4_720p),
+                m_shouldPlay(false), m_replyFinished(false)
 {
 }
 
