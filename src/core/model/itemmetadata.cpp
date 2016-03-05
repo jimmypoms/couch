@@ -115,6 +115,22 @@ void ItemMetadata::merge(const ItemMetadata* metadata)
     Q_EMIT merged();
 }
 
+bool ItemMetadata::operator==(const ItemMetadata& metadata) noexcept
+{
+    QVariant var;
+    QVariant metadataVar;
+    for (int i = 0; i < metaObject()->propertyCount(); ++i) {
+        if (metaObject()->property(i).isStored(this)) {
+            var = metaObject()->property(i).read(this);
+            metadataVar = metadata.property(metaObject()->property(i).name());
+            if (metadataVar.isValid() && metadataVar != var) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 const QUrl& ItemMetadata::backdrop() const
 {
     if (!m_poster.isEmpty()) {

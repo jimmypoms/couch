@@ -20,22 +20,20 @@ class COUCH_LIBRARY_EXPORT TrackMetadata : public AlbumMetadata
 {
 Q_OBJECT
 
-Q_PROPERTY(QString artist READ artist WRITE setArtist NOTIFY artistChanged)
-Q_PROPERTY(QString album READ album WRITE setAlbum NOTIFY albumChanged)
+Q_PROPERTY(QString track READ track WRITE setTrack NOTIFY trackChanged)
 
 Q_SIGNALS:
-    void artistChanged();
-    void albumChanged();
+    void trackChanged();
+
+private:
+    QString m_track;
 
 public:
     explicit TrackMetadata(QObject *parent = 0);
     virtual ~TrackMetadata() = default;
 
-    QString artist() const;
-    void setArtist(const QString& artist);
-
-    QString album() const;
-    void setAlbum(const QString& album);
+    const QString &track() const;
+    void setTrack(const QString& track);
 };
 
 #endif /* TRACKMETADATA_H_ */

@@ -73,11 +73,7 @@ public:
     void setYear(int year);
 
     void merge(const ItemMetadata *metadata);
-
-    bool operator==(const ItemMetadata& other) noexcept
-    {
-        return m_year == other.m_year && m_name == other.m_name;
-    }
+    bool operator==(const ItemMetadata& other) noexcept;
 };
 
 #endif // ITEMMETADATA_H

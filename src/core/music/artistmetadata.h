@@ -18,9 +18,19 @@
 
 class COUCH_LIBRARY_EXPORT ArtistMetadata : public ItemMetadata
 {
+Q_OBJECT
+
+Q_PROPERTY(QString artist READ artist WRITE setArtist NOTIFY artistChanged)
+
+Q_SIGNALS:
+    void artistChanged();
+
 public:
     explicit ArtistMetadata(QObject *parent = 0);
     virtual ~ArtistMetadata() = default;
+
+    const QString &artist() const;
+    void setArtist(const QString& artist);
 };
 
 #endif /* ARTISTMETADATA_H_ */

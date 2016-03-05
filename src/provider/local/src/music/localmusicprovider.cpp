@@ -130,30 +130,30 @@ void LocalMusicProvider::searchDatabase(const MusicFilter *filter, const QString
     Xapian::QueryParser qp;
     Xapian::Stem stemmer("english");
     Xapian::Query query = Xapian::Query::MatchAll;
-    if (!filter->text().isEmpty()) {
-        qp.set_stemmer(stemmer);
-        qp.set_database(m_reader);
-        qp.set_stemming_strategy(Xapian::QueryParser::STEM_SOME);
-        qp.add_prefix("", s_prefixTitle);
-        qp.add_prefix("", s_prefixAlbum);
-        qp.add_prefix("", s_prefixArtist);
-        Xapian::Query filterQuery = qp.parse_query(filter->text().toStdString(),
-                Xapian::QueryParser::FLAG_DEFAULT
-                        | Xapian::QueryParser::FLAG_SPELLING_CORRECTION
-                        | Xapian::QueryParser::FLAG_PARTIAL);
-        query = Xapian::Query(Xapian::Query::OP_AND, query, filterQuery);
-    }
+
+    qp.set_stemmer(stemmer);
+    qp.set_database(m_reader);
+    qp.set_stemming_strategy(Xapian::QueryParser::STEM_SOME);
+    qp.add_prefix("", s_prefixTitle);
+    qp.add_prefix("", s_prefixAlbum);
+    qp.add_prefix("", s_prefixArtist);
+    Xapian::Query filterQuery = qp.parse_query(filter->text().toStdString(),
+            Xapian::QueryParser::FLAG_DEFAULT | Xapian::QueryParser::FLAG_SPELLING_CORRECTION
+                    | Xapian::QueryParser::FLAG_PARTIAL);
+    query = Xapian::Query(Xapian::Query::OP_AND, query, filterQuery);
+
     if (filter->genre() != Album::Genre::All) {
         Xapian::Query genreFilter(
                 s_prefixGenre + Album::genreToString(filter->genre()).toStdString());
         query = Xapian::Query(Xapian::Query::OP_FILTER, query, genreFilter);
     }
+
     Xapian::Enquire enquire(m_reader);
     enquire.set_query(query);
     qDebug() << "loading provider" << name() << ":"
             << QString::fromStdString(enquire.get_description());
 
-    Xapian::MSet matches = enquire.get_mset(0, 10);
+    Xapian::MSet matches = enquire.get_mset(filter->offset(), filter->limit());
     Q_EMIT searchFinished(matches, id);
 }
 
@@ -161,6 +161,7 @@ void LocalMusicProvider::searchDatabase(const Artist *artist, const QString &id)
 {
     Xapian::QueryParser qp;
     Xapian::Stem stemmer("english");
+
     qp.set_stemmer(stemmer);
     qp.set_database(m_reader);
     qp.set_stemming_strategy(Xapian::QueryParser::STEM_SOME);
@@ -170,6 +171,7 @@ void LocalMusicProvider::searchDatabase(const Artist *artist, const QString &id)
     Xapian::Query query = qp.parse_query(artist->name().toStdString(),
             Xapian::QueryParser::FLAG_DEFAULT | Xapian::QueryParser::FLAG_SPELLING_CORRECTION,
             s_prefixTitle);
+
     Xapian::Enquire enquire(m_reader);
     enquire.set_query(query);
     qDebug() << "loading provider" << name() << ":"
@@ -185,7 +187,7 @@ void LocalMusicProvider::onSearchFinished(const Xapian::MSet &matches, const QSt
 
     for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i) {
         Source* s = new Source();
-        ArtistMetadata* metadata = new ArtistMetadata();
+        TrackMetadata* metadata = new TrackMetadata();
         QByteArray data = QByteArray::fromStdString(i.get_document().get_data());
         QDataStream stream(data);
         stream >> *s;

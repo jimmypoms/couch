@@ -12,3 +12,16 @@ ArtistMetadata::ArtistMetadata(QObject *parent) :
 {
 }
 
+const QString &ArtistMetadata::artist() const
+{
+    return ItemMetadata::name();
+}
+
+void ArtistMetadata::setArtist(const QString& artist)
+{
+    if (ItemMetadata::name() != artist) {
+        Q_EMIT artistChanged();
+        ItemMetadata::setName(artist);
+    }
+}
+

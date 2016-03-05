@@ -30,3 +30,16 @@ void AlbumMetadata::addGenre(const QString& genre)
     this->m_genres.append(genre);
     Q_EMIT genresChanged();
 }
+
+const QString &AlbumMetadata::album() const
+{
+    return m_album;
+}
+
+void AlbumMetadata::setAlbum(const QString& album)
+{
+    if (m_album != album) {
+        Q_EMIT albumChanged();
+        m_album = album;
+    }
+}

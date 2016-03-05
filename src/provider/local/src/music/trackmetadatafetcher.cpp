@@ -45,7 +45,7 @@ bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata* metadata,
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Performer")));
     metadata->setAlbum(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Album")));
-    metadata->setName(
+    metadata->setTrack(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Track")));
     metadata->setDescription(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Description")));

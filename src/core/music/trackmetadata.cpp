@@ -15,28 +15,15 @@ TrackMetadata::TrackMetadata(QObject *parent) :
 {
 }
 
-QString TrackMetadata::artist() const
+const QString &TrackMetadata::track() const
 {
-    return ArtistMetadata::name();
+    return m_track;
 }
 
-void TrackMetadata::setArtist(const QString& a)
+void TrackMetadata::setTrack(const QString& track)
 {
-    if (a != artist()) {
-        Q_EMIT artistChanged();
-        ArtistMetadata::setName(a);
-    }
-}
-
-QString TrackMetadata::album() const
-{
-    return AlbumMetadata::name();
-}
-
-void TrackMetadata::setAlbum(const QString& a)
-{
-    if (a != album()) {
-        Q_EMIT albumChanged();
-        AlbumMetadata::setName(a);
+    if (m_track != track) {
+        Q_EMIT trackChanged();
+        m_track = track;
     }
 }
