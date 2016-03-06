@@ -18,6 +18,7 @@ FocusScope {
     Item {
         id: container
         anchors.fill: parent
+        clip: true
 
         Text {
             anchors.centerIn: parent
