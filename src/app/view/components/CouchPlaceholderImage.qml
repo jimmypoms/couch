@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Item {
     id: root
-    property alias source: intendedImage.source
+    property var source: ''
     property var sourceList: []
     property alias placeholder: placeholderImage.source
     clip: true
@@ -25,7 +25,6 @@ Item {
             model: Math.min(4, sourceList.length)
             delegate: Image {
                 source: sourceList[index]
-                fillMode: Image.PreserveAspectFit
                 width: (root.width / 2) - dp(1)
                 height: (root.height / 2) - dp(1)
             }
@@ -37,6 +36,7 @@ Item {
         width: parent.width
         height: parent.height
 
+        source: root.source ? root.source : (sourceList.length === 1 ? sourceList[0] : '')
         opacity: 0
         fillMode: Image.PreserveAspectCrop
         onStatusChanged: {

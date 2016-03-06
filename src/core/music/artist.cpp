@@ -46,7 +46,9 @@ QList<QUrl> Artist::albumCovers() const
 {
     QList<QUrl> list;
     for (Album *album : m_albums) {
-        list.append(album->cover());
+        if (!album->cover().isEmpty()) {
+            list.append(album->cover());
+        }
     }
     return list;
 }
