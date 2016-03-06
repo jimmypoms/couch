@@ -39,11 +39,11 @@ public:
 private:
     QString m_text;
     Filter::Order m_order;
-    int m_limit;
     int m_offset;
+    int m_limit;
 
 public:
-    explicit Filter(QObject *parent = 0);
+    explicit Filter(QObject *parent = 0, int offset = 0, int limit = 20);
     virtual ~Filter() = default;
 
     const QString& text() const;

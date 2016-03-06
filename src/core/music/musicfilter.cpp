@@ -8,7 +8,7 @@
 #include "musicfilter.h"
 
 MusicFilter::MusicFilter(QObject *parent) :
-        Filter(parent), m_genre(Album::Genre::All)
+        Filter(parent, 0, 200), m_genre(Album::Genre::All)
 {
 }
 

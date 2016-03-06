@@ -1,7 +1,7 @@
 #include "filter.h"
 
-Filter::Filter(QObject *parent) :
-        QObject(parent), m_order(Order::None), m_limit(20), m_offset(0)
+Filter::Filter(QObject *parent, int offset, int limit) :
+        QObject(parent), m_order(Order::None), m_offset(offset), m_limit(limit)
 {
 }
 
