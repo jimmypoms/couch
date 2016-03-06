@@ -32,7 +32,6 @@ private:
     std::shared_ptr<ItemMetadata> m_metadata;
     CouchSourceList* m_emptySourceList;
     QHash<const QObject*, CouchSourceList*> m_sources;
-    QHash<const QObject*, bool> m_loaded;
 
 public:
     explicit Item(QObject* parent);
@@ -41,13 +40,10 @@ public:
     const QString &name() const;
     void setName(const QString &name);
 
-    bool isLoaded(const QObject* provider) const;
-    void setLoaded(const QObject* provider, bool loaded);
-
     ItemMetadata *metadata() const;
     void setMetadata(std::shared_ptr<ItemMetadata> metadata);
 
-    void addSource(const QObject* provider, Source* source);
+    virtual void addSource(const QObject* provider, Source* source);
 
     bool operator==(const Item& other) noexcept
     {

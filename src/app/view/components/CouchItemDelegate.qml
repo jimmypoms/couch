@@ -8,6 +8,7 @@ Item {
     property var item: {}
     property string placeholder: ''
     property color containerColor: '#383F42'
+    property alias imageList: previewImage.sourceList
 
     z: activeFocus ? 2 : 1
     signal clicked(var item)

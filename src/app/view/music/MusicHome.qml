@@ -12,7 +12,7 @@ FocusScope {
 
     property real listMargin: home.width * 0.02
     property real bigDelegateWidth: home.width * 0.16
-    property real bigDelegateHeight: bigDelegateWidth * 1.2
+    property real bigDelegateHeight: bigDelegateWidth
     property real smallDelegateWidth: home.width * (0.96/9)
     property real smallDelegateHeight: smallDelegateWidth
 
@@ -62,6 +62,7 @@ FocusScope {
                 placeholder: "../images/placeholder-music.svg"
                 containerColor: highlightColor
                 item: modelData
+                imageList: modelData.albumCovers
                 onClicked: {
                     itemClicked(item);
                 }
@@ -109,6 +110,7 @@ FocusScope {
                 placeholder: "../images/placeholder-music.svg"
                 containerColor: highlightColor
                 item: modelData
+                imageList: modelData.albumCovers
                 onClicked: {
                     itemClicked(item);
                 }

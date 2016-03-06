@@ -12,7 +12,7 @@ CouchGridView {
     anchors.margins: parent.width * 0.02
 
     cellWidth: parent.width * 0.16
-    cellHeight: cellWidth * 1.2
+    cellHeight: cellWidth
 
     property MusicFilter filter: MusicFilter {}
     property var itemList: {'loading': false}
@@ -34,6 +34,7 @@ CouchGridView {
         placeholder: "../images/placeholder-music.svg"
         containerColor: highlightColor
         item: modelData
+        imageList: modelData.albumCovers
         onClicked: {
             itemClicked(modelData);
         }

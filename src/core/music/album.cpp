@@ -14,6 +14,32 @@ Album::Album(Artist *parent) :
 {
 }
 
+const QString Album::title() const
+{
+    return m_title;
+}
+
+void Album::setTitle(const QString& title)
+{
+    if (m_title != title) {
+        m_title = title;
+        Q_EMIT titleChanged();
+    }
+}
+
+const QUrl Album::cover() const
+{
+    return m_cover;
+}
+
+void Album::setCover(const QUrl& cover)
+{
+    if (m_cover != cover) {
+        m_cover = cover;
+        Q_EMIT coverChanged();
+    }
+}
+
 QString Album::genreToString(Album::Genre genre)
 {
     switch (genre) {

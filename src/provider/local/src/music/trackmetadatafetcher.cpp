@@ -69,11 +69,12 @@ bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata* metadata,
     QString albumArtFilename(
             QCryptographicHash::hash(stringKey.toLocal8Bit(), QCryptographicHash::Md5).toHex());
     QFile albumArtFile(m_coverCacheDir.filePath(albumArtFilename));
-    metadata->setAlbumCover(m_coverCacheDir.filePath(albumArtFilename));
-    if (!albumArtData.empty() && !albumArtFile.exists()
-            && albumArtFile.open(QIODevice::ReadWrite)) {
-        albumArtFile.write(QByteArray::fromBase64(QByteArray::fromStdString(albumArtData)));
-        albumArtFile.close();
+    if (!albumArtData.empty()) {
+        if (!albumArtFile.exists() && albumArtFile.open(QIODevice::ReadWrite)) {
+            albumArtFile.write(QByteArray::fromBase64(QByteArray::fromStdString(albumArtData)));
+            albumArtFile.close();
+        }
+        metadata->setAlbumCover(QUrl::fromLocalFile(m_coverCacheDir.filePath(albumArtFilename)));
     }
 
     return true;

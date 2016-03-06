@@ -65,16 +65,3 @@ CouchSourceList *Item::sources(QObject* provider)
         return m_emptySourceList;
     }
 }
-
-bool Item::isLoaded(const QObject* provider) const
-{
-    if (m_loaded.contains(provider)) {
-        return m_loaded[provider];
-    }
-    return false;
-}
-
-void Item::setLoaded(const QObject* provider, bool loaded)
-{
-    m_loaded.insert(provider, loaded);
-}
