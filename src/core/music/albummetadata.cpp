@@ -43,3 +43,16 @@ void AlbumMetadata::setAlbum(const QString& album)
         m_album = album;
     }
 }
+
+const QUrl& AlbumMetadata::albumCover() const
+{
+    return m_albumCover;
+}
+
+void AlbumMetadata::setAlbumCover(const QUrl& albumCover)
+{
+    if (m_albumCover != albumCover) {
+        Q_EMIT albumCoverChanged();
+        m_albumCover = albumCover;
+    }
+}

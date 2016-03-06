@@ -7,7 +7,12 @@
 
 #include "trackmetadatafetcher.h"
 
+#include <qbytearray.h>
 #include <qchar.h>
+#include <qcryptographichash.h>
+#include <qfile.h>
+#include <qiodevice.h>
+#include <qstandardpaths.h>
 #include <qstring.h>
 #include <qstringlist.h>
 #include <string>
@@ -17,9 +22,13 @@
 
 using namespace MediaInfoDLL;
 
-TrackMetadataFetcher::TrackMetadataFetcher()
+TrackMetadataFetcher::TrackMetadataFetcher() :
+                m_coverCacheDir(
+                        QStandardPaths::writableLocation(QStandardPaths::DataLocation)
+                                + "/cache/music/cover")
 {
     m_mediaInfoHandle.Option("Internet", "No");
+    m_coverCacheDir.mkpath(m_coverCacheDir.absolutePath());
 }
 
 TrackMetadata* TrackMetadataFetcher::fetch(Source *source)
@@ -54,5 +63,18 @@ bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata* metadata,
     metadata->setGenres(genres);
     metadata->setYear(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Recorded_Date")).toInt());
+
+    std::string albumArtData(m_mediaInfoHandle.Get(Stream_General, 0, "Cover_Data"));
+    QString stringKey(metadata->artist() + metadata->album());
+    QString albumArtFilename(
+            QCryptographicHash::hash(stringKey.toLocal8Bit(), QCryptographicHash::Md5).toHex());
+    QFile albumArtFile(m_coverCacheDir.filePath(albumArtFilename));
+    metadata->setAlbumCover(m_coverCacheDir.filePath(albumArtFilename));
+    if (!albumArtData.empty() && !albumArtFile.exists()
+            && albumArtFile.open(QIODevice::ReadWrite)) {
+        albumArtFile.write(QByteArray::fromBase64(QByteArray::fromStdString(albumArtData)));
+        albumArtFile.close();
+    }
+
     return true;
 }
