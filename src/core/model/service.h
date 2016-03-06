@@ -83,9 +83,12 @@ inline CouchItemList* Service<Item, Filter, P>::load(Filter *filter)
         P* provider = qobject_cast<P*>(object);
         CouchSourceList* sourceList = provider->load(filter);
         sourceList->setParent(list);
-
         connect(sourceList, &CouchSourceList::sourcesLoaded, this,
                 &ServiceImpl::reduceSources);
+
+        if (sourceList->sources().count() > 0) {
+            Q_EMIT sourceList->sourcesLoaded();
+        }
     }
     return list;
 }
@@ -99,9 +102,12 @@ inline CouchItemList* Service<Item, Filter, P>::load(Item *movie)
         P* provider = qobject_cast<P*>(object);
         CouchSourceList* sourceList = provider->load(movie);
         sourceList->setParent(list);
-
         connect(sourceList, &CouchSourceList::sourcesLoaded, this,
                 &ServiceImpl::reduceSources);
+
+        if (sourceList->sources().count() > 0) {
+            Q_EMIT sourceList->sourcesLoaded();
+        }
     }
     return list;
 }

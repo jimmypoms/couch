@@ -77,7 +77,6 @@ void ServiceImpl::reduceSources()
         QString id = itemList->id();
         Q_EMIT itemsReady(list, id);
     }
-    delete sourcesList;
 }
 
 void ServiceImpl::onActionTriggered()
