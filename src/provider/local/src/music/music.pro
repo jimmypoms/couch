@@ -29,10 +29,12 @@ INCLUDEPATH += $$CINCLUDEPATH
 LIBS += -L$$CLIBDESTDIR -lcouch -L$$CLIBDESTDIR/service -lxapian -lmediainfo
 
 SOURCES += \
+    ../common/localprovider.cpp \
     localmusicprovider.cpp \
     trackmetadatafetcher.cpp
 
 HEADERS += \
+    ../common/localprovider.h \
     localmusicprovider.h \
     trackmetadatafetcher.h
 

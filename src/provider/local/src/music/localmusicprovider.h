@@ -8,25 +8,20 @@
 #ifndef LOCALMUSICPROVIDER_H_
 #define LOCALMUSICPROVIDER_H_
 
+#include "trackmetadatafetcher.h"
+
 #include <qlist.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
-#include <xapian/database.h>
-#include <atomic>
 #include <string>
 
+#include "../common/localprovider.h"
+#include "couch/music/artist.h"
+#include "couch/music/musicfilter.h"
 #include "couch/music/musicprovider.h"
 #include "couch/source.h"
 
-class TrackMetadata;
-
-namespace Xapian
-{
-class MSet;
-class TermGenerator;
-} /* namespace Xapian */
-
-class LocalMusicProvider : public MusicProvider
+class LocalMusicProvider : public MusicProvider, public LocalProvider<Artist, MusicFilter>
 {
 Q_OBJECT
 
@@ -35,37 +30,32 @@ Q_INTERFACES(MusicProviderInterface)
 
 Q_SIGNALS:
     void sourcesReady(const QList<Source*> &sources, const QString &id);
-    void searchFinished(const Xapian::MSet &matches, const QString &id);
 
 private:
-    static const QStringList s_fileNameFilters;
+    static const QStringList s_filenameFilters;
     static const std::string s_prefixTitle;
     static const std::string s_prefixAlbum;
     static const std::string s_prefixArtist;
     static const std::string s_prefixYear;
     static const std::string s_prefixGenre;
 
-    std::atomic_bool m_isIndexing;
-    QString m_database;
-    QString m_library;
-    Xapian::Database m_reader;
+    TrackMetadataFetcher m_metadataFetcher;
 
-    void searchDatabase(const MusicFilter *filter, const QString &id);
-    void searchDatabase(const Artist *artist, const QString &id);
-    void loadDatabase(Xapian::WritableDatabase &writer);
+    void searchFinished(const Xapian::MSet &matches, const QString &id);
+
+    QStringList filenameFilters() const;
+    Xapian::Query buildQuery(Xapian::QueryParser &qp, const Artist *item);
+    Xapian::Query buildQuery(Xapian::QueryParser &qp, const MusicFilter *filter);
     void indexFile(Xapian::WritableDatabase &writer, Xapian::TermGenerator &indexer,
-            const Source &source, TrackMetadata* info);
-
-private Q_SLOTS:
-    void onSearchFinished(const Xapian::MSet &result, const QString &id);
+            Source &source);
 
 public:
     explicit LocalMusicProvider(QObject* parent = 0);
     virtual ~LocalMusicProvider() = default;
 
 public Q_SLOTS:
-    CouchSourceList* load(MusicFilter *filter);
     CouchSourceList* load(Artist* item);
+    CouchSourceList* load(MusicFilter *filter);
 };
 
 #endif /* LOCALMUSICPROVIDER_H_ */

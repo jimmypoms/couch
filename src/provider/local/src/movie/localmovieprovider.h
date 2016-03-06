@@ -8,28 +8,28 @@
 #ifndef LOCALMOVIEPROVIDER_H_
 #define LOCALMOVIEPROVIDER_H_
 
+#include "moviemetadatafetcher.h"
+
 #include <qlist.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
-#include <xapian/database.h>
-#include <atomic>
 #include <string>
 
+#include "../common/localprovider.h"
+#include "couch/movie/movie.h"
+#include "couch/movie/moviefilter.h"
 #include "couch/movie/movieprovider.h"
 #include "couch/source.h"
-
-class Movie;
-class MovieFilter;
-class MovieMetadata;
 
 namespace Xapian
 {
 class MSet;
+class QueryParser;
 class TermGenerator;
 class WritableDatabase;
 } /* namespace Xapian */
 
-class LocalMovieProvider : public MovieProvider
+class LocalMovieProvider : public MovieProvider, public LocalProvider<Movie, MovieFilter>
 {
 Q_OBJECT
 
@@ -38,10 +38,9 @@ Q_INTERFACES(MovieProviderInterface)
 
 Q_SIGNALS:
     void sourcesReady(const QList<Source*> &sources, const QString &id);
-    void searchFinished(const Xapian::MSet &matches, const QString &id);
 
 private:
-    static const QStringList s_fileNameFilters;
+    static const QStringList s_filenameFilters;
     static const std::string s_prefixTitle;
     static const std::string s_prefixTagline;
     static const std::string s_prefixYear;
@@ -49,27 +48,23 @@ private:
     static const std::string s_prefixActor;
     static const std::string s_prefixGenre;
 
-    std::atomic_bool m_isIndexing;
-    QString m_database;
-    QString m_library;
-    Xapian::Database m_reader;
+    MovieMetadataFetcher m_metadataFetcher;
 
-    void searchDatabase(const MovieFilter *filter, const QString &id);
-    void searchDatabase(const Movie *movie, const QString &id);
-    void loadDatabase(Xapian::WritableDatabase &writer);
+    void searchFinished(const Xapian::MSet &matches, const QString &id);
+
+    QStringList filenameFilters() const;
+    Xapian::Query buildQuery(Xapian::QueryParser &qp, const Movie *item);
+    Xapian::Query buildQuery(Xapian::QueryParser &qp, const MovieFilter *filter);
     void indexFile(Xapian::WritableDatabase &writer, Xapian::TermGenerator &indexer,
-            const Source &source, MovieMetadata* info);
-
-private Q_SLOTS:
-    void onSearchFinished(const Xapian::MSet &result, const QString &id);
+            Source &source);
 
 public:
     explicit LocalMovieProvider(QObject* parent = 0);
     virtual ~LocalMovieProvider() = default;
 
 public Q_SLOTS:
-    CouchSourceList* load(MovieFilter *filter);
     CouchSourceList* load(Movie* item);
+    CouchSourceList* load(MovieFilter *filter);
 };
 
 #endif /* LOCALMOVIEPROVIDER_H_ */

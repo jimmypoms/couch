@@ -7,39 +7,30 @@
 
 #include "localmusicprovider.h"
 
-#include "trackmetadatafetcher.h"
-
 #include <qbytearray.h>
 #include <qdatastream.h>
-#include <qdebug.h>
-#include <qdir.h>
-#include <qdiriterator.h>
 #include <qfuture.h>
+#include <qfuturewatcher.h>
 #include <qiodevice.h>
-#include <qlogging.h>
-#include <qmetatype.h>
 #include <qobject.h>
 #include <qstandardpaths.h>
 #include <qstringlist.h>
 #include <qtconcurrentrun.h>
-#include <qurl.h>
-#include <sys/time.h>
+#include <xapian/database.h>
 #include <xapian/document.h>
 #include <xapian/enquire.h>
 #include <xapian/query.h>
 #include <xapian/queryparser.h>
-#include <xapian/stem.h>
 #include <xapian/termgenerator.h>
-#include <ctime>
 
 #include "couch/couchsourcelist.h"
+#include "couch/filter.h"
+#include "couch/movie/movieprovider.h"
 #include "couch/music/album.h"
-#include "couch/music/artist.h"
-#include "couch/music/musicfilter.h"
 #include "couch/music/trackmetadata.h"
 #include "couch/serializableclass.h"
 
-const QStringList LocalMusicProvider::s_fileNameFilters = {
+const QStringList LocalMusicProvider::s_filenameFilters = {
         "*.mp3",
         "*.ogg",
         "*.aac",
@@ -52,95 +43,42 @@ const std::string LocalMusicProvider::s_prefixYear = "Y";
 const std::string LocalMusicProvider::s_prefixGenre = "G";
 
 LocalMusicProvider::LocalMusicProvider(QObject* parent) :
-        MusicProvider(parent, "local"), m_isIndexing(false),
-                m_database(
+        MusicProvider(parent, "local"),
+                LocalProvider(
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-                                + "/database/music"), m_library("/misc/music")
+                                + "/database/music", "/misc/music")
 {
-    qRegisterMetaType<Xapian::MSet>("Xapian::MSet");
-    connect(this, &LocalMusicProvider::searchFinished, this,
-            &LocalMusicProvider::onSearchFinished);
-
-    QDir().mkpath(m_database);
-    Xapian::WritableDatabase writer(m_database.toStdString(), Xapian::DB_CREATE_OR_OVERWRITE);
-    QtConcurrent::run(this, &LocalMusicProvider::loadDatabase, writer);
-
-    m_reader = Xapian::Database(m_database.toStdString());
 }
 
-void LocalMusicProvider::loadDatabase(Xapian::WritableDatabase &writer)
+QStringList LocalMusicProvider::filenameFilters() const
 {
-    Xapian::TermGenerator indexer;
-    Xapian::Stem stemmer("english");
-    indexer.set_stemmer(stemmer);
-
-    QDirIterator it(m_library, s_fileNameFilters, QDir::Files, QDirIterator::Subdirectories);
-    TrackMetadataFetcher fetcher;
-
-    std::clock_t start;
-    double duration;
-    qDebug() << "starting indexing of files in library path:" << m_library;
-    m_isIndexing = true;
-    int count = 0;
-    start = std::clock();
-    while (it.hasNext()) {
-        ++count;
-        QString filePath = it.next();
-
-        Source source;
-        source.setUrl(QUrl::fromLocalFile(filePath));
-        TrackMetadata* metadata = fetcher.fetch(&source);
-        source.setItemMetadata(metadata);
-        indexFile(writer, indexer, source, metadata);
-    }
-    writer.commit();
-    duration = (std::clock() - start) / (double) CLOCKS_PER_SEC;
-    m_isIndexing = false;
-    qDebug() << "finished indexing" << count << "files in path:" << m_library << duration
-            << 's';
+    return s_filenameFilters;
 }
 
-void LocalMusicProvider::indexFile(Xapian::WritableDatabase& writer,
-        Xapian::TermGenerator& indexer, const Source &source, TrackMetadata* metadata)
+Xapian::Query LocalMusicProvider::buildQuery(Xapian::QueryParser &qp, const Artist* item)
 {
-    if (metadata->name().isEmpty()) {
-        return;
-    }
-
-    QByteArray data;
-    QDataStream dataStream(&data, QIODevice::ReadWrite);
-    dataStream << source;
-    dataStream << *metadata;
-
-    Xapian::Document doc;
-    doc.set_data(data.toStdString());
-    indexer.set_document(doc);
-    indexer.index_text(metadata->name().toStdString(), 1, s_prefixTitle);
-    indexer.index_text(metadata->album().toStdString(), 1, s_prefixAlbum);
-    indexer.index_text(metadata->artist().toStdString(), 1, s_prefixArtist);
-    indexer.index_text(std::to_string(metadata->year()), 1, s_prefixYear);
-    for (const QString genre : metadata->genres()) {
-        indexer.index_text(genre.toStdString(), 1, s_prefixGenre);
-    }
-    writer.add_document(doc);
+    qp.add_prefix("artist", s_prefixArtist);
+    Xapian::Query query = qp.parse_query(item->name().toStdString(),
+            Xapian::QueryParser::FLAG_DEFAULT | Xapian::QueryParser::FLAG_SPELLING_CORRECTION,
+            s_prefixTitle);
+    return query;
 }
 
-void LocalMusicProvider::searchDatabase(const MusicFilter *filter, const QString &id)
+Xapian::Query LocalMusicProvider::buildQuery(Xapian::QueryParser &qp,
+        const MusicFilter* filter)
 {
-    Xapian::QueryParser qp;
-    Xapian::Stem stemmer("english");
     Xapian::Query query = Xapian::Query::MatchAll;
 
-    qp.set_stemmer(stemmer);
-    qp.set_database(m_reader);
-    qp.set_stemming_strategy(Xapian::QueryParser::STEM_SOME);
     qp.add_prefix("", s_prefixTitle);
     qp.add_prefix("", s_prefixAlbum);
     qp.add_prefix("", s_prefixArtist);
-    Xapian::Query filterQuery = qp.parse_query(filter->text().toStdString(),
-            Xapian::QueryParser::FLAG_DEFAULT | Xapian::QueryParser::FLAG_SPELLING_CORRECTION
-                    | Xapian::QueryParser::FLAG_PARTIAL);
-    query = Xapian::Query(Xapian::Query::OP_AND, query, filterQuery);
+
+    if (!filter->text().isEmpty()) {
+        query = qp.parse_query(filter->text().toStdString(),
+                Xapian::QueryParser::FLAG_DEFAULT
+                        | Xapian::QueryParser::FLAG_SPELLING_CORRECTION
+                        | Xapian::QueryParser::FLAG_PARTIAL);
+    }
 
     if (filter->genre() != Album::Genre::All) {
         Xapian::Query genreFilter(
@@ -148,40 +86,10 @@ void LocalMusicProvider::searchDatabase(const MusicFilter *filter, const QString
         query = Xapian::Query(Xapian::Query::OP_FILTER, query, genreFilter);
     }
 
-    Xapian::Enquire enquire(m_reader);
-    enquire.set_query(query);
-    qDebug() << "loading provider" << name() << ":"
-            << QString::fromStdString(enquire.get_description());
-
-    Xapian::MSet matches = enquire.get_mset(filter->offset(), filter->limit());
-    Q_EMIT searchFinished(matches, id);
+    return query;
 }
 
-void LocalMusicProvider::searchDatabase(const Artist *artist, const QString &id)
-{
-    Xapian::QueryParser qp;
-    Xapian::Stem stemmer("english");
-
-    qp.set_stemmer(stemmer);
-    qp.set_database(m_reader);
-    qp.set_stemming_strategy(Xapian::QueryParser::STEM_SOME);
-    qp.add_prefix("title", s_prefixTitle);
-    qp.add_prefix("album", s_prefixAlbum);
-    qp.add_prefix("artist", s_prefixArtist);
-    Xapian::Query query = qp.parse_query(artist->name().toStdString(),
-            Xapian::QueryParser::FLAG_DEFAULT | Xapian::QueryParser::FLAG_SPELLING_CORRECTION,
-            s_prefixTitle);
-
-    Xapian::Enquire enquire(m_reader);
-    enquire.set_query(query);
-    qDebug() << "loading provider" << name() << ":"
-            << QString::fromStdString(enquire.get_description());
-
-    Xapian::MSet matches = enquire.get_mset(0, 10);
-    Q_EMIT searchFinished(matches, id);
-}
-
-void LocalMusicProvider::onSearchFinished(const Xapian::MSet &matches, const QString &id)
+void LocalMusicProvider::searchFinished(const Xapian::MSet &matches, const QString &id)
 {
     QList<Source*> sources;
 
@@ -199,6 +107,34 @@ void LocalMusicProvider::onSearchFinished(const Xapian::MSet &matches, const QSt
     Q_EMIT sourcesReady(sources, id);
 }
 
+void LocalMusicProvider::indexFile(Xapian::WritableDatabase& writer,
+        Xapian::TermGenerator& indexer, Source &source)
+{
+    TrackMetadata *metadata = m_metadataFetcher.fetch(&source);
+    if (metadata->name().isEmpty()) {
+        return;
+    }
+
+    QByteArray data;
+    QDataStream dataStream(&data, QIODevice::ReadWrite);
+    dataStream << source;
+    dataStream << *metadata;
+
+    Xapian::Document doc;
+    doc.set_data(data.toStdString());
+    doc.add_value(Filter::Newest, Xapian::sortable_serialise(metadata->addedAt().toTime_t()));
+    doc.add_value(Filter::Popular, Xapian::sortable_serialise(metadata->popularity()));
+    indexer.set_document(doc);
+    indexer.index_text(metadata->name().toStdString(), 1, s_prefixTitle);
+    indexer.index_text(metadata->album().toStdString(), 1, s_prefixAlbum);
+    indexer.index_text(metadata->artist().toStdString(), 1, s_prefixArtist);
+    indexer.index_text(std::to_string(metadata->year()), 1, s_prefixYear);
+    for (const QString genre : metadata->genres()) {
+        indexer.index_text(genre.toStdString(), 1, s_prefixGenre);
+    }
+    writer.add_document(doc);
+}
+
 CouchSourceList* LocalMusicProvider::load(MusicFilter* filter)
 {
     if (!m_isIndexing) {
@@ -207,10 +143,15 @@ CouchSourceList* LocalMusicProvider::load(MusicFilter* filter)
     CouchSourceList* list = new CouchSourceList(this);
     const QString id = list->id();
 
+    QFutureWatcher<Xapian::MSet> *watcher = new QFutureWatcher<Xapian::MSet>(list);
+    connect(watcher, &QFutureWatcherBase::finished, this, [=]() {
+        searchFinished(watcher->result(), id);
+    });
     connect(this, &LocalMusicProvider::sourcesReady, list, &CouchSourceList::addSources);
-    QtConcurrent::run(this,
-            static_cast<void (LocalMusicProvider::*)(const MusicFilter*,
-                    const QString &)>(&LocalMusicProvider::searchDatabase), filter, id);
+    QFuture<Xapian::MSet> future = QtConcurrent::run(this,
+            static_cast<Xapian::MSet (LocalMusicProvider::*)(
+                    const MusicFilter*)>(&LocalMusicProvider::searchDatabase), filter);
+    watcher->setFuture(future);
 
     return list;
 }
@@ -223,10 +164,15 @@ CouchSourceList* LocalMusicProvider::load(Artist* artist)
     CouchSourceList* list = new CouchSourceList(this);
     const QString id = list->id();
 
+    QFutureWatcher<Xapian::MSet> *watcher = new QFutureWatcher<Xapian::MSet>(list);
+    connect(watcher, &QFutureWatcherBase::finished, this, [=]() {
+        searchFinished(watcher->result(), id);
+    });
     connect(this, &LocalMusicProvider::sourcesReady, list, &CouchSourceList::addSources);
-    QtConcurrent::run(this,
-            static_cast<void (LocalMusicProvider::*)(const Artist*,
-                    const QString &)>(&LocalMusicProvider::searchDatabase), artist, id);
+    QFuture<Xapian::MSet> future = QtConcurrent::run(this,
+            static_cast<Xapian::MSet (LocalMusicProvider::*)(
+                    const Artist*)>(&LocalMusicProvider::searchDatabase), artist);
+    watcher->setFuture(future);
 
     return list;
 }

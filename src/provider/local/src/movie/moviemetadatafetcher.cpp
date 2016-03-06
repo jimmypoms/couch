@@ -154,6 +154,9 @@ bool MovieMetadataFetcher::fetchFileMetadata(MovieMetadata* metadata,
 MovieMetadata* MovieMetadataFetcher::fetch(Source *source)
 {
     MovieMetadata* metadata = new MovieMetadata();
+    if (source->url().isEmpty()) {
+        return nullptr;
+    }
     m_mediaInfoHandle.Open(source->url().toLocalFile().toStdString());
 
     std::string width = m_mediaInfoHandle.Get(Stream_Video, 0, "Width");
