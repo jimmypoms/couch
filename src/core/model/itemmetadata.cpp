@@ -86,6 +86,19 @@ void ItemMetadata::setYear(int year)
     }
 }
 
+const QDateTime& ItemMetadata::addedAt() const
+{
+    return m_addedAt;
+}
+
+void ItemMetadata::setAddedAt(const QDateTime& addedAt)
+{
+    if (m_addedAt != addedAt) {
+        m_addedAt = addedAt;
+        Q_EMIT addedAtChanged();
+    }
+}
+
 double ItemMetadata::popularity() const
 {
     return m_popularity;

@@ -1,6 +1,7 @@
 #ifndef ITEMMETADATA_H
 #define ITEMMETADATA_H
 
+#include <qdatetime.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
 #include <qurl.h>
@@ -25,6 +26,7 @@ Q_PROPERTY(QUrl poster READ poster WRITE setPoster NOTIFY posterChanged)
 Q_PROPERTY(QUrl backdrop READ backdrop NOTIFY posterChanged)
 Q_PROPERTY(double rating READ rating WRITE setRating NOTIFY ratingChanged)
 Q_PROPERTY(int year READ year WRITE setYear NOTIFY yearChanged)
+Q_PROPERTY(QDateTime addedAt READ addedAt WRITE setAddedAt NOTIFY addedAtChanged)
 
 Q_SIGNALS:
     void nameChanged();
@@ -34,6 +36,7 @@ Q_SIGNALS:
     void posterChanged();
     void ratingChanged();
     void yearChanged();
+    void addedAtChanged();
     void merged();
 
 private:
@@ -44,6 +47,7 @@ private:
     QUrl m_poster;
     double m_rating;
     int m_year;
+    QDateTime m_addedAt;
 
 public:
     explicit ItemMetadata(QObject *parent = 0);
@@ -71,6 +75,9 @@ public:
 
     int year() const;
     void setYear(int year);
+
+    const QDateTime& addedAt() const;
+    void setAddedAt(const QDateTime& addedAt);
 
     void merge(const ItemMetadata *metadata);
     bool operator==(const ItemMetadata& other) noexcept;
