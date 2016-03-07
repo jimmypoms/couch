@@ -33,12 +33,15 @@ TrackMetadataFetcher::TrackMetadataFetcher() :
 
 TrackMetadata* TrackMetadataFetcher::fetch(Source *source)
 {
+    QFileInfo fileInfo(source->url().toLocalFile());
+    if (!fileInfo.exists()) {
+        return nullptr;
+    }
     TrackMetadata* metadata = new TrackMetadata();
     m_mediaInfoHandle.Open(source->url().toLocalFile().toStdString());
 
-    std::string bitRate = m_mediaInfoHandle.Get(Stream_Audio, 0, "OverallBitRate/String");
+    std::string bitRate(m_mediaInfoHandle.Get(Stream_Audio, 0, "OverallBitRate/String"));
 
-    QFileInfo fileInfo(source->url().toLocalFile());
     source->setSizeBytes(fileInfo.size());
     source->setQuality(QString::fromStdString(bitRate));
     if (fetchFileMetadata(metadata, fileInfo)) {

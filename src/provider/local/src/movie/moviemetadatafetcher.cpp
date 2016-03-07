@@ -154,15 +154,15 @@ bool MovieMetadataFetcher::fetchFileMetadata(MovieMetadata* metadata,
 MovieMetadata* MovieMetadataFetcher::fetch(Source *source)
 {
     MovieMetadata* metadata = new MovieMetadata();
-    if (source->url().isEmpty()) {
+    QFileInfo fileInfo(source->url().toLocalFile());
+    if (!fileInfo.exists()) {
         return nullptr;
     }
     m_mediaInfoHandle.Open(source->url().toLocalFile().toStdString());
 
-    std::string width = m_mediaInfoHandle.Get(Stream_Video, 0, "Width");
-    std::string height = m_mediaInfoHandle.Get(Stream_Video, 0, "Height");
+    std::string width(m_mediaInfoHandle.Get(Stream_Video, 0, "Width"));
+    std::string height(m_mediaInfoHandle.Get(Stream_Video, 0, "Height"));
 
-    QFileInfo fileInfo(source->url().toLocalFile());
     source->setSizeBytes(fileInfo.size());
     source->setQuality(QString::fromStdString(width + " x " + height));
     if (fetchNfoMetadata(metadata, fileInfo)) {
