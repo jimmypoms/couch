@@ -13,6 +13,7 @@
 #include <qobject.h>
 #include <qstring.h>
 #include <algorithm>
+#include <memory>
 
 Artist::Artist(QObject *parent) :
         Item(parent)
@@ -28,18 +29,22 @@ void Artist::addSource(const QObject* provider, Source* source)
 {
     Item::addSource(provider, source);
     TrackMetadata *metadata = qobject_cast<TrackMetadata*>(source->itemMetadata());
-    QString albumTitle = metadata->album();
-    auto it = std::find_if(m_albums.cbegin(), m_albums.cend(), [albumTitle](Album* album) {
-        return album->title() == albumTitle;
+    QString albumName(metadata->album());
+    auto it = std::find_if(m_albums.cbegin(), m_albums.cend(), [albumName](Album* album) {
+        return album->name() == albumName;
     });
+    Album *album;
     if (it == m_albums.cend()) {
-        Album *album = new Album(this);
-        album->setTitle(albumTitle);
-        album->setCover(metadata->albumCover());
+        album = new Album(this);
+        album->setName(albumName);
+        album->setMetadata(std::shared_ptr<ItemMetadata>(new AlbumMetadata()));
         m_albums.append(album);
         Q_EMIT albumsChanged();
         Q_EMIT albumCoversChanged();
+    } else {
+        album = *it;
     }
+    album->addSource(provider, source);
 }
 
 QList<QUrl> Artist::albumCovers() const

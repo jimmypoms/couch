@@ -7,7 +7,9 @@
 
 #include "track.h"
 
-Track::Track(QObject *parent) :
-        QObject(parent)
+#include "album.h"
+
+Track::Track(Album *parent) :
+        Item(parent)
 {
 }

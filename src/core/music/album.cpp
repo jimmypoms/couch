@@ -8,36 +8,52 @@
 #include "album.h"
 
 #include "artist.h"
+#include "trackmetadata.h"
+
+#include <model/source.h>
+#include <qobject.h>
+#include <qstring.h>
+#include <algorithm>
+#include <memory>
 
 Album::Album(Artist *parent) :
-        QObject(parent)
+        Item(parent)
 {
 }
 
-const QString Album::title() const
-{
-    return m_title;
-}
-
-void Album::setTitle(const QString& title)
-{
-    if (m_title != title) {
-        m_title = title;
-        Q_EMIT titleChanged();
-    }
-}
-
-const QUrl Album::cover() const
+QUrl Album::cover() const
 {
     return m_cover;
 }
 
-void Album::setCover(const QUrl& cover)
+void Album::addSource(const QObject* provider, Source* source)
 {
-    if (m_cover != cover) {
-        m_cover = cover;
+    Item::addSource(provider, source);
+    TrackMetadata *metadata = qobject_cast<TrackMetadata*>(source->itemMetadata());
+    QString trackName = metadata->track();
+    auto it = std::find_if(m_tracks.cbegin(), m_tracks.cend(), [trackName](Track* track) {
+        return track->name() == trackName;
+    });
+    Track *track;
+    if (it == m_tracks.cend()) {
+        track = new Track(this);
+        track->setName(trackName);
+        track->setMetadata(std::shared_ptr<ItemMetadata>(new TrackMetadata()));
+        m_tracks.append(track);
+        Q_EMIT tracksChanged();
+    } else {
+        track = *it;
+    }
+    track->addSource(provider, source);
+    if (m_cover.isEmpty() && !metadata->albumCover().isEmpty()) {
+        m_cover = metadata->albumCover();
         Q_EMIT coverChanged();
     }
+}
+
+QList<Track*> Album::tracks() const
+{
+    return m_tracks;
 }
 
 QString Album::genreToString(Album::Genre genre)

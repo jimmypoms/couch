@@ -8,9 +8,10 @@
 #ifndef ALBUM_H_
 #define ALBUM_H_
 
-#include <qobject.h>
+#include "track.h"
+
+#include <qlist.h>
 #include <qobjectdefs.h>
-#include <qstring.h>
 #include <qurl.h>
 
 class Artist;
@@ -21,21 +22,21 @@ class Artist;
 #  define COUCH_LIBRARY_EXPORT Q_DECL_IMPORT
 #endif
 
-class COUCH_LIBRARY_EXPORT Album : public QObject
+class COUCH_LIBRARY_EXPORT Album : public Item
 {
 Q_OBJECT
 
 Q_ENUMS(Genre)
-Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
-Q_PROPERTY(QUrl cover READ cover WRITE setCover NOTIFY coverChanged)
+Q_PROPERTY(QUrl cover READ cover NOTIFY coverChanged)
+Q_PROPERTY(QList<Track*> tracks READ tracks NOTIFY tracksChanged)
 
 Q_SIGNALS:
-    void titleChanged();
     void coverChanged();
+    void tracksChanged();
 
 private:
-    QString m_title;
     QUrl m_cover;
+    QList<Track*> m_tracks;
 
 public:
     enum Genre
@@ -66,11 +67,10 @@ public:
     explicit Album(Artist *parent);
     virtual ~Album() = default;
 
-    const QString title() const;
-    void setTitle(const QString &title);
+    QUrl cover() const;
+    void addSource(const QObject* provider, Source* source);
 
-    const QUrl cover() const;
-    void setCover(const QUrl &cover);
+    QList<Track*> tracks() const;
 
     static QString genreToString(Album::Genre genre);
 };
