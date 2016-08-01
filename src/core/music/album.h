@@ -8,11 +8,11 @@
 #ifndef ALBUM_H_
 #define ALBUM_H_
 
-#include "track.h"
-
-#include <qlist.h>
 #include <qobjectdefs.h>
 #include <qurl.h>
+
+#include "../model/couchitemlist.h"
+#include "../model/item.h"
 
 class Artist;
 
@@ -28,7 +28,7 @@ Q_OBJECT
 
 Q_ENUMS(Genre)
 Q_PROPERTY(QUrl cover READ cover NOTIFY coverChanged)
-Q_PROPERTY(QList<Track*> tracks READ tracks NOTIFY tracksChanged)
+Q_PROPERTY(CouchItemList* tracks READ tracks NOTIFY tracksChanged)
 
 Q_SIGNALS:
     void coverChanged();
@@ -36,7 +36,7 @@ Q_SIGNALS:
 
 private:
     QUrl m_cover;
-    QList<Track*> m_tracks;
+    CouchItemList m_tracks;
 
 public:
     enum Genre
@@ -70,7 +70,7 @@ public:
     QUrl cover() const;
     void addSource(const QObject* provider, Source* source);
 
-    QList<Track*> tracks() const;
+    CouchItemList* tracks();
 
     static QString genreToString(Album::Genre genre);
 };

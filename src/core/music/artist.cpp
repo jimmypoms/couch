@@ -19,6 +19,7 @@
 Artist::Artist(QObject *parent) :
         Item(parent)
 {
+    m_albums.setParent(this);
 }
 
 ArtistMetadata* Artist::metadata() const
