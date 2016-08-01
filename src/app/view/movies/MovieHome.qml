@@ -52,9 +52,8 @@ FocusScope {
                 order: MovieFilter.Popular
             }
 
-            property var itemList: movies.load(popularFilter)
-            loading: itemList.loading
-            items: itemList
+            items: movies.load(popularFilter)
+            loading: items.loading
             delegate: CouchItemDelegate {
                 width: bigDelegateWidth
                 height: bigDelegateHeight
@@ -97,9 +96,8 @@ FocusScope {
                 order: MovieFilter.Newest
             }
 
-            property var itemList: movies.load(popularFilter)
-            loading: itemList.loading
-            items: itemList
+            items: movies.load(newestFilter)
+            loading: items.loading
             cellWidth: smallDelegateWidth
             cellHeight: smallDelegateHeight
             delegate: CouchItemDelegate {

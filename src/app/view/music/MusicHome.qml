@@ -52,9 +52,8 @@ FocusScope {
                 order: MusicFilter.Popular
             }
 
-            property var itemList: music.load(popularFilter)
-            loading: itemList.loading
-            items: itemList
+            items: music.load(popularFilter)
+            loading: items.loading
             delegate: CouchItemDelegate {
                 width: bigDelegateWidth
                 height: bigDelegateHeight
@@ -98,9 +97,8 @@ FocusScope {
                 order: MusicFilter.Newest
             }
 
-            property var itemList: music.load(popularFilter)
-            loading: itemList.loading
-            items: itemList
+            items: music.load(newestFilter)
+            loading: items.loading
             cellWidth: smallDelegateWidth
             cellHeight: smallDelegateHeight
             delegate: CouchItemDelegate {
