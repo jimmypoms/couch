@@ -1,8 +1,14 @@
 TEMPLATE = app
 TARGET = couch
 
+CLIBDESTDIR = ../../lib/couch
+CBINDESTDIR = ../../bin
+CINCLUDEPATH = ../../include
+
 CONFIG(debug, debug|release) {
     CBUILDDIR = ../../build/debug
+    QMAKE_RPATHDIR += $$CLIBDESTDIR
+    QMAKE_RPATHDIR += lib/couch
 } else {
     CBUILDDIR = ../../build/release
 }
@@ -12,12 +18,8 @@ MOC_DIR = $$CBUILDDIR/.moc
 RCC_DIR = $$CBUILDDIR/.rcc
 UI_DIR = $$CBUILDDIR/.ui
 
-CLIBDESTDIR = ../../lib/couch
-CBINDESTDIR = ../../bin
-CINCLUDEPATH = ../../include
-
 QT += core gui qml quick multimedia network
-QMAKE_RPATHDIR += $$CLIBDESTDIR
+QMAKE_RPATHDIR += ../lib/couch
 
 CONFIG += c++11
 CONFIG += debug_and_release
