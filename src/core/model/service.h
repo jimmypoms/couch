@@ -8,6 +8,7 @@
 #include "provider.h"
 
 #include <qlist.h>
+#include <qmutex.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
 #include <memory>
@@ -30,14 +31,16 @@ Q_SIGNALS:
 
 private:
     QString m_name;
-    QList<std::shared_ptr<Item> > m_items;
     int m_maxItemCacheSize;
+    QMutex m_mutex;
 
     virtual Item* createItem(const Source *source) = 0;
 protected:
     CouchPlayer* m_player;
     QList<QObject*> m_providers;
+    QList<std::shared_ptr<Item> > m_items;
 
+    virtual QList<std::shared_ptr<Item> >::const_iterator findItem(Source* source);
 public Q_SLOTS:
     void reduceSources();
     void onActionTriggered();
@@ -94,13 +97,13 @@ inline CouchItemList* Service<Item, Filter, P>::load(Filter *filter)
 }
 
 template<class Item, class Filter, class P>
-inline CouchItemList* Service<Item, Filter, P>::load(Item *movie)
+inline CouchItemList* Service<Item, Filter, P>::load(Item *item)
 {
     CouchItemList* list = new CouchItemList(providers().count());
     connect(this, &ServiceImpl::itemsReady, list, &CouchItemList::addItems);
     for (const QObject *object : providers()) {
         P* provider = qobject_cast<P*>(object);
-        CouchSourceList* sourceList = provider->load(movie);
+        CouchSourceList* sourceList = provider->load(item);
         sourceList->setParent(list);
         connect(sourceList, &CouchSourceList::sourcesLoaded, this,
                 &ServiceImpl::reduceSources);

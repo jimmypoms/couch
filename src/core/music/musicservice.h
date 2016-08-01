@@ -34,6 +34,9 @@ private:
     Artist* createItem(const Source *source);
     CouchActionList* serviceActions(Artist *artist);
 
+protected:
+    QList<std::shared_ptr<Item> >::const_iterator findItem(Source* source);
+
 public:
     explicit MusicService(QObject *parent = 0);
     virtual ~MusicService() = default;

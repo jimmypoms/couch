@@ -49,11 +49,9 @@ void ServiceImpl::reduceSources()
     CouchSourceList* sourcesList = qobject_cast<CouchSourceList*>(sender());
     const QObject* provider = sourcesList->provider();
     QList<std::shared_ptr<Item> > list;
+    m_mutex.lock();
     for (Source* source : sourcesList->sources()) {
-        auto it = std::find_if(m_items.cbegin(), m_items.cend(),
-                [source](std::shared_ptr<Item> item)->bool {
-                    return *(item->metadata()) == *(source->itemMetadata());
-                });
+        auto it = findItem(source);
         if (it == m_items.cend()) {
             if (!source->itemMetadata()) {
                 qDebug() << "invalid source (missing metadata), url:" << source->url();
@@ -72,11 +70,20 @@ void ServiceImpl::reduceSources()
             list.append(item);
         }
     }
+    m_mutex.unlock();
     CouchItemList* itemList = qobject_cast<CouchItemList*>(sourcesList->parent());
     if (itemList) {
         QString id = itemList->id();
         Q_EMIT itemsReady(list, id);
     }
+}
+
+QList<std::shared_ptr<Item> >::const_iterator ServiceImpl::findItem(Source *source)
+{
+    return std::find_if(m_items.cbegin(), m_items.cend(),
+            [source](std::shared_ptr<Item> item)->bool {
+                return *(item->metadata()) == *(source->itemMetadata());
+            });
 }
 
 void ServiceImpl::onActionTriggered()

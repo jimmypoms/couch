@@ -11,8 +11,11 @@
 
 #include <model/source.h>
 #include <qdebug.h>
+#include <qlist.h>
 #include <qlogging.h>
 #include <qobject.h>
+#include <qurl.h>
+#include <algorithm>
 #include <memory>
 #include <unordered_map>
 
@@ -39,6 +42,14 @@ Artist* MusicService::createItem(const Source* source)
         artist->setMetadata(m_metadataCache.insert(key, new ArtistMetadata()));
     }
     return artist;
+}
+
+QList<std::shared_ptr<Item> >::const_iterator MusicService::findItem(Source *source)
+{
+    return std::find_if(m_items.cbegin(), m_items.cend(),
+            [source](std::shared_ptr<Item> item)->bool {
+                return item->metadata()->name() == source->itemMetadata()->name();
+            });
 }
 
 CouchActionList* MusicService::serviceActions(Artist* artist)
