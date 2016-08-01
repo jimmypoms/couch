@@ -32,6 +32,11 @@ bool CouchItemList::loading() const
     return m_loadingCount > m_loaded;
 }
 
+const std::shared_ptr<Item> &CouchItemList::itemAt(int index) const
+{
+    return m_items.at(index);
+}
+
 QHash<int, QByteArray> CouchItemList::roleNames() const
 {
     QHash<int, QByteArray> roles;
@@ -106,4 +111,14 @@ void CouchItemList::append(const QList<std::shared_ptr<Item> >& items)
 void CouchItemList::append(const std::shared_ptr<Item> &item)
 {
     insert(rowCount(), item);
+}
+
+QList<std::shared_ptr<Item> >::const_iterator CouchItemList::cbegin()
+{
+    return m_items.cbegin();
+}
+
+QList<std::shared_ptr<Item> >::const_iterator CouchItemList::cend()
+{
+    return m_items.cend();
 }

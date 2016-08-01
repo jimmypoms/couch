@@ -7,6 +7,7 @@
 
 #include "artist.h"
 
+#include "album.h"
 #include "trackmetadata.h"
 
 #include <model/source.h>
@@ -30,35 +31,38 @@ void Artist::addSource(const QObject* provider, Source* source)
     Item::addSource(provider, source);
     TrackMetadata *metadata = qobject_cast<TrackMetadata*>(source->itemMetadata());
     QString albumName(metadata->album());
-    auto it = std::find_if(m_albums.cbegin(), m_albums.cend(), [albumName](Album* album) {
-        return album->name() == albumName;
-    });
-    Album *album;
+    auto it = std::find_if(m_albums.cbegin(), m_albums.cend(),
+            [albumName](const std::shared_ptr<Item> &item) {
+                auto album = std::static_pointer_cast<Album>(item);
+                return album->name() == albumName;
+            });
     if (it == m_albums.cend()) {
-        album = new Album(this);
+        std::shared_ptr<Album> album(new Album(this));
         album->setName(albumName);
         album->setMetadata(std::shared_ptr<ItemMetadata>(new AlbumMetadata()));
         m_albums.append(album);
-        Q_EMIT albumsChanged();
-        Q_EMIT albumCoversChanged();
+        album->addSource(provider, source);
     } else {
-        album = *it;
+        (*it)->addSource(provider, source);
     }
-    album->addSource(provider, source);
 }
 
 QList<QUrl> Artist::albumCovers() const
 {
     QList<QUrl> list;
-    for (Album *album : m_albums) {
+    const int count = m_albums.rowCount();
+
+    for (int i = 0; i < count; ++i) {
+        auto album = std::static_pointer_cast<Album>(m_albums.itemAt(i));
         if (!album->cover().isEmpty()) {
             list.append(album->cover());
         }
     }
+
     return list;
 }
 
-QList<Album*> Artist::albums() const
+CouchItemList *Artist::albums()
 {
-    return m_albums;
+    return &m_albums;
 }

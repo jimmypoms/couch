@@ -46,11 +46,12 @@ private:
     std::atomic_int m_loaded;
 
 public:
-    CouchItemList(int loadingCount, QString id = "");
+    CouchItemList(int loadingCount = 0, QString id = "");
     virtual ~CouchItemList() = default;
 
     const QString &id() const;
     bool loading() const;
+    const std::shared_ptr<Item> &itemAt(int index) const;
 
     QHash<int, QByteArray> roleNames() const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -61,6 +62,9 @@ public Q_SLOTS:
     void insert(int row, const std::shared_ptr<Item> &item);
     void append(const QList<std::shared_ptr<Item> > &items);
     void append(const std::shared_ptr<Item> &item);
+
+    QList<std::shared_ptr<Item> >::const_iterator cbegin();
+    QList<std::shared_ptr<Item> >::const_iterator cend();
 };
 
 #endif /* COUCHITEMLIST_H_ */
