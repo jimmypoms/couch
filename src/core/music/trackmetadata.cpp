@@ -23,7 +23,20 @@ const QString &TrackMetadata::track() const
 void TrackMetadata::setTrack(const QString& track)
 {
     if (m_track != track) {
-        Q_EMIT trackChanged();
         m_track = track;
+        Q_EMIT trackChanged();
+    }
+}
+
+int TrackMetadata::trackPosition() const
+{
+    return m_trackPosition;
+}
+
+void TrackMetadata::setTrackPosition(int trackPosition)
+{
+    if (m_trackPosition != trackPosition) {
+        m_trackPosition = trackPosition;
+        Q_EMIT trackPositionChanged();
     }
 }

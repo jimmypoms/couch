@@ -30,6 +30,7 @@ SOURCES += \
     model/networkprovider.cpp \
     model/couchitemlist.cpp \
     model/couchsourcelist.cpp \
+    model/couchproviderlist.cpp \
     model/couchactionlist.cpp \
     model/couchaction.cpp \
     model/couchplayaction.cpp \
@@ -67,6 +68,7 @@ HEADERS += \
     model/networkprovider.h \
     model/couchitemlist.h \
     model/couchsourcelist.h \
+    model/couchproviderlist.h \
     model/couchactionlist.h \
     model/couchaction.h \
     model/couchplayaction.h \

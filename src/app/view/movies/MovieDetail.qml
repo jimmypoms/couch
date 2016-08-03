@@ -329,7 +329,7 @@ FocusScope {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
 
-                    model: movies.providers
+                    model: movie.providers()
                     delegate: CouchSourcesList {
                         name: modelData.name
                         sourceList: movie.sources(modelData)

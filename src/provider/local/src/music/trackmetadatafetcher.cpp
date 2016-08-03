@@ -44,8 +44,6 @@ void TrackMetadataFetcher::fetch(TrackMetadata &metadata, Source &source)
     source.setSizeBytes(fileInfo.size());
     source.setQuality(QString::fromStdString(bitRate));
     fetchFileMetadata(metadata, fileInfo);
-
-    m_mediaInfoHandle.Close();
 }
 
 bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata &metadata,
@@ -57,6 +55,10 @@ bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata &metadata,
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Album")));
     metadata.setTrack(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Track")));
+    metadata.setTrackPosition(
+            QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Track/Position")).toInt());
+    metadata.setTrackTotal(
+            QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Track/Position_Total")).toInt());
     metadata.setDescription(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Description")));
     QStringList genres = QString::fromStdString(

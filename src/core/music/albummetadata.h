@@ -25,16 +25,19 @@ Q_OBJECT
 Q_PROPERTY(QStringList genres READ genres WRITE setGenres NOTIFY genresChanged)
 Q_PROPERTY(QString album READ album WRITE setAlbum NOTIFY albumChanged)
 Q_PROPERTY(QUrl albumCover READ albumCover WRITE setAlbumCover NOTIFY albumCoverChanged)
+Q_PROPERTY(int trackTotal READ trackTotal WRITE setTrackTotal NOTIFY trackTotalChanged)
 
 Q_SIGNALS:
     void genresChanged();
     void albumChanged();
     void albumCoverChanged();
+    void trackTotalChanged();
 
 private:
     QStringList m_genres;
     QString m_album;
     QUrl m_albumCover;
+    int m_trackTotal;
 
 public:
     explicit AlbumMetadata(QObject *parent = 0);
@@ -49,6 +52,9 @@ public:
 
     const QUrl &albumCover() const;
     void setAlbumCover(const QUrl &albumCover);
+
+    int trackTotal() const;
+    void setTrackTotal(int trackTotal);
 };
 
 #endif /* ALBUMMETADATA_H_ */

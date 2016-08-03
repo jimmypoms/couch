@@ -39,8 +39,8 @@ const QString &AlbumMetadata::album() const
 void AlbumMetadata::setAlbum(const QString& album)
 {
     if (m_album != album) {
-        Q_EMIT albumChanged();
         m_album = album;
+        Q_EMIT albumChanged();
     }
 }
 
@@ -52,7 +52,20 @@ const QUrl& AlbumMetadata::albumCover() const
 void AlbumMetadata::setAlbumCover(const QUrl& albumCover)
 {
     if (m_albumCover != albumCover) {
-        Q_EMIT albumCoverChanged();
         m_albumCover = albumCover;
+        Q_EMIT albumCoverChanged();
+    }
+}
+
+int AlbumMetadata::trackTotal() const
+{
+    return m_trackTotal;
+}
+
+void AlbumMetadata::setTrackTotal(int trackTotal)
+{
+    if (m_trackTotal != trackTotal) {
+        m_trackTotal = trackTotal;
+        Q_EMIT trackTotalChanged();
     }
 }

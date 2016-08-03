@@ -2,12 +2,13 @@
 #define ITEM_H
 
 #include "couchsourcelist.h"
-#include "itemmetadata.h"
 
 #include <qhash.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
 #include <memory>
+
+class CouchProviderList;
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
@@ -26,12 +27,14 @@ Q_SIGNALS:
     void nameChanged();
     void metadataChanged();
     void sourcesChanged();
+    void providersChanged();
 
 private:
     QString m_name;
     std::shared_ptr<ItemMetadata> m_metadata;
-    CouchSourceList* m_emptySourceList;
     QHash<const QObject*, CouchSourceList*> m_sources;
+    CouchSourceList* m_emptySourceList;
+    CouchProviderList* m_providers;
 
 public:
     explicit Item(QObject* parent);
@@ -52,6 +55,7 @@ public:
 
 public Q_SLOTS:
     CouchSourceList *sources(QObject *provider);
+    CouchProviderList* providers() const;
 
 };
 

@@ -1,14 +1,18 @@
 #include "item.h"
 
+#include "couchproviderlist.h"
+#include "itemmetadata.h"
 #include "source.h"
 
 #include <qlist.h>
 #include <algorithm>
 
 Item::Item(QObject* parent) :
-        QObject(parent), m_emptySourceList(new CouchSourceList())
+                QObject(parent), m_emptySourceList(new CouchSourceList()),
+                m_providers(new CouchProviderList())
 {
     m_emptySourceList->setParent(this);
+    m_providers->setParent(this);
 }
 
 const QString &Item::name() const
@@ -44,6 +48,7 @@ void Item::addSource(const QObject* provider, Source* source)
         CouchSourceList *list = new CouchSourceList(provider);
         list->setParent(this);
         m_sources.insert(provider, list);
+        m_providers->append(const_cast<QObject*>(provider));
     }
 
     auto it = std::find_if(m_sources[provider]->cbegin(), m_sources[provider]->cend(),
@@ -64,4 +69,9 @@ CouchSourceList *Item::sources(QObject* provider)
     } else {
         return m_emptySourceList;
     }
+}
+
+CouchProviderList *Item::providers() const
+{
+    return m_providers;
 }

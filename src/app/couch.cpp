@@ -6,6 +6,7 @@
 #include "couch/couchitemlist.h"
 #include "couch/couchplayer.h"
 #include "couch/couchsourcelist.h"
+#include "couch/couchproviderlist.h"
 #include "couch/itemmetadata.h"
 #include "couch/movie/movie.h"
 #include "couch/movie/moviefilter.h"
@@ -25,6 +26,8 @@ Couch::Couch(QObject *parent) :
             "impossible to create itemlist from qml");
     qmlRegisterUncreatableType<CouchSourceList>("org.couch.sourcelist", 1, 0,
             "CouchSourceList", "impossible to create sourcelist from qml");
+    qmlRegisterUncreatableType<CouchProviderList>("org.couch.providerlist", 1, 0,
+            "CouchProviderList", "impossible to create providerlist from qml");
     qmlRegisterUncreatableType<CouchActionList>("org.couch.actionlist", 1, 0,
             "CouchActionList", "impossible to create actionlist from qml");
 

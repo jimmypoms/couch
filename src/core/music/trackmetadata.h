@@ -21,12 +21,15 @@ class COUCH_LIBRARY_EXPORT TrackMetadata : public AlbumMetadata
 Q_OBJECT
 
 Q_PROPERTY(QString track READ track WRITE setTrack NOTIFY trackChanged)
+Q_PROPERTY(int trackPosition READ trackPosition WRITE setTrackPosition NOTIFY trackPositionChanged)
 
 Q_SIGNALS:
     void trackChanged();
+    void trackPositionChanged();
 
 private:
     QString m_track;
+    int m_trackPosition;
 
 public:
     explicit TrackMetadata(QObject *parent = 0);
@@ -34,6 +37,9 @@ public:
 
     const QString &track() const;
     void setTrack(const QString& track);
+
+    int trackPosition() const;
+    void setTrackPosition(int trackPosition);
 };
 
 #endif /* TRACKMETADATA_H_ */

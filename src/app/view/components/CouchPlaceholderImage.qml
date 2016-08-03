@@ -5,12 +5,13 @@ Item {
     property string source: ''
     property var sourceList: []
     property alias placeholder: placeholderImage.source
+    property int verticalAlignment: Image.AlignVCenter
     clip: true
 
     Image {
         id: placeholderImage
         width: parent.width
-        verticalAlignment: Image.AlignVCenter
+        verticalAlignment: root.verticalAlignment
 
         fillMode: Image.PreserveAspectCrop
     }
@@ -35,6 +36,7 @@ Item {
         id: intendedImage
         width: parent.width
         height: parent.height
+        verticalAlignment: root.verticalAlignment
 
         source: root.source ? root.source : (sourceList.length === 1 ? sourceList[0] : '')
         opacity: 0

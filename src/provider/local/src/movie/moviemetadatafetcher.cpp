@@ -161,7 +161,6 @@ void MovieMetadataFetcher::fetch(MovieMetadata &metadata, Source &source)
     m_mediaInfoHandle.Open(source.url().toLocalFile().toStdString());
     std::string width(m_mediaInfoHandle.Get(Stream_Video, 0, "Width"));
     std::string height(m_mediaInfoHandle.Get(Stream_Video, 0, "Height"));
-    m_mediaInfoHandle.Close();
 
     source.setSizeBytes(fileInfo.size());
     source.setQuality(QString::fromStdString(width + " x " + height));

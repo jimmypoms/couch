@@ -1,7 +1,11 @@
 import QtQuick 2.2
+import QtQuick.Layouts 1.2
 
-Item {
+import "../components"
+
+FocusScope {
     property var item: ({})
+    focus: true
 
     Rectangle {
         anchors.fill: parent
@@ -15,10 +19,37 @@ Item {
         }
     }
 
-    Text {
+    Item {
+        anchors.margins: dp(5)
         anchors.fill: parent
-        text: item.name
-        color: "white"
+        Text {
+            anchors.fill: parent
+            font.weight: Font.Light
+            font.pointSize: fp(10)
+            verticalAlignment: Text.AlignVCenter
+
+            text: (item.metadata.trackPosition ? item.metadata.trackPosition + " - " : "") + item.name
+            elide: Text.ElideRight
+            color: "white"
+        }
+
+        ListView {
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            focus: true
+            orientation: ListView.Horizontal
+            layoutDirection: Qt.RightToLeft
+
+            model: item.providers()
+            delegate: CouchIconButton {
+                size: dp(40)
+                source: "../images/icon-play.svg"
+
+                onClicked: {
+                }
+            }
+        }
     }
 
     MouseArea {

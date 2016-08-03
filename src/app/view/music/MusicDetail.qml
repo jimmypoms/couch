@@ -9,7 +9,7 @@ FocusScope {
     id: container
     focus: true
 
-    property real listMargin: parent.width * 0.02
+    property real listMargin: dp(50)
     property real albumDelegateWidth: parent.width * 0.23
     property real albumDelegateSpacing: parent.width * 0.01
 
@@ -18,7 +18,7 @@ FocusScope {
 
     onVisibleChanged: {
         if (visible) {
-            sourcesView.forceActiveFocus();
+            contentActions.forceActiveFocus();
         }
     }
 
@@ -121,28 +121,29 @@ FocusScope {
             Keys.onUpPressed: {
                 closeButton.forceActiveFocus();
             }
+            Keys.onDownPressed: {
+                contentAlbums.forceActiveFocus();
+            }
             anchors.top: contentDescription.bottom
             anchors.right: parent.right
             anchors.left: parent.left
-            anchors.leftMargin: dp(50)
-            anchors.rightMargin: dp(50)
+            anchors.leftMargin: listMargin
+            anchors.rightMargin: listMargin
             height: parent.height * 0.2
 
             RowLayout {
                 anchors.fill: parent
 
-                CouchRow {
-                    id: sourcesView
+                CouchButton {
+                    text: "play all"
                     focus: true
 
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
+                    Layout.alignment: Qt.AlignBottom | Qt.AlignRight
+                    Layout.preferredHeight: dp(50)
+                    Layout.preferredWidth: dp(200)
 
-                    Keys.onPressed: {
-                        if (event.key === Qt.Key_Right && actionsView.focusableChildren) {
-                            actionsView.forceActiveFocus();
-                            event.accepted = true;
-                        }
+                    color: "orange"
+                    onClicked: {
                     }
                 }
 
@@ -174,13 +175,19 @@ FocusScope {
                 }
             }
         }
-        Item {
+
+        FocusScope {
             id: contentAlbums
             anchors.top: contentActions.bottom
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             anchors.left: parent.left
+            anchors.topMargin: listMargin
             anchors.bottomMargin: listMargin
+
+            Keys.onUpPressed: {
+                contentActions.forceActiveFocus();
+            }
 
             CouchListView {
                 anchors.fill: parent
