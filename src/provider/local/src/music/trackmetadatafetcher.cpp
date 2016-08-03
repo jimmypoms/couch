@@ -31,46 +31,42 @@ TrackMetadataFetcher::TrackMetadataFetcher() :
     m_coverCacheDir.mkpath(m_coverCacheDir.absolutePath());
 }
 
-TrackMetadata* TrackMetadataFetcher::fetch(Source *source)
+void TrackMetadataFetcher::fetch(TrackMetadata &metadata, Source &source)
 {
-    QFileInfo fileInfo(source->url().toLocalFile());
+    QFileInfo fileInfo(source.url().toLocalFile());
     if (!fileInfo.exists()) {
-        return nullptr;
+        return;
     }
-    TrackMetadata* metadata = new TrackMetadata();
 
-    m_mediaInfoHandle.Open(source->url().toLocalFile().toStdString());
+    m_mediaInfoHandle.Open(source.url().toLocalFile().toStdString());
     std::string bitRate(m_mediaInfoHandle.Get(Stream_Audio, 0, "OverallBitRate/String"));
 
-    source->setSizeBytes(fileInfo.size());
-    source->setQuality(QString::fromStdString(bitRate));
-    if (fetchFileMetadata(metadata, fileInfo)) {
-        m_mediaInfoHandle.Close();
-        return metadata;
-    }
+    source.setSizeBytes(fileInfo.size());
+    source.setQuality(QString::fromStdString(bitRate));
+    fetchFileMetadata(metadata, fileInfo);
+
     m_mediaInfoHandle.Close();
-    return metadata;
 }
 
-bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata* metadata,
+bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata &metadata,
         const QFileInfo &fileInfo)
 {
-    metadata->setArtist(
+    metadata.setArtist(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Performer")));
-    metadata->setAlbum(
+    metadata.setAlbum(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Album")));
-    metadata->setTrack(
+    metadata.setTrack(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Track")));
-    metadata->setDescription(
+    metadata.setDescription(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Description")));
     QStringList genres = QString::fromStdString(
             m_mediaInfoHandle.Get(Stream_General, 0, "Genre")).split(';');
-    metadata->setGenres(genres);
-    metadata->setYear(
+    metadata.setGenres(genres);
+    metadata.setYear(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Recorded_Date")).toInt());
 
     std::string albumArtData(m_mediaInfoHandle.Get(Stream_General, 0, "Cover_Data"));
-    QString stringKey(metadata->artist() + metadata->album());
+    QString stringKey(metadata.artist() + metadata.album());
     QString albumArtFilename(
             QCryptographicHash::hash(stringKey.toLocal8Bit(), QCryptographicHash::Md5).toHex());
     QFile albumArtFile(m_coverCacheDir.filePath(albumArtFilename));
@@ -79,7 +75,7 @@ bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata* metadata,
             albumArtFile.write(QByteArray::fromBase64(QByteArray::fromStdString(albumArtData)));
             albumArtFile.close();
         }
-        metadata->setAlbumCover(QUrl::fromLocalFile(m_coverCacheDir.filePath(albumArtFilename)));
+        metadata.setAlbumCover(QUrl::fromLocalFile(m_coverCacheDir.filePath(albumArtFilename)));
     }
 
     return true;

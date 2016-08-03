@@ -108,34 +108,33 @@ void LocalMovieProvider::searchFinished(const Xapian::MSet& matches, const QStri
 void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer,
         Xapian::TermGenerator& indexer, Source &source)
 {
-    MovieMetadata *metadata = m_metadataFetcher.fetch(&source);
-    if (!metadata || metadata->name().isEmpty()) {
-        delete metadata;
+    MovieMetadata metadata;
+    m_metadataFetcher.fetch(metadata, source);
+    if (metadata.name().isEmpty()) {
         return;
     }
 
     QByteArray data;
     QDataStream dataStream(&data, QIODevice::ReadWrite);
     dataStream << source;
-    dataStream << *metadata;
+    dataStream << metadata;
 
     Xapian::Document doc;
     doc.set_data(data.toStdString());
     indexer.set_document(doc);
-    indexer.index_text(metadata->name().toStdString(), 1, s_prefixTitle);
-    indexer.index_text(metadata->tagline().toStdString(), 1, s_prefixTagline);
-    indexer.index_text(std::to_string(metadata->year()), 1, s_prefixYear);
-    for (const QString &actor : metadata->actors()) {
+    indexer.index_text(metadata.name().toStdString(), 1, s_prefixTitle);
+    indexer.index_text(metadata.tagline().toStdString(), 1, s_prefixTagline);
+    indexer.index_text(std::to_string(metadata.year()), 1, s_prefixYear);
+    for (const QString &actor : metadata.actors()) {
         indexer.index_text(actor.toStdString(), 1, s_prefixActor);
     }
-    for (const QString director : metadata->directors()) {
+    for (const QString director : metadata.directors()) {
         indexer.index_text(director.toStdString(), 1, s_prefixDirector);
     }
-    for (const QString genre : metadata->genres()) {
+    for (const QString genre : metadata.genres()) {
         indexer.index_text(genre.toStdString(), 1, s_prefixGenre);
     }
     writer.add_document(doc);
-    delete metadata;
 }
 
 CouchSourceList* LocalMovieProvider::load(Movie* movie)

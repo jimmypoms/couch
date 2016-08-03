@@ -24,7 +24,7 @@ MovieMetadataFetcher::MovieMetadataFetcher()
     m_mediaInfoHandle.Option("Internet", "No");
 }
 
-bool MovieMetadataFetcher::fetchNfoMetadata(MovieMetadata* metadata, const QFileInfo &fileInfo)
+bool MovieMetadataFetcher::fetchNfoMetadata(MovieMetadata &metadata, const QFileInfo &fileInfo)
 {
     QFile nfoFile(fileInfo.absolutePath() + "/" + fileInfo.completeBaseName() + ".nfo");
     if (!nfoFile.exists()) {
@@ -44,7 +44,7 @@ bool MovieMetadataFetcher::fetchNfoMetadata(MovieMetadata* metadata, const QFile
     return true;
 }
 
-void MovieMetadataFetcher::readMovieTag(QXmlStreamReader &xml, MovieMetadata* metadata)
+void MovieMetadataFetcher::readMovieTag(QXmlStreamReader &xml, MovieMetadata &metadata)
 {
     Q_ASSERT(xml.isStartElement() && xml.name() == "movie");
     while (xml.readNextStartElement()) {
@@ -53,64 +53,64 @@ void MovieMetadataFetcher::readMovieTag(QXmlStreamReader &xml, MovieMetadata* me
         } else if (xml.name() == "fanart") {
             readFanartTag(xml, metadata);
         } else if (xml.name() == "title") {
-            metadata->setName(readStringTag(xml));
+            metadata.setName(readStringTag(xml));
         } else if (xml.name() == "tagline") {
-            metadata->setTagline(readStringTag(xml));
+            metadata.setTagline(readStringTag(xml));
         } else if (xml.name() == "year") {
-            metadata->setYear(readIntTag(xml));
+            metadata.setYear(readIntTag(xml));
         } else if (xml.name() == "popularity") {
-            metadata->setPopularity(readIntTag(xml) / 100);
+            metadata.setPopularity(readIntTag(xml) / 100);
         } else if (xml.name() == "rating") {
-            metadata->setRating(readDoubleTag(xml) / 10.0);
+            metadata.setRating(readDoubleTag(xml) / 10.0);
         } else if (xml.name() == "runtime") {
-            metadata->setRuntime(readIntTag(xml));
+            metadata.setRuntime(readIntTag(xml));
         } else if (xml.name() == "thumb") {
-            if (metadata->image().isEmpty()) {
-                metadata->setImage(QUrl(xml.attributes().value("preview").toString()));
+            if (metadata.image().isEmpty()) {
+                metadata.setImage(QUrl(xml.attributes().value("preview").toString()));
             } else {
                 xml.skipCurrentElement();
             }
             xml.readElementText(QXmlStreamReader::SkipChildElements);
         } else if (xml.name() == "plot") {
-            metadata->setDescription(readStringTag(xml));
+            metadata.setDescription(readStringTag(xml));
         } else if (xml.name() == "genre") {
-            metadata->addGenre(readStringTag(xml));
+            metadata.addGenre(readStringTag(xml));
         } else if (xml.name() == "country") {
-            metadata->setCountry(readStringTag(xml));
+            metadata.setCountry(readStringTag(xml));
         } else if (xml.name() == "credits") {
-            metadata->addCredit(readStringTag(xml));
+            metadata.addCredit(readStringTag(xml));
         } else if (xml.name() == "director") {
-            metadata->addDirector(readStringTag(xml));
+            metadata.addDirector(readStringTag(xml));
         } else if (xml.name() == "studio") {
-            metadata->setStudio(readStringTag(xml));
+            metadata.setStudio(readStringTag(xml));
         } else if (xml.name() == "trailer") {
-            metadata->setTrailer(readTrailerTag(xml));
+            metadata.setTrailer(readTrailerTag(xml));
         } else {
             xml.skipCurrentElement();
         }
     }
 }
 
-void MovieMetadataFetcher::readActorTag(QXmlStreamReader &xml, MovieMetadata* metadata)
+void MovieMetadataFetcher::readActorTag(QXmlStreamReader &xml, MovieMetadata &metadata)
 {
     Q_ASSERT(xml.isStartElement() && xml.name() == "actor");
 
     while (xml.readNextStartElement()) {
         if (xml.name() == "name") {
-            metadata->addActor(readStringTag(xml));
+            metadata.addActor(readStringTag(xml));
         } else {
             xml.skipCurrentElement();
         }
     }
 }
 
-void MovieMetadataFetcher::readFanartTag(QXmlStreamReader &xml, MovieMetadata* metadata)
+void MovieMetadataFetcher::readFanartTag(QXmlStreamReader &xml, MovieMetadata &metadata)
 {
     Q_ASSERT(xml.isStartElement() && xml.name() == "fanart");
 
     while (xml.readNextStartElement()) {
-        if (metadata->poster().isEmpty() && xml.name() == "thumb") {
-            metadata->setPoster(readUrlTag(xml));
+        if (metadata.poster().isEmpty() && xml.name() == "thumb") {
+            metadata.setPoster(readUrlTag(xml));
         } else {
             xml.skipCurrentElement();
         }
@@ -145,32 +145,30 @@ QUrl MovieMetadataFetcher::readUrlTag(QXmlStreamReader& xml)
     return QUrl(xml.readElementText(QXmlStreamReader::SkipChildElements));
 }
 
-bool MovieMetadataFetcher::fetchFileMetadata(MovieMetadata* metadata,
+bool MovieMetadataFetcher::fetchFileMetadata(MovieMetadata &metadata,
         const QFileInfo &fileInfo)
 {
     return false;
 }
 
-MovieMetadata* MovieMetadataFetcher::fetch(Source *source)
+void MovieMetadataFetcher::fetch(MovieMetadata &metadata, Source &source)
 {
-    MovieMetadata* metadata = new MovieMetadata();
-    QFileInfo fileInfo(source->url().toLocalFile());
+    QFileInfo fileInfo(source.url().toLocalFile());
     if (!fileInfo.exists()) {
-        return nullptr;
+        return;
     }
 
-    m_mediaInfoHandle.Open(source->url().toLocalFile().toStdString());
+    m_mediaInfoHandle.Open(source.url().toLocalFile().toStdString());
     std::string width(m_mediaInfoHandle.Get(Stream_Video, 0, "Width"));
     std::string height(m_mediaInfoHandle.Get(Stream_Video, 0, "Height"));
     m_mediaInfoHandle.Close();
 
-    source->setSizeBytes(fileInfo.size());
-    source->setQuality(QString::fromStdString(width + " x " + height));
+    source.setSizeBytes(fileInfo.size());
+    source.setQuality(QString::fromStdString(width + " x " + height));
     if (fetchNfoMetadata(metadata, fileInfo)) {
-        return metadata;
+        return;
     }
     if (fetchFileMetadata(metadata, fileInfo)) {
-        return metadata;
+        return;
     }
-    return metadata;
 }

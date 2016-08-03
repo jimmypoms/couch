@@ -20,13 +20,13 @@ class TrackMetadataFetcher
     MediaInfoDLL::MediaInfo m_mediaInfoHandle;
     QDir m_coverCacheDir;
 
-    bool fetchFileMetadata(TrackMetadata* metadata, const QFileInfo &fileInfo);
+    bool fetchFileMetadata(TrackMetadata &metadata, const QFileInfo &fileInfo);
 
 public:
     TrackMetadataFetcher();
     virtual ~TrackMetadataFetcher() = default;
 
-    TrackMetadata* fetch(Source *source);
+    void fetch(TrackMetadata &metadata, Source &source);
 };
 
 #endif /* TRACKMETADATAFETCHER_H_ */
