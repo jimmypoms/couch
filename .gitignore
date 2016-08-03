@@ -21,3 +21,5 @@ lib/
 
 ### Misc
 *.Doxyfile
+profile
+reports
