@@ -11,6 +11,7 @@
 #include "moviemetadatafetcher.h"
 
 #include <qlist.h>
+#include <qmutex.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
 #include <string>
@@ -49,6 +50,7 @@ private:
     static const std::string s_prefixGenre;
 
     MovieMetadataFetcher m_metadataFetcher;
+    QMutex m_mutex;
 
     void searchFinished(const Xapian::MSet &matches, const QString &id);
 

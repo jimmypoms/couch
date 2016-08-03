@@ -133,7 +133,9 @@ void LocalMusicProvider::indexFile(Xapian::WritableDatabase& writer,
     for (const QString genre : metadata.genres()) {
         indexer.index_text(genre.toStdString(), 1, s_prefixGenre);
     }
+    m_mutex.lock();
     writer.add_document(doc);
+    m_mutex.unlock();
 }
 
 CouchSourceList* LocalMusicProvider::load(MusicFilter* filter)
