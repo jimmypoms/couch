@@ -16,7 +16,6 @@ ApplicationWindow {
 
     visible: true
     visibility: "FullScreen"
-    flags: Qt.FramelessWindowHint
     width: dp(1024)
     height: dp(768)
 
