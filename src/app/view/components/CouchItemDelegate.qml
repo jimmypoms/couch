@@ -5,7 +5,7 @@ import "../components"
 Item {
     id: itemContainer
 
-    property var item: {}
+    property var item: ({})
     property string placeholder: ''
     property color containerColor: '#383F42'
     property alias imageList: previewImage.sourceList

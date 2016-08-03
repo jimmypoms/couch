@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Item {
     id: root
-    property var source: ''
+    property string source: ''
     property var sourceList: []
     property alias placeholder: placeholderImage.source
     clip: true
