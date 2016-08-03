@@ -110,6 +110,7 @@ void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer,
 {
     MovieMetadata *metadata = m_metadataFetcher.fetch(&source);
     if (!metadata || metadata->name().isEmpty()) {
+        delete metadata;
         return;
     }
 
@@ -134,6 +135,7 @@ void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer,
         indexer.index_text(genre.toStdString(), 1, s_prefixGenre);
     }
     writer.add_document(doc);
+    delete metadata;
 }
 
 CouchSourceList* LocalMovieProvider::load(Movie* movie)

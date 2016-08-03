@@ -111,7 +111,8 @@ void LocalMusicProvider::indexFile(Xapian::WritableDatabase& writer,
         Xapian::TermGenerator& indexer, Source &source)
 {
     TrackMetadata *metadata = m_metadataFetcher.fetch(&source);
-    if (metadata->name().isEmpty()) {
+    if (!metadata || metadata->name().isEmpty()) {
+        delete metadata;
         return;
     }
 
@@ -133,6 +134,7 @@ void LocalMusicProvider::indexFile(Xapian::WritableDatabase& writer,
         indexer.index_text(genre.toStdString(), 1, s_prefixGenre);
     }
     writer.add_document(doc);
+    delete metadata;
 }
 
 CouchSourceList* LocalMusicProvider::load(MusicFilter* filter)
