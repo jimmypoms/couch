@@ -53,7 +53,7 @@ int CouchItemList::rowCount(const QModelIndex& parent) const
 QVariant CouchItemList::data(const QModelIndex& index, int role) const
 {
     if (index.row() < 0 || index.row() >= m_items.count()) {
-        return QVariant();
+        return QVariant::Invalid;
     }
     if (Qt::UserRole == role) {
         QObject *item = m_items[index.row()].get();

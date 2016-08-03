@@ -40,10 +40,13 @@
         <file>music/MusicDetail.qml</file>
         <file>music/MusicGrid.qml</file>
         <file>music/MusicHome.qml</file>
+        <file>music/AlbumDelegate.qml</file>
+        <file>music/TrackDelegate.qml</file>
         <file>images/icon-minus.svg</file>
         <file>images/icon-plus.svg</file>
         <file>images/placeholder-movie.svg</file>
         <file>images/placeholder-music.svg</file>
+        <file>images/placeholder-album.svg</file>
         <file>images/icon-search.svg</file>
         <file>images/icon-play.svg</file>
         <file>images/icon-next.svg</file>

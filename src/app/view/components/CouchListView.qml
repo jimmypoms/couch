@@ -12,9 +12,11 @@ FocusScope {
 
     property alias delegate: listView.delegate
     property alias items: listView.model
+    property alias spacing: listView.spacing
     property real leftMargin: 0
     property real rightMargin: 0
     property bool loading: false
+    property int orientation: ListView.Horizontal
 
     Item {
         id: container
@@ -61,16 +63,13 @@ FocusScope {
             displayMarginEnd: scope.rightMargin
 
             focus: true
-            orientation: ListView.Horizontal
+            orientation: scope.orientation
 
             highlightMoveDuration: 150
-            populate: addTransition
             add: addTransition
             footer: Item {
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
                 CouchIndicator {
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.centerIn: parent
                     visible: scope.loading
                 }
             }
