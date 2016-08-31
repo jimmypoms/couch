@@ -19,19 +19,19 @@ QNetworkReply *NetworkProviderImpl::sendRequest(QNetworkRequest &request,
 {
     request.setUrl(cRequest.url());
     switch (cRequest.operation()) {
-    case QNetworkAccessManager::UnknownOperation:
-    case QNetworkAccessManager::GetOperation:
-        return m_nam.get(request);
-    case QNetworkAccessManager::HeadOperation:
-        return m_nam.head(request);
-    case QNetworkAccessManager::PutOperation:
-        return m_nam.put(request, cRequest.data());
-    case QNetworkAccessManager::PostOperation:
-        return m_nam.post(request, cRequest.data());
-    case QNetworkAccessManager::DeleteOperation:
-        return m_nam.deleteResource(request);
-    case QNetworkAccessManager::CustomOperation:
-        return m_nam.sendCustomRequest(request, cRequest.data());
+        case QNetworkAccessManager::UnknownOperation:
+        case QNetworkAccessManager::GetOperation:
+            return m_nam.get(request);
+        case QNetworkAccessManager::HeadOperation:
+            return m_nam.head(request);
+        case QNetworkAccessManager::PutOperation:
+            return m_nam.put(request, cRequest.data());
+        case QNetworkAccessManager::PostOperation:
+            return m_nam.post(request, cRequest.data());
+        case QNetworkAccessManager::DeleteOperation:
+            return m_nam.deleteResource(request);
+        case QNetworkAccessManager::CustomOperation:
+            return m_nam.sendCustomRequest(request, cRequest.data());
     }
     return m_nam.get(request);
 }

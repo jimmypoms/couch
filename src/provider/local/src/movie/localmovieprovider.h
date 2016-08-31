@@ -24,10 +24,10 @@
 
 namespace Xapian
 {
-class MSet;
-class QueryParser;
-class TermGenerator;
-class WritableDatabase;
+    class MSet;
+    class QueryParser;
+    class TermGenerator;
+    class WritableDatabase;
 } /* namespace Xapian */
 
 class LocalMovieProvider : public MovieProvider, public LocalProvider<Movie, MovieFilter>

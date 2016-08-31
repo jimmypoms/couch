@@ -46,23 +46,20 @@ void TrackMetadataFetcher::fetch(TrackMetadata &metadata, Source &source)
     fetchFileMetadata(metadata, fileInfo);
 }
 
-bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata &metadata,
-        const QFileInfo &fileInfo)
+bool TrackMetadataFetcher::fetchFileMetadata(TrackMetadata &metadata, const QFileInfo &fileInfo)
 {
     metadata.setArtist(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Performer")));
-    metadata.setAlbum(
-            QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Album")));
-    metadata.setTrack(
-            QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Track")));
+    metadata.setAlbum(QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Album")));
+    metadata.setTrack(QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Track")));
     metadata.setTrackPosition(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Track/Position")).toInt());
     metadata.setTrackTotal(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Track/Position_Total")).toInt());
     metadata.setDescription(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Description")));
-    QStringList genres = QString::fromStdString(
-            m_mediaInfoHandle.Get(Stream_General, 0, "Genre")).split(';');
+    QStringList genres =
+            QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Genre")).split(';');
     metadata.setGenres(genres);
     metadata.setYear(
             QString::fromStdString(m_mediaInfoHandle.Get(Stream_General, 0, "Recorded_Date")).toInt());

@@ -59,7 +59,8 @@ void CouchItemListSortProxy::setSourceModel(QAbstractItemModel* model)
     if (oldSource) {
         disconnect(oldSource, &CouchItemList::loadingChanged, this,
                 &CouchItemListSortProxy::loadingChanged);
-        disconnect(oldSource, &CouchItemList::itemsChanged, this, &CouchItemListSortProxy::itemsChanged);
+        disconnect(oldSource, &CouchItemList::itemsChanged, this,
+                &CouchItemListSortProxy::itemsChanged);
     }
 
     QSortFilterProxyModel::setSourceModel(model);

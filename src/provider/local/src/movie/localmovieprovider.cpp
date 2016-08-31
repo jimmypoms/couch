@@ -42,7 +42,7 @@ const std::string LocalMovieProvider::s_prefixActor = "A";
 const std::string LocalMovieProvider::s_prefixGenre = "G";
 
 LocalMovieProvider::LocalMovieProvider(QObject* parent) :
-        MovieProvider(parent, "local"),
+                MovieProvider(parent, "local"),
                 LocalProvider(
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
                                 + "/database/movie", "/misc/movies")
@@ -63,8 +63,7 @@ Xapian::Query LocalMovieProvider::buildQuery(Xapian::QueryParser &qp, const Movi
     return query;
 }
 
-Xapian::Query LocalMovieProvider::buildQuery(Xapian::QueryParser &qp,
-        const MovieFilter* filter)
+Xapian::Query LocalMovieProvider::buildQuery(Xapian::QueryParser &qp, const MovieFilter* filter)
 {
     Xapian::Query query = Xapian::Query::MatchAll;
     qp.add_prefix("", s_prefixTitle);
@@ -73,8 +72,7 @@ Xapian::Query LocalMovieProvider::buildQuery(Xapian::QueryParser &qp,
 
     if (!filter->text().isEmpty()) {
         query = qp.parse_query(filter->text().toStdString(),
-                Xapian::QueryParser::FLAG_DEFAULT
-                        | Xapian::QueryParser::FLAG_SPELLING_CORRECTION
+                Xapian::QueryParser::FLAG_DEFAULT | Xapian::QueryParser::FLAG_SPELLING_CORRECTION
                         | Xapian::QueryParser::FLAG_PARTIAL);
     }
 
@@ -105,8 +103,8 @@ void LocalMovieProvider::searchFinished(const Xapian::MSet& matches, const QStri
     Q_EMIT sourcesReady(sources, id);
 }
 
-void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer,
-        Xapian::TermGenerator& indexer, Source &source)
+void LocalMovieProvider::indexFile(Xapian::WritableDatabase& writer, Xapian::TermGenerator& indexer,
+        Source &source)
 {
     MovieMetadata metadata;
     m_metadataFetcher.fetch(metadata, source);

@@ -86,8 +86,7 @@ inline CouchItemList* Service<Item, Filter, P>::load(Filter *filter)
         P* provider = qobject_cast<P*>(object);
         CouchSourceList* sourceList = provider->load(filter);
         sourceList->setParent(list);
-        connect(sourceList, &CouchSourceList::sourcesLoaded, this,
-                &ServiceImpl::reduceSources);
+        connect(sourceList, &CouchSourceList::sourcesLoaded, this, &ServiceImpl::reduceSources);
 
         if (sourceList->sources().count() > 0) {
             Q_EMIT sourceList->sourcesLoaded();
@@ -105,8 +104,7 @@ inline CouchItemList* Service<Item, Filter, P>::load(Item *item)
         P* provider = qobject_cast<P*>(object);
         CouchSourceList* sourceList = provider->load(item);
         sourceList->setParent(list);
-        connect(sourceList, &CouchSourceList::sourcesLoaded, this,
-                &ServiceImpl::reduceSources);
+        connect(sourceList, &CouchSourceList::sourcesLoaded, this, &ServiceImpl::reduceSources);
 
         if (sourceList->sources().count() > 0) {
             Q_EMIT sourceList->sourcesLoaded();

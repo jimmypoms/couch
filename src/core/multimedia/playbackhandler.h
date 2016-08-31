@@ -71,8 +71,7 @@ protected:
                 &PlaybackHandler::positionChanged);
         connect(m_mediaPlayer, &QMediaPlayer::bufferStatusChanged, this,
                 &PlaybackHandler::bufferStatusChanged);
-        connect(m_mediaPlayer, &QMediaPlayer::stateChanged, this,
-                &PlaybackHandler::stateChanged);
+        connect(m_mediaPlayer, &QMediaPlayer::stateChanged, this, &PlaybackHandler::stateChanged);
     }
     void disconnectPlayerSignals()
     {

@@ -60,12 +60,12 @@ void VodoProvider::buildRequest(CouchRequest* request, const Movie* movie) const
 QString VodoProvider::orderToString(MovieFilter::Order order) const
 {
     switch (order) {
-    case MovieFilter::None:
-        return "";
-    case MovieFilter::Newest:
-        return "date_added";
-    case MovieFilter::Popular:
-        return "peers";
+        case MovieFilter::None:
+            return "";
+        case MovieFilter::Newest:
+            return "date_added";
+        case MovieFilter::Popular:
+            return "peers";
     }
     return "";
 }

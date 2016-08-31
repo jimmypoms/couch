@@ -7,7 +7,8 @@
 
 #include "couchproviderlist.h"
 
-CouchProviderList::CouchProviderList(QObject *parent) : QAbstractListModel(parent)
+CouchProviderList::CouchProviderList(QObject *parent) :
+        QAbstractListModel(parent)
 {
 }
 

@@ -30,11 +30,7 @@
 #include "couch/music/trackmetadata.h"
 #include "couch/serializableclass.h"
 
-const QStringList LocalMusicProvider::s_filenameFilters = {
-        "*.mp3",
-        "*.ogg",
-        "*.aac",
-        "*.wma",
+const QStringList LocalMusicProvider::s_filenameFilters = {"*.mp3", "*.ogg", "*.aac", "*.wma",
         "*.mpeg"};
 const std::string LocalMusicProvider::s_prefixTitle = "S";
 const std::string LocalMusicProvider::s_prefixAlbum = "G";
@@ -43,7 +39,7 @@ const std::string LocalMusicProvider::s_prefixYear = "Y";
 const std::string LocalMusicProvider::s_prefixGenre = "G";
 
 LocalMusicProvider::LocalMusicProvider(QObject* parent) :
-        MusicProvider(parent, "local"),
+                MusicProvider(parent, "local"),
                 LocalProvider(
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
                                 + "/database/music", "/misc/music")
@@ -64,8 +60,7 @@ Xapian::Query LocalMusicProvider::buildQuery(Xapian::QueryParser &qp, const Arti
     return query;
 }
 
-Xapian::Query LocalMusicProvider::buildQuery(Xapian::QueryParser &qp,
-        const MusicFilter* filter)
+Xapian::Query LocalMusicProvider::buildQuery(Xapian::QueryParser &qp, const MusicFilter* filter)
 {
     Xapian::Query query = Xapian::Query::MatchAll;
 
@@ -75,8 +70,7 @@ Xapian::Query LocalMusicProvider::buildQuery(Xapian::QueryParser &qp,
 
     if (!filter->text().isEmpty()) {
         query = qp.parse_query(filter->text().toStdString(),
-                Xapian::QueryParser::FLAG_DEFAULT
-                        | Xapian::QueryParser::FLAG_SPELLING_CORRECTION
+                Xapian::QueryParser::FLAG_DEFAULT | Xapian::QueryParser::FLAG_SPELLING_CORRECTION
                         | Xapian::QueryParser::FLAG_PARTIAL);
     }
 
@@ -107,8 +101,8 @@ void LocalMusicProvider::searchFinished(const Xapian::MSet &matches, const QStri
     Q_EMIT sourcesReady(sources, id);
 }
 
-void LocalMusicProvider::indexFile(Xapian::WritableDatabase& writer,
-        Xapian::TermGenerator& indexer, Source &source)
+void LocalMusicProvider::indexFile(Xapian::WritableDatabase& writer, Xapian::TermGenerator& indexer,
+        Source &source)
 {
     TrackMetadata metadata;
     m_metadataFetcher.fetch(metadata, source);

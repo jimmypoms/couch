@@ -39,7 +39,7 @@ private:
 
 public:
     explicit Source(QObject *parent = 0, QString name = "") :
-            SerializableClass(parent), m_itemMetadata(nullptr), m_name(name),
+                    SerializableClass(parent), m_itemMetadata(nullptr), m_name(name),
                     m_quality("undefined"), m_sizeBytes(0), m_url()
     {
     }

@@ -74,10 +74,9 @@ void CouchSourceList::addSources(const QList<Source*>& sources, const QString& i
 
     QList<Source*> added;
     for (const auto source : sources) {
-        auto it = std::find_if(m_sources.cbegin(), m_sources.cend(),
-                [source](Source* s)->bool {
-                    return *source == *s;
-                });
+        auto it = std::find_if(m_sources.cbegin(), m_sources.cend(), [source](Source* s)->bool {
+            return *source == *s;
+        });
         if (it == m_sources.cend()) {
             added.append(source);
         }

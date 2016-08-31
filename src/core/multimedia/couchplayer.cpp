@@ -8,10 +8,9 @@
 #include "../model/source.h"
 
 CouchPlayer::CouchPlayer(QObject *parent) :
-        QObject(parent), m_mediaPlayer(new QMediaPlayer()), m_handler(nullptr),
-                m_playbackStatus(PlaybackStatus::Stopped),
-                m_sourceStatus(SourceStatus::NoSource), m_lastError(Error::NoError),
-                m_currentSource(nullptr), m_currentItem(nullptr)
+                QObject(parent), m_mediaPlayer(new QMediaPlayer()), m_handler(nullptr),
+                m_playbackStatus(PlaybackStatus::Stopped), m_sourceStatus(SourceStatus::NoSource),
+                m_lastError(Error::NoError), m_currentSource(nullptr), m_currentItem(nullptr)
 {
 }
 
@@ -26,8 +25,7 @@ void CouchPlayer::addPlaybackHandler(PlaybackHandler *handler)
             &CouchPlayer::onHandlerBufferStatusChanged);
     connect(handler, &PlaybackHandler::mediaStatusChanged, this,
             &CouchPlayer::onHandlerMediaStatusChanged);
-    connect(handler, &PlaybackHandler::stateChanged, this,
-            &CouchPlayer::onHandlerStateChanged);
+    connect(handler, &PlaybackHandler::stateChanged, this, &CouchPlayer::onHandlerStateChanged);
     connect(handler, &PlaybackHandler::error, this, &CouchPlayer::onHandlerError);
     handler->setMediaPlayer(m_mediaPlayer.get());
 }
@@ -220,35 +218,35 @@ void CouchPlayer::onHandlerMediaStatusChanged(QMediaPlayer::MediaStatus status)
         return;
     }
     switch (status) {
-    case QMediaPlayer::UnknownMediaStatus:
-        setSourceStatus(SourceStatus::Unknown);
-        break;
-    case QMediaPlayer::NoMedia:
-        setSourceStatus(SourceStatus::NoSource);
-        break;
-    case QMediaPlayer::LoadedMedia:
-        setSourceStatus(SourceStatus::Ready);
-        break;
-    case QMediaPlayer::LoadingMedia:
-        setSourceStatus(SourceStatus::Loading);
-        break;
-    case QMediaPlayer::BufferedMedia:
-        setSourceStatus(SourceStatus::Ready);
-        break;
-    case QMediaPlayer::BufferingMedia:
-        setSourceStatus(SourceStatus::Buffering);
-        break;
-    case QMediaPlayer::StalledMedia:
-        setSourceStatus(SourceStatus::Stalled);
-        break;
-    case QMediaPlayer::EndOfMedia:
-        setSourceStatus(SourceStatus::EndOfSource);
-        break;
-    case QMediaPlayer::InvalidMedia:
-        setSourceStatus(SourceStatus::InvalidSource);
-        break;
-    default:
-        break;
+        case QMediaPlayer::UnknownMediaStatus:
+            setSourceStatus(SourceStatus::Unknown);
+            break;
+        case QMediaPlayer::NoMedia:
+            setSourceStatus(SourceStatus::NoSource);
+            break;
+        case QMediaPlayer::LoadedMedia:
+            setSourceStatus(SourceStatus::Ready);
+            break;
+        case QMediaPlayer::LoadingMedia:
+            setSourceStatus(SourceStatus::Loading);
+            break;
+        case QMediaPlayer::BufferedMedia:
+            setSourceStatus(SourceStatus::Ready);
+            break;
+        case QMediaPlayer::BufferingMedia:
+            setSourceStatus(SourceStatus::Buffering);
+            break;
+        case QMediaPlayer::StalledMedia:
+            setSourceStatus(SourceStatus::Stalled);
+            break;
+        case QMediaPlayer::EndOfMedia:
+            setSourceStatus(SourceStatus::EndOfSource);
+            break;
+        case QMediaPlayer::InvalidMedia:
+            setSourceStatus(SourceStatus::InvalidSource);
+            break;
+        default:
+            break;
     }
 }
 
@@ -258,17 +256,17 @@ void CouchPlayer::onHandlerStateChanged(QMediaPlayer::State state)
         return;
     }
     switch (state) {
-    case QMediaPlayer::StoppedState:
-        setPlaybackStatus(PlaybackStatus::Stopped);
-        break;
-    case QMediaPlayer::PlayingState:
-        setPlaybackStatus(PlaybackStatus::Playing);
-        break;
-    case QMediaPlayer::PausedState:
-        setPlaybackStatus(PlaybackStatus::Paused);
-        break;
-    default:
-        break;
+        case QMediaPlayer::StoppedState:
+            setPlaybackStatus(PlaybackStatus::Stopped);
+            break;
+        case QMediaPlayer::PlayingState:
+            setPlaybackStatus(PlaybackStatus::Playing);
+            break;
+        case QMediaPlayer::PausedState:
+            setPlaybackStatus(PlaybackStatus::Paused);
+            break;
+        default:
+            break;
     }
 }
 
@@ -278,24 +276,24 @@ void CouchPlayer::onHandlerError(QMediaPlayer::Error e)
         return;
     }
     switch (e) {
-    case QMediaPlayer::ResourceError:
-        m_lastError = Error::ResourceError;
-        break;
-    case QMediaPlayer::NetworkError:
-        m_lastError = Error::NetworkError;
-        break;
-    case QMediaPlayer::FormatError:
-        m_lastError = Error::FormatError;
-        break;
-    case QMediaPlayer::AccessDeniedError:
-        m_lastError = Error::AccessDeniedError;
-        break;
-    case QMediaPlayer::ServiceMissingError:
-        m_lastError = Error::ServiceMissingError;
-        break;
-    default:
-        m_lastError = Error::UnknownError;
-        break;
+        case QMediaPlayer::ResourceError:
+            m_lastError = Error::ResourceError;
+            break;
+        case QMediaPlayer::NetworkError:
+            m_lastError = Error::NetworkError;
+            break;
+        case QMediaPlayer::FormatError:
+            m_lastError = Error::FormatError;
+            break;
+        case QMediaPlayer::AccessDeniedError:
+            m_lastError = Error::AccessDeniedError;
+            break;
+        case QMediaPlayer::ServiceMissingError:
+            m_lastError = Error::ServiceMissingError;
+            break;
+        default:
+            m_lastError = Error::UnknownError;
+            break;
     }
     Q_EMIT error(m_lastError);
     qDebug() << "handler error" << errorString();

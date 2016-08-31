@@ -145,8 +145,7 @@ QUrl MovieMetadataFetcher::readUrlTag(QXmlStreamReader& xml)
     return QUrl(xml.readElementText(QXmlStreamReader::SkipChildElements));
 }
 
-bool MovieMetadataFetcher::fetchFileMetadata(MovieMetadata &metadata,
-        const QFileInfo &fileInfo)
+bool MovieMetadataFetcher::fetchFileMetadata(MovieMetadata &metadata, const QFileInfo &fileInfo)
 {
     return false;
 }
