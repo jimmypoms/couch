@@ -8,6 +8,8 @@
 #ifndef LOCALPROVIDER_H_
 #define LOCALPROVIDER_H_
 
+#include "couch/source.h"
+
 #include <qdebug.h>
 #include <qdir.h>
 #include <qdiriterator.h>
@@ -15,6 +17,7 @@
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qtconcurrentrun.h> // IWYU pragma: keep
+#include <qthread.h>
 #include <qurl.h>
 #include <sys/time.h>
 #include <xapian/database.h>
@@ -27,8 +30,6 @@
 #include <xapian/termgenerator.h>
 #include <atomic>
 #include <ctime>
-
-#include "couch/source.h"
 
 template<class Item, class Filter>
 class LocalProvider
@@ -58,8 +59,7 @@ public:
 };
 
 template<class Item, class Filter>
-inline LocalProvider<Item, Filter>::LocalProvider(const QString &database,
-        const QString &library) :
+inline LocalProvider<Item, Filter>::LocalProvider(const QString &database, const QString &library) :
         m_database(database), m_library(library), m_isIndexing(false)
 {
     try {
@@ -119,6 +119,7 @@ inline Xapian::MSet LocalProvider<Item, Filter>::searchDatabase(const Filter *fi
 template<class Item, class Filter>
 inline void LocalProvider<Item, Filter>::loadDatabase()
 {
+    QThread::sleep(1000);
     Xapian::WritableDatabase writer(m_database.toStdString(), Xapian::DB_OPEN);
     Xapian::TermGenerator indexer;
     Xapian::Stem stemmer("english");
@@ -148,8 +149,7 @@ inline void LocalProvider<Item, Filter>::loadDatabase()
 
     duration = (std::clock() - start) / (double) CLOCKS_PER_SEC;
     m_isIndexing = false;
-    qDebug() << "finished indexing" << count << "files in path:" << m_library << duration
-            << 's';
+    qDebug() << "finished indexing" << count << "files in path:" << m_library << duration << 's';
 }
 
 #endif /* LOCALPROVIDER_H_ */

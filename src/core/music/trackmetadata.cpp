@@ -7,9 +7,6 @@
 
 #include "trackmetadata.h"
 
-#include <qobjectdefs.h>
-#include <qstring.h>
-
 TrackMetadata::TrackMetadata(QObject *parent) :
         AlbumMetadata(parent)
 {

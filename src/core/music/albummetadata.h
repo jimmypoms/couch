@@ -10,7 +10,11 @@
 
 #include "artistmetadata.h"
 
+#include <qobject.h>
 #include <qobjectdefs.h>
+#include <qstring.h>
+#include <qstringlist.h>
+#include <qurl.h>
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
@@ -55,6 +59,21 @@ public:
 
     int trackTotal() const;
     void setTrackTotal(int trackTotal);
+
+    virtual bool lessThan(const ItemMetadata *other) noexcept
+    {
+        const AlbumMetadata *album = qobject_cast<const AlbumMetadata*>(other);
+        if (album) {
+            return lessThan(album);
+        }
+
+        return ArtistMetadata::lessThan(other);
+    }
+
+    bool lessThan(const AlbumMetadata *other) noexcept
+    {
+        return year() < other->year();
+    }
 };
 
 #endif /* ALBUMMETADATA_H_ */

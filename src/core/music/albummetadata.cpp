@@ -7,6 +7,8 @@
 
 #include "albummetadata.h"
 
+#include <qlist.h>
+
 AlbumMetadata::AlbumMetadata(QObject *parent) :
         ArtistMetadata(parent)
 {

@@ -1,7 +1,6 @@
 #include "item.h"
 
 #include "couchproviderlist.h"
-#include "itemmetadata.h"
 #include "source.h"
 
 #include <qlist.h>

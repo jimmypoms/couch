@@ -2,6 +2,7 @@
 #define ITEM_H
 
 #include "couchsourcelist.h"
+#include "itemmetadata.h"
 
 #include <qhash.h>
 #include <qobjectdefs.h>
@@ -51,6 +52,11 @@ public:
     bool operator==(const Item& other) noexcept
     {
         return *m_metadata == *(other.m_metadata);
+    }
+
+    bool operator<(const Item& other) noexcept
+    {
+        return *m_metadata < *(other.m_metadata);
     }
 
 public Q_SLOTS:

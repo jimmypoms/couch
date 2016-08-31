@@ -10,7 +10,7 @@ FocusScope {
     focus: true
 
     property real listMargin: dp(50)
-    property real albumDelegateWidth: parent.width * 0.23
+    property real albumDelegateWidth: parent.width * 0.31
     property real albumDelegateSpacing: parent.width * 0.01
 
     signal backClicked()

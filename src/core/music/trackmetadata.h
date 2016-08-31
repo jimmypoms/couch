@@ -10,6 +10,10 @@
 
 #include "albummetadata.h"
 
+#include <qobject.h>
+#include <qobjectdefs.h>
+#include <qstring.h>
+
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
 #else
@@ -40,6 +44,21 @@ public:
 
     int trackPosition() const;
     void setTrackPosition(int trackPosition);
+
+    virtual bool lessThan(const ItemMetadata *other) noexcept
+    {
+        const TrackMetadata *track = qobject_cast<const TrackMetadata*>(other);
+        if (track) {
+            return lessThan(track);
+        }
+
+        return AlbumMetadata::lessThan(other);
+    }
+
+    bool lessThan(const TrackMetadata *other) noexcept
+    {
+        return trackPosition() < other->trackPosition();
+    }
 };
 
 #endif /* TRACKMETADATA_H_ */

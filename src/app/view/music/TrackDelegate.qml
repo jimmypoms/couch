@@ -7,6 +7,21 @@ FocusScope {
     property var item: ({})
     focus: true
 
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        hoverEnabled: true
+
+        onEntered: {
+            if (itemContainer.GridView.view) {
+                itemContainer.GridView.view.currentIndex = index;
+            } else {
+                itemContainer.ListView.view.currentIndex = index;
+            }
+            itemContainer.forceActiveFocus()
+        }
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "grey"
@@ -28,7 +43,7 @@ FocusScope {
             font.pointSize: fp(10)
             verticalAlignment: Text.AlignVCenter
 
-            text: (item.metadata.trackPosition ? item.metadata.trackPosition + " - " : "") + item.name
+            text: (item && item.metadata.trackPosition ? item.metadata.trackPosition + " - " : "") + (item ? item.name : "")
             elide: Text.ElideRight
             color: "white"
         }
@@ -41,7 +56,7 @@ FocusScope {
             orientation: ListView.Horizontal
             layoutDirection: Qt.RightToLeft
 
-            model: item.providers()
+            model: item ? item.providers() : ([])
             delegate: CouchIconButton {
                 size: dp(40)
                 source: "../images/icon-play.svg"
@@ -49,21 +64,6 @@ FocusScope {
                 onClicked: {
                 }
             }
-        }
-    }
-
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        hoverEnabled: true
-
-        onEntered: {
-            if (itemContainer.GridView.view) {
-                itemContainer.GridView.view.currentIndex = index;
-            } else {
-                itemContainer.ListView.view.currentIndex = index;
-            }
-            itemContainer.forceActiveFocus()
         }
     }
 }

@@ -7,11 +7,14 @@
 
 #include "album.h"
 
-#include "artist.h"
 #include "track.h"
 #include "trackmetadata.h"
 
-#include <model/source.h>
+#include "couch/couchitemlistsortproxy.h"
+#include "couch/source.h"
+
+#include <qlist.h>
+#include <qnamespace.h>
 #include <qobject.h>
 #include <qstring.h>
 #include <algorithm>
@@ -56,6 +59,15 @@ void Album::addSource(const QObject* provider, Source* source)
 CouchItemList* Album::tracks()
 {
     return &m_tracks;
+}
+
+CouchItemListSortProxy* Album::tracksSortedByTrackPosition()
+{
+    CouchItemListSortProxy *proxyModel = new CouchItemListSortProxy();
+    proxyModel->setSourceModel(&m_tracks);
+    proxyModel->sort(Qt::AscendingOrder);
+
+    return proxyModel;
 }
 
 QString Album::genreToString(Album::Genre genre)

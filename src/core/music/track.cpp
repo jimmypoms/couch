@@ -7,7 +7,7 @@
 
 #include "track.h"
 
-#include "album.h"
+#include "album.h" // IWYU pragma: keep
 
 Track::Track(Album *parent) :
         Item(parent)

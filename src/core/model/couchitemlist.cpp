@@ -9,7 +9,6 @@
 
 #include "item.h"
 
-#include <qglobal.h>
 #include <quuid.h>
 #include <qvariant.h>
 #include <algorithm>
@@ -46,7 +45,9 @@ QHash<int, QByteArray> CouchItemList::roleNames() const
 
 int CouchItemList::rowCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent);
+    if (parent.isValid()) {
+        return 0;
+    }
     return m_items.count();
 }
 
@@ -59,7 +60,7 @@ QVariant CouchItemList::data(const QModelIndex& index, int role) const
         QObject *item = m_items[index.row()].get();
         return QVariant::fromValue(item);
     }
-    return QVariant();
+    return QVariant::Invalid;
 }
 
 void CouchItemList::addItems(const QList<std::shared_ptr<Item> > &items, const QString &id)

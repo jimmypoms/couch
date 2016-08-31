@@ -1,12 +1,12 @@
 #ifndef ITEMMETADATA_H
 #define ITEMMETADATA_H
 
+#include "couch/serializableclass.h"
+
 #include <qdatetime.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
 #include <qurl.h>
-
-#include "../couch/serializableclass.h"
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
@@ -81,6 +81,16 @@ public:
 
     void merge(const ItemMetadata *metadata);
     bool operator==(const ItemMetadata& other) noexcept;
+
+    bool operator<(const ItemMetadata& other) noexcept
+    {
+        return lessThan(&other);
+    }
+
+    virtual bool lessThan(const ItemMetadata* other) noexcept
+    {
+        return name() < other->name();
+    }
 };
 
 #endif // ITEMMETADATA_H

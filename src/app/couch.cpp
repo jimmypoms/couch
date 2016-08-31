@@ -1,18 +1,19 @@
 #include "couch.h"
 
-#include <qqml.h>
-
 #include "couch/couchactionlist.h"
 #include "couch/couchitemlist.h"
+#include "couch/couchitemlistsortproxy.h"
 #include "couch/couchplayer.h"
-#include "couch/couchsourcelist.h"
 #include "couch/couchproviderlist.h"
+#include "couch/couchsourcelist.h"
 #include "couch/itemmetadata.h"
 #include "couch/movie/movie.h"
 #include "couch/movie/moviefilter.h"
 #include "couch/music/artist.h"
 #include "couch/music/musicfilter.h"
 #include "couch/source.h"
+
+#include <qqml.h>
 
 Couch::Couch(QObject *parent) :
         QObject(parent)
@@ -24,12 +25,14 @@ Couch::Couch(QObject *parent) :
 
     qmlRegisterUncreatableType<CouchItemList>("org.couch.itemlist", 1, 0, "CouchItemList",
             "impossible to create itemlist from qml");
-    qmlRegisterUncreatableType<CouchSourceList>("org.couch.sourcelist", 1, 0,
-            "CouchSourceList", "impossible to create sourcelist from qml");
+    qmlRegisterUncreatableType<CouchSourceList>("org.couch.sourcelist", 1, 0, "CouchSourceList",
+            "impossible to create sourcelist from qml");
     qmlRegisterUncreatableType<CouchProviderList>("org.couch.providerlist", 1, 0,
             "CouchProviderList", "impossible to create providerlist from qml");
-    qmlRegisterUncreatableType<CouchActionList>("org.couch.actionlist", 1, 0,
-            "CouchActionList", "impossible to create actionlist from qml");
+    qmlRegisterUncreatableType<CouchActionList>("org.couch.actionlist", 1, 0, "CouchActionList",
+            "impossible to create actionlist from qml");
+    qmlRegisterUncreatableType<CouchItemListSortProxy>("org.couch.itemlistsortproxy", 1, 0,
+            "CouchItemListSortProxy", "impossible to create CouchItemListSortProxy from qml");
 
     qmlRegisterUncreatableType<ItemMetadata>("org.couch.metadata", 1, 0, "Metadata",
             "impossible to create metadata from qml");

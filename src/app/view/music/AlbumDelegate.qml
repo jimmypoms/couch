@@ -48,25 +48,22 @@ FocusScope {
         }
 
         CouchPlaceholderImage {
-            anchors.fill: parent
-            verticalAlignment: Image.AlignTop
+            id: cover
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            height: parent.height
+            width: parent.height
 
             source: item.cover
             placeholder: "../images/placeholder-album.svg"
         }
 
-        Rectangle {
-            id: curtain
-            anchors.fill: parent
-            height: dp(50)
-            color: "black"
-            opacity: 0.5
-        }
-
         Text {
             anchors.margins: dp(5)
-            anchors.left: curtain.left
-            anchors.right: curtain.right
+            anchors.left: cover.right
+            anchors.right: parent.right
+            anchors.top: parent.top
             anchors.bottom: playButton.top
             color: "white"
             font.weight: Font.Light
@@ -79,10 +76,10 @@ FocusScope {
 
         CouchButton {
             id: playButton
-            anchors.margins: dp(5)
-            anchors.bottom: parent.bottom
+            anchors.leftMargin: dp(5)
             anchors.right: parent.right
-            anchors.left: parent.left
+            anchors.left: cover.right
+            anchors.bottom: parent.bottom
             text: "play all"
             focus: true
 
@@ -109,7 +106,7 @@ FocusScope {
         anchors.bottom: parent.bottom
         orientation: ListView.Vertical
 
-        items: item.tracks
+        items: item.tracksSortedByTrackPosition()
         loading: items.loading
         delegate: TrackDelegate {
             height: dp(50)

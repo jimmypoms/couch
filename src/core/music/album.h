@@ -8,13 +8,14 @@
 #ifndef ALBUM_H_
 #define ALBUM_H_
 
+#include "couch/couchitemlist.h"
+#include "couch/item.h"
+
 #include <qobjectdefs.h>
 #include <qurl.h>
 
-#include "../model/couchitemlist.h"
-#include "../model/item.h"
-
 class Artist;
+class CouchItemListSortProxy;
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
@@ -71,6 +72,9 @@ public:
     void addSource(const QObject* provider, Source* source);
 
     CouchItemList* tracks();
+
+    Q_INVOKABLE
+    CouchItemListSortProxy *tracksSortedByTrackPosition();
 
     static QString genreToString(Album::Genre genre);
 };
