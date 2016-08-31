@@ -1,6 +1,10 @@
 TEMPLATE = lib
 TARGET = couch
 
+CLIBDESTDIR = ../../lib/couch
+CBINDESTDIR = ../../bin
+CINCLUDEPATH = ../../include
+
 CONFIG(debug, debug|release) {
     CBUILDDIR = ../../build/debug
 } else {
@@ -12,13 +16,14 @@ MOC_DIR = $$CBUILDDIR/.moc
 RCC_DIR = $$CBUILDDIR/.rcc
 UI_DIR = $$CBUILDDIR/.ui
 
-CLIBDESTDIR = ../../lib/couch
-
 QT += core network multimedia
 
 CONFIG += c++11
 CONFIG += debug_and_release
 DESTDIR = $$CLIBDESTDIR
+
+DEPENDPATH += $$CINCLUDEPATH
+INCLUDEPATH += $$CINCLUDEPATH
 
 DEFINES += COUCH_LIBRARY
 

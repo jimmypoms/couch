@@ -10,7 +10,8 @@
 #include "album.h"
 #include "trackmetadata.h"
 
-#include <model/source.h>
+#include "couch/source.h"
+
 #include <qobject.h>
 #include <qstring.h>
 #include <algorithm>

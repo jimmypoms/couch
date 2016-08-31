@@ -1,12 +1,12 @@
 #ifndef PROVIDERINTERFACE_H_
 #define PROVIDERINTERFACE_H_
 
-#include <qobject.h>
+#include "couch/movie/movie.h"
+#include "couch/movie/moviefilter.h"
+#include "couch/music/artist.h"
+#include "couch/music/musicfilter.h"
 
-#include "../movie/movie.h"
-#include "../movie/moviefilter.h"
-#include "../music/artist.h"
-#include "../music/musicfilter.h"
+#include <qobject.h>
 
 class CouchSourceList;
 class QString;

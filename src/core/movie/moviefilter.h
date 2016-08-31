@@ -3,9 +3,9 @@
 
 #include "movie.h"
 
-#include <qobjectdefs.h>
+#include "couch/filter.h"
 
-#include "../model/filter.h"
+#include <qobjectdefs.h>
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT

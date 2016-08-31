@@ -5,11 +5,11 @@
 #include "moviefilter.h"
 #include "moviemetadata.h"
 
+#include "couch/cycliccache.h"
+#include "couch/service.h"
+
 #include <qobjectdefs.h>
 #include <qstring.h>
-
-#include "../couch/cycliccache.h"
-#include "../model/service.h"
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT

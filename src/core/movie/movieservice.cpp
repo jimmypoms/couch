@@ -1,10 +1,11 @@
 #include "movieservice.h"
 
-#include "../model/couchactionlist.h"
-#include "../model/couchplayaction.h"
-#include "../model/source.h"
+#include "couch/couchactionlist.h"
+#include "couch/couchplayaction.h"
+#include "couch/source.h"
 
 #include <qlist.h>
+#include <qurl.h>
 #include <memory>
 #include <unordered_map>
 

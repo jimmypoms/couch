@@ -8,9 +8,9 @@
 #ifndef TRACK_H_
 #define TRACK_H_
 
-#include <qobjectdefs.h>
+#include "couch/item.h"
 
-#include "../model/item.h"
+#include <qobjectdefs.h>
 
 class Album;
 

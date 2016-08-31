@@ -1,9 +1,9 @@
 #ifndef MOVIE_H
 #define MOVIE_H
 
-#include <qobjectdefs.h>
+#include "couch/item.h"
 
-#include "../model/item.h"
+#include <qobjectdefs.h>
 
 class MovieMetadata;
 

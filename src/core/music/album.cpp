@@ -7,6 +7,7 @@
 
 #include "album.h"
 
+#include "artist.h" // IWYU pragma: keep
 #include "track.h"
 #include "trackmetadata.h"
 

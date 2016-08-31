@@ -11,10 +11,10 @@
 #include "artist.h"
 #include "musicfilter.h"
 
+#include "couch/networkprovider.h"
+
 #include <qobjectdefs.h>
 #include <qstring.h>
-
-#include "../model/networkprovider.h"
 
 class MusicNetworkProvider : public NetworkProvider<Artist, MusicFilter>
 {

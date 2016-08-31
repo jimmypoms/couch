@@ -9,14 +9,13 @@
 
 #include "trackmetadata.h"
 
-#include <model/source.h>
+#include "couch/source.h"
+
 #include <qdebug.h>
-#include <qlist.h>
 #include <qlogging.h>
 #include <qobject.h>
 #include <qurl.h>
 #include <algorithm>
-#include <memory>
 #include <unordered_map>
 
 MusicService::MusicService(QObject* parent) :

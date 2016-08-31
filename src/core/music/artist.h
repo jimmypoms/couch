@@ -8,12 +8,12 @@
 #ifndef ARTIST_H_
 #define ARTIST_H_
 
+#include "couch/couchitemlist.h"
+#include "couch/item.h"
+
 #include <qlist.h>
 #include <qobjectdefs.h>
 #include <qurl.h>
-
-#include "../model/couchitemlist.h"
-#include "../model/item.h"
 
 class ArtistMetadata;
 

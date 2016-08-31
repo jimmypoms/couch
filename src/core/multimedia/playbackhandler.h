@@ -3,6 +3,8 @@
 
 #include "playbackhandlerinterface.h"
 
+#include "couch/source.h"
+
 #include <qglobal.h>
 #include <qmediaplayer.h>
 #include <qmimedatabase.h>
@@ -10,8 +12,6 @@
 #include <qobjectdefs.h>
 #include <qstring.h>
 #include <qurl.h>
-
-#include "../model/source.h"
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT

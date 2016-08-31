@@ -1,11 +1,12 @@
 #include "couchplayer.h"
 
+#include "couch/item.h"
+#include "couch/source.h"
+
 #include <qdebug.h>
 #include <qlogging.h>
 #include <qobject.h>
-
-#include "../model/item.h"
-#include "../model/source.h"
+#include <qurl.h>
 
 CouchPlayer::CouchPlayer(QObject *parent) :
                 QObject(parent), m_mediaPlayer(new QMediaPlayer()), m_handler(nullptr),

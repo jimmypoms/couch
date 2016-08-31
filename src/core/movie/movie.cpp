@@ -2,9 +2,10 @@
 
 #include "moviemetadata.h"
 
-#include "../model/source.h"
+#include "couch/source.h"
 
 #include <qstring.h>
+#include <qurl.h>
 
 Movie::Movie(QObject* parent) :
         Item(parent), m_trailerSource(nullptr)

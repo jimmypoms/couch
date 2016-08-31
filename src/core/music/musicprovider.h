@@ -8,11 +8,11 @@
 #ifndef MUSICPROVIDER_H_
 #define MUSICPROVIDER_H_
 
+#include "couch/provider.h"
+
 #include <qobject.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
-
-#include "../model/provider.h"
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
