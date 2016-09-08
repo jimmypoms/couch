@@ -10,7 +10,7 @@
 #include <qlist.h>
 
 AlbumMetadata::AlbumMetadata(QObject *parent) :
-        ArtistMetadata(parent)
+        ArtistMetadata(parent), m_trackTotal(0)
 {
 }
 

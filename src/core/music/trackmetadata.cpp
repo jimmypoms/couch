@@ -8,7 +8,7 @@
 #include "trackmetadata.h"
 
 TrackMetadata::TrackMetadata(QObject *parent) :
-        AlbumMetadata(parent)
+        AlbumMetadata(parent), m_trackPosition(0)
 {
 }
 
