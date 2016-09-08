@@ -106,7 +106,7 @@ FocusScope {
         anchors.bottom: parent.bottom
         orientation: ListView.Vertical
 
-        items: item.tracksSortedByTrackPosition()
+        items: item.tracks
         loading: items.loading
         delegate: TrackDelegate {
             height: dp(50)

@@ -2,7 +2,6 @@
 
 #include "couch/couchactionlist.h"
 #include "couch/couchitemlist.h"
-#include "couch/couchitemlistsortproxy.h"
 #include "couch/couchplayer.h"
 #include "couch/couchproviderlist.h"
 #include "couch/couchsourcelist.h"
@@ -31,8 +30,6 @@ Couch::Couch(QObject *parent) :
             "CouchProviderList", "impossible to create providerlist from qml");
     qmlRegisterUncreatableType<CouchActionList>("org.couch.actionlist", 1, 0, "CouchActionList",
             "impossible to create actionlist from qml");
-    qmlRegisterUncreatableType<CouchItemListSortProxy>("org.couch.itemlistsortproxy", 1, 0,
-            "CouchItemListSortProxy", "impossible to create CouchItemListSortProxy from qml");
 
     qmlRegisterUncreatableType<ItemMetadata>("org.couch.metadata", 1, 0, "Metadata",
             "impossible to create metadata from qml");

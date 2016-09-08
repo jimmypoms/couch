@@ -58,11 +58,11 @@ void ServiceImpl::reduceSources()
                 continue;
             }
             auto item = createItem(source);
+            item->addSource(provider, source);
             m_items.append(std::shared_ptr<Item>(item));
             if (m_items.size() > m_maxItemCacheSize) {
                 m_items.pop_front();
             }
-            item->addSource(provider, source);
             list.append(m_items.last());
         } else {
             auto item = *it;

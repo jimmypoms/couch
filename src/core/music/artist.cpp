@@ -42,8 +42,8 @@ void Artist::addSource(const QObject* provider, Source* source)
         std::shared_ptr<Album> album(new Album(this));
         album->setName(albumName);
         album->setMetadata(std::shared_ptr<ItemMetadata>(new AlbumMetadata()));
-        m_albums.append(album);
         album->addSource(provider, source);
+        m_albums.append(album);
     } else {
         (*it)->addSource(provider, source);
     }

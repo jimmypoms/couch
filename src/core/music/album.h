@@ -15,7 +15,6 @@
 #include <qurl.h>
 
 class Artist;
-class CouchItemListSortProxy;
 
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
@@ -37,7 +36,7 @@ Q_SIGNALS:
 
 private:
     QUrl m_cover;
-    CouchItemList m_tracks;
+    SortedCouchItemList m_tracks;
 
 public:
     enum Genre
@@ -72,9 +71,6 @@ public:
     void addSource(const QObject* provider, Source* source);
 
     CouchItemList* tracks();
-
-    Q_INVOKABLE
-    CouchItemListSortProxy *tracksSortedByTrackPosition();
 
     static QString genreToString(Album::Genre genre);
 };

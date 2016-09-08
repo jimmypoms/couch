@@ -11,7 +11,6 @@
 #include "track.h"
 #include "trackmetadata.h"
 
-#include "couch/couchitemlistsortproxy.h"
 #include "couch/source.h"
 
 #include <qlist.h>
@@ -46,8 +45,8 @@ void Album::addSource(const QObject* provider, Source* source)
         std::shared_ptr<Item> track(new Track(this));
         track->setName(trackName);
         track->setMetadata(std::shared_ptr<ItemMetadata>(new TrackMetadata()));
-        m_tracks.append(track);
         track->addSource(provider, source);
+        m_tracks.append(track);
     } else {
         (*it)->addSource(provider, source);
     }
@@ -60,15 +59,6 @@ void Album::addSource(const QObject* provider, Source* source)
 CouchItemList* Album::tracks()
 {
     return &m_tracks;
-}
-
-CouchItemListSortProxy* Album::tracksSortedByTrackPosition()
-{
-    CouchItemListSortProxy *proxyModel = new CouchItemListSortProxy();
-    proxyModel->setSourceModel(&m_tracks);
-    proxyModel->sort(Qt::AscendingOrder);
-
-    return proxyModel;
 }
 
 QString Album::genreToString(Album::Genre genre)

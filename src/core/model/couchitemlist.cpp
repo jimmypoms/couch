@@ -8,7 +8,10 @@
 #include "couchitemlist.h"
 
 #include "item.h"
+#include "itemmetadata.h"
 
+#include <qalgorithms.h>
+#include <qglobal.h>
 #include <quuid.h>
 #include <qvariant.h>
 #include <algorithm>
@@ -99,16 +102,6 @@ void CouchItemList::insert(int row, const std::shared_ptr<Item> &item)
     endInsertRows();
 }
 
-void CouchItemList::append(const QList<std::shared_ptr<Item> >& items)
-{
-    if (items.isEmpty()) {
-        return;
-    }
-    beginInsertRows(QModelIndex(), rowCount(), rowCount() + items.count() - 1);
-    m_items.append(items);
-    endInsertRows();
-}
-
 void CouchItemList::append(const std::shared_ptr<Item> &item)
 {
     insert(rowCount(), item);
@@ -122,4 +115,27 @@ QList<std::shared_ptr<Item> >::const_iterator CouchItemList::cbegin()
 QList<std::shared_ptr<Item> >::const_iterator CouchItemList::cend()
 {
     return m_items.cend();
+}
+
+SortedCouchItemList::SortedCouchItemList(int loadingCount, QString id, Qt::SortOrder order) :
+        CouchItemList(loadingCount, id), m_order(order)
+{
+}
+
+void SortedCouchItemList::insert(int row, const std::shared_ptr<Item>& item)
+{
+    Q_UNUSED(row);
+    QList<std::shared_ptr<Item> >::const_iterator i;
+    auto lessThan = [item](const std::shared_ptr<Item>& left, const std::shared_ptr<Item>& right) -> bool {
+        return left->metadata()->lessThan(right->metadata());
+    };
+    if (m_order == Qt::AscendingOrder) {
+        i = qLowerBound(m_items.cbegin(), m_items.cend(), item, lessThan);
+    } else {
+        i = qUpperBound(m_items.cbegin(), m_items.cend(), item, lessThan);
+    }
+    int index = i - m_items.cbegin();
+    beginInsertRows(QModelIndex(), index, index);
+    m_items.insert(index, item);
+    endInsertRows();
 }

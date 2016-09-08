@@ -34,7 +34,6 @@ SOURCES += \
     model/provider.cpp \
     model/networkprovider.cpp \
     model/couchitemlist.cpp \
-    model/couchitemlistsortproxy.cpp \
     model/couchsourcelist.cpp \
     model/couchproviderlist.cpp \
     model/couchactionlist.cpp \
@@ -73,7 +72,6 @@ HEADERS += \
     model/provider.h \
     model/networkprovider.h \
     model/couchitemlist.h \
-    model/couchitemlistsortproxy.h \
     model/couchsourcelist.h \
     model/couchproviderlist.h \
     model/couchactionlist.h \

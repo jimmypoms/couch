@@ -40,10 +40,12 @@ Q_SIGNALS:
 
 private:
     QString m_id;
-    QList<std::shared_ptr<Item> > m_items;
 
     int m_loadingCount;
     std::atomic_int m_loaded;
+
+protected:
+    QList<std::shared_ptr<Item> > m_items;
 
 public:
     CouchItemList(int loadingCount = 0, QString id = "");
@@ -59,12 +61,25 @@ public:
 
 public Q_SLOTS:
     void addItems(const QList<std::shared_ptr<Item> > &items, const QString &id = "");
-    void insert(int row, const std::shared_ptr<Item> &item);
-    void append(const QList<std::shared_ptr<Item> > &items);
+    virtual void insert(int row, const std::shared_ptr<Item> &item);
     void append(const std::shared_ptr<Item> &item);
 
     QList<std::shared_ptr<Item> >::const_iterator cbegin();
     QList<std::shared_ptr<Item> >::const_iterator cend();
 };
 
+class COUCH_LIBRARY_EXPORT SortedCouchItemList : public CouchItemList
+{
+Q_OBJECT
+
+private:
+    Qt::SortOrder m_order;
+
+public:
+    SortedCouchItemList(int loadingCount = 0, QString id = "", Qt::SortOrder order = Qt::AscendingOrder);
+    virtual ~SortedCouchItemList() = default;
+
+public Q_SLOTS:
+    void insert(int row, const std::shared_ptr<Item> &item);
+};
 #endif /* COUCHITEMLIST_H_ */
