@@ -122,6 +122,19 @@ SortedCouchItemList::SortedCouchItemList(int loadingCount, QString id, Qt::SortO
 {
 }
 
+Qt::SortOrder SortedCouchItemList::order() const
+{
+    return m_order;
+}
+
+void SortedCouchItemList::setOrder(Qt::SortOrder order)
+{
+    if (m_order != order) {
+        m_order = order;
+        Q_EMIT orderChanged();
+    }
+}
+
 void SortedCouchItemList::insert(int row, const std::shared_ptr<Item>& item)
 {
     Q_UNUSED(row);

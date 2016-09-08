@@ -21,6 +21,7 @@ Artist::Artist(QObject *parent) :
         Item(parent)
 {
     m_albums.setParent(this);
+    m_albums.setOrder(Qt::DescendingOrder);
 }
 
 ArtistMetadata* Artist::metadata() const

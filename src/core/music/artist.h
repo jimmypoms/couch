@@ -35,7 +35,7 @@ Q_SIGNALS:
     void albumCoversChanged();
 
 private:
-    CouchItemList m_albums;
+    SortedCouchItemList m_albums;
 
 public:
     explicit Artist(QObject *parent);

@@ -72,12 +72,20 @@ class COUCH_LIBRARY_EXPORT SortedCouchItemList : public CouchItemList
 {
 Q_OBJECT
 
+Q_PROPERTY(Qt::SortOrder order READ order NOTIFY orderChanged)
+
+Q_SIGNALS:
+    void orderChanged();
+
 private:
     Qt::SortOrder m_order;
 
 public:
     SortedCouchItemList(int loadingCount = 0, QString id = "", Qt::SortOrder order = Qt::AscendingOrder);
     virtual ~SortedCouchItemList() = default;
+
+    Qt::SortOrder order() const;
+    void setOrder(Qt::SortOrder order);
 
 public Q_SLOTS:
     void insert(int row, const std::shared_ptr<Item> &item);
