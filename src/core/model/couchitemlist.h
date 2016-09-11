@@ -64,8 +64,11 @@ public Q_SLOTS:
     virtual void insert(int row, const std::shared_ptr<Item> &item);
     void append(const std::shared_ptr<Item> &item);
 
-    QList<std::shared_ptr<Item> >::const_iterator cbegin();
-    QList<std::shared_ptr<Item> >::const_iterator cend();
+    QList<std::shared_ptr<Item> >::iterator begin();
+    QList<std::shared_ptr<Item> >::iterator end();
+
+    QList<std::shared_ptr<Item> >::const_iterator cbegin() const;
+    QList<std::shared_ptr<Item> >::const_iterator cend() const;
 };
 
 class COUCH_LIBRARY_EXPORT SortedCouchItemList : public CouchItemList

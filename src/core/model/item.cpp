@@ -61,13 +61,18 @@ void Item::addSource(const QObject* provider, Source* source)
     }
 }
 
-CouchSourceList *Item::sources(QObject* provider)
+CouchSourceList *Item::sources(QObject* provider) const
 {
     if (m_sources.contains(provider)) {
         return m_sources[provider];
     } else {
         return m_emptySourceList;
     }
+}
+
+CouchItemList* Item::childItems()
+{
+    return nullptr;
 }
 
 CouchProviderList *Item::providers() const

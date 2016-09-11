@@ -144,6 +144,7 @@ FocusScope {
 
                     color: "orange"
                     onClicked: {
+                        player.play(artist);
                     }
                 }
 

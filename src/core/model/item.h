@@ -9,6 +9,7 @@
 #include <qstring.h>
 #include <memory>
 
+class CouchItemList;
 class CouchProviderList;
 
 #if defined(COUCH_LIBRARY)
@@ -48,6 +49,7 @@ public:
     void setMetadata(std::shared_ptr<ItemMetadata> metadata);
 
     virtual void addSource(const QObject* provider, Source* source);
+    virtual CouchItemList* childItems();
 
     bool operator==(const Item& other) noexcept
     {
@@ -60,7 +62,7 @@ public:
     }
 
 public Q_SLOTS:
-    CouchSourceList *sources(QObject *provider);
+    CouchSourceList *sources(QObject *provider) const;
     CouchProviderList* providers() const;
 
 };

@@ -48,6 +48,7 @@ SOURCES += \
     multimedia/playbackhandler.cpp \
     multimedia/playbackhandlerinterface.cpp \
     multimedia/couchplayer.cpp \
+    multimedia/couchplaylist.cpp \
     movie/movie.cpp \
     movie/moviefilter.cpp \
     movie/moviemetadata.cpp \
@@ -86,6 +87,7 @@ HEADERS += \
     multimedia/playbackhandler.h \
     multimedia/playbackhandlerinterface.h \
     multimedia/couchplayer.h \
+    multimedia/couchplaylist.h \
     movie/movie.h \
     movie/moviefilter.h \
     movie/moviemetadata.h \

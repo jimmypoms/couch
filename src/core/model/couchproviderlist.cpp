@@ -54,6 +54,26 @@ void CouchProviderList::append(const QList<QObject*>& providers)
     endInsertRows();
 }
 
+QList<QObject*>::iterator CouchProviderList::begin()
+{
+    return m_providers.begin();
+}
+
+QList<QObject*>::iterator CouchProviderList::end()
+{
+    return m_providers.end();
+}
+
+QList<QObject*>::const_iterator CouchProviderList::cbegin() const
+{
+    return m_providers.cbegin();
+}
+
+QList<QObject*>::const_iterator CouchProviderList::cend() const
+{
+    return m_providers.cend();
+}
+
 void CouchProviderList::append(QObject* provider)
 {
     m_providers.append(provider);

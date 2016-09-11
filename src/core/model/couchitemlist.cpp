@@ -107,12 +107,22 @@ void CouchItemList::append(const std::shared_ptr<Item> &item)
     insert(rowCount(), item);
 }
 
-QList<std::shared_ptr<Item> >::const_iterator CouchItemList::cbegin()
+QList<std::shared_ptr<Item> >::iterator CouchItemList::begin()
+{
+    return m_items.begin();
+}
+
+QList<std::shared_ptr<Item> >::iterator CouchItemList::end()
+{
+    return m_items.end();
+}
+
+QList<std::shared_ptr<Item> >::const_iterator CouchItemList::cbegin() const
 {
     return m_items.cbegin();
 }
 
-QList<std::shared_ptr<Item> >::const_iterator CouchItemList::cend()
+QList<std::shared_ptr<Item> >::const_iterator CouchItemList::cend() const
 {
     return m_items.cend();
 }

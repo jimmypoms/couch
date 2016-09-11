@@ -111,6 +111,16 @@ void CouchSourceList::append(const QList<Source*>& sources)
     endInsertRows();
 }
 
+QList<Source*>::iterator CouchSourceList::begin()
+{
+    return m_sources.begin();
+}
+
+QList<Source*>::iterator CouchSourceList::end()
+{
+    return m_sources.end();
+}
+
 QList<Source*>::const_iterator CouchSourceList::cbegin() const
 {
     return m_sources.cbegin();

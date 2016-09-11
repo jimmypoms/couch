@@ -47,6 +47,7 @@ public:
     QList<QUrl> albumCovers() const;
 
     CouchItemList *albums();
+    CouchItemList* childItems();
 };
 
 #endif /* ARTIST_H_ */

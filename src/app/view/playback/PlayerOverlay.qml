@@ -139,7 +139,35 @@ Item {
                     }
                 }
                 CouchIconButton {
+                    id: previousButton
+                    visible: player.hasPrevious
+                    focusColor: "grey"
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "../images/icon-previous.svg"
+                    margins: dp(20)
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: dp(60)
+
+                    Keys.enabled: !autohide.shouldHide
+                    Keys.onLeftPressed: {
+                        autohide.reset();
+                        playButton.forceActiveFocus();
+                    }
+                    Keys.onRightPressed: {
+                        autohide.reset();
+                        nextButton.forceActiveFocus();
+                    }
+                    Keys.onUpPressed: {
+                        autohide.reset();
+                        progressSlider.forceActiveFocus();
+                    }
+                    onClicked: {
+                        player.previous();
+                    }
+                }
+                CouchIconButton {
                     id: nextButton
+                    visible: player.hasNext
                     focusColor: "grey"
                     anchors.verticalCenter: parent.verticalCenter
                     source: "../images/icon-next.svg"
@@ -150,11 +178,14 @@ Item {
                     Keys.enabled: !autohide.shouldHide
                     Keys.onLeftPressed: {
                         autohide.reset();
-                        playButton.forceActiveFocus();
+                        previousButton.forceActiveFocus();
                     }
                     Keys.onUpPressed: {
                         autohide.reset();
                         progressSlider.forceActiveFocus();
+                    }
+                    onClicked: {
+                        player.next();
                     }
                 }
                 Row {

@@ -28,6 +28,12 @@ public:
     CouchProviderList(QObject *parent = 0);
     virtual ~CouchProviderList() = default;
 
+    QList<QObject*>::iterator begin();
+    QList<QObject*>::iterator end();
+
+    QList<QObject*>::const_iterator cbegin() const;
+    QList<QObject*>::const_iterator cend() const;
+
     QHash<int, QByteArray> roleNames() const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;

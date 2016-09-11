@@ -88,6 +88,7 @@ FocusScope {
 
             color: "orange"
             onClicked: {
+                player.play(item);
             }
         }
     }

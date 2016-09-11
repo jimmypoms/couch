@@ -1,5 +1,7 @@
 #include "couchplayer.h"
 
+#include "couch/couchproviderlist.h"
+#include "couch/couchsourcelist.h"
 #include "couch/item.h"
 #include "couch/source.h"
 
@@ -7,11 +9,13 @@
 #include <qlogging.h>
 #include <qobject.h>
 #include <qurl.h>
+#include "couch/couchitemlist.h" // IWYU pragma: keep
 
 CouchPlayer::CouchPlayer(QObject *parent) :
                 QObject(parent), m_mediaPlayer(new QMediaPlayer()), m_handler(nullptr),
-                m_playbackStatus(PlaybackStatus::Stopped), m_sourceStatus(SourceStatus::NoSource),
-                m_lastError(Error::NoError), m_currentSource(nullptr), m_currentItem(nullptr)
+                m_playlist(this), m_playbackStatus(PlaybackStatus::Stopped),
+                m_sourceStatus(SourceStatus::NoSource), m_lastError(Error::NoError),
+                m_currentSource(nullptr), m_currentItem(nullptr), m_playlistItem(nullptr)
 {
 }
 
@@ -28,6 +32,7 @@ void CouchPlayer::addPlaybackHandler(PlaybackHandler *handler)
             &CouchPlayer::onHandlerMediaStatusChanged);
     connect(handler, &PlaybackHandler::stateChanged, this, &CouchPlayer::onHandlerStateChanged);
     connect(handler, &PlaybackHandler::error, this, &CouchPlayer::onHandlerError);
+
     handler->setMediaPlayer(m_mediaPlayer.get());
 }
 
@@ -86,21 +91,38 @@ qint64 CouchPlayer::position() const
     return 0;
 }
 
+void CouchPlayer::play(QObject *object)
+{
+    Item *item = qobject_cast<Item*>(object);
+    if (item) {
+        return play(item);
+    }
+    Source *source = qobject_cast<Source*>(object);
+    if (source) {
+        setPlaylistItem(nullptr);
+        return play(source);
+    }
+}
+
 void CouchPlayer::play(Source *source)
 {
     load(source);
-    if (m_handler) {
-        m_currentSource = source;
-        m_currentItem = qobject_cast<Item*>(m_currentSource->parent());
-        Q_EMIT currentItemChanged();
-        Q_EMIT currentSourceChanged();
-        m_handler->play();
-    }
+    setCurrentSource(source);
+    setCurrentItem(qobject_cast<Item*>(source->parent()));
+    Q_EMIT hasPreviousChanged();
+    Q_EMIT hasNextChanged();
+    play();
+}
+
+void CouchPlayer::play(Item* item)
+{
+    setPlaylistItem(item);
+    play(*(m_playlist.cbegin()));
 }
 
 void CouchPlayer::play()
 {
-    if (!m_currentSource) {
+    if (!currentSource()) {
         Q_EMIT error(Error::NoSourceError);
         return;
     }
@@ -120,12 +142,12 @@ void CouchPlayer::stop()
 {
     if (m_handler) {
         m_handler->stop();
+        m_handler = nullptr;
     }
     setPlaybackStatus(PlaybackStatus::Stopped);
     setSourceStatus(SourceStatus::NoSource);
-    m_currentSource = nullptr;
-    m_currentItem = nullptr;
-    m_handler = nullptr;
+    setCurrentSource(nullptr);
+    setCurrentItem(nullptr);
 }
 
 void CouchPlayer::pause()
@@ -142,11 +164,6 @@ void CouchPlayer::seek(qint64 position)
     }
 }
 
-void CouchPlayer::next()
-{
-    // TODO:
-}
-
 Source* CouchPlayer::currentSource() const
 {
     return m_currentSource;
@@ -157,9 +174,87 @@ Item* CouchPlayer::currentItem() const
     return m_currentItem;
 }
 
+void CouchPlayer::setCurrentSource(Source *source)
+{
+    if (m_currentSource != source) {
+        m_currentSource = source;
+        Q_EMIT currentSourceChanged();
+    }
+}
+
+void CouchPlayer::setCurrentItem(Item *item)
+{
+    if (m_currentItem != item) {
+        m_currentItem = item;
+        Q_EMIT currentItemChanged();
+    }
+}
+
+void CouchPlayer::setPlaylistItem(Item* item)
+{
+    if (m_playlistItem != item) {
+        m_playlistItem = item;
+        updatePlaylist(item);
+        Q_EMIT playlistItemChanged();
+        Q_EMIT hasPlaylistChanged();
+    }
+}
+
+void CouchPlayer::updatePlaylist(Item *item)
+{
+    m_playlist.clear();
+
+    if (item) {
+        addPlaylistSources(item);
+    }
+}
+
+void CouchPlayer::addPlaylistSources(Item *item)
+{
+    CouchProviderList* providers = item->providers();
+    if (providers->rowCount()) {
+        m_playlist.addSource(*(item->sources(*(providers->cbegin()))->cbegin()));
+    }
+    CouchItemList* itemList = item->childItems();
+    if (itemList) {
+        for (std::shared_ptr<Item> child : *itemList) {
+            addPlaylistSources(child.get());
+        }
+    }
+}
+
+Item* CouchPlayer::playlistItem() const
+{
+    return m_playlistItem;
+}
+
+bool CouchPlayer::hasNext()
+{
+    return m_playlist.hasNext();
+}
+
+void CouchPlayer::next()
+{
+    if (hasNext()) {
+        play(m_playlist.next());
+    }
+}
+
+bool CouchPlayer::hasPrevious()
+{
+    return m_playlist.hasPrevious();
+}
+
+bool CouchPlayer::hasPlaylist()
+{
+    return m_playlistItem;
+}
+
 void CouchPlayer::previous()
 {
-    // TODO:
+    if (hasPrevious()) {
+        play(m_playlist.previous());
+    }
 }
 
 void CouchPlayer::load(const Source *source)

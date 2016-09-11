@@ -33,7 +33,6 @@ QUrl Album::cover() const
 
 void Album::addSource(const QObject* provider, Source* source)
 {
-    Item::addSource(provider, source);
     TrackMetadata *metadata = qobject_cast<TrackMetadata*>(source->itemMetadata());
     QString trackName = metadata->track();
     auto it = std::find_if(m_tracks.cbegin(), m_tracks.cend(),
@@ -57,6 +56,11 @@ void Album::addSource(const QObject* provider, Source* source)
 }
 
 CouchItemList* Album::tracks()
+{
+    return &m_tracks;
+}
+
+CouchItemList* Album::childItems()
 {
     return &m_tracks;
 }

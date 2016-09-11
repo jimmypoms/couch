@@ -54,6 +54,9 @@ public:
     const QList<Source*> sources() const;
     bool loading() const;
 
+    QList<Source*>::iterator begin();
+    QList<Source*>::iterator end();
+
     QList<Source*>::const_iterator cbegin() const;
     QList<Source*>::const_iterator cend() const;
 

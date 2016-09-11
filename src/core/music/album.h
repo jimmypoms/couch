@@ -71,6 +71,7 @@ public:
     void addSource(const QObject* provider, Source* source);
 
     CouchItemList* tracks();
+    CouchItemList* childItems();
 
     static QString genreToString(Album::Genre genre);
 };

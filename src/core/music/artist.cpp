@@ -31,7 +31,6 @@ ArtistMetadata* Artist::metadata() const
 
 void Artist::addSource(const QObject* provider, Source* source)
 {
-    Item::addSource(provider, source);
     TrackMetadata *metadata = qobject_cast<TrackMetadata*>(source->itemMetadata());
     QString albumName(metadata->album());
     auto it = std::find_if(m_albums.cbegin(), m_albums.cend(),
@@ -66,6 +65,11 @@ QList<QUrl> Artist::albumCovers() const
 }
 
 CouchItemList *Artist::albums()
+{
+    return &m_albums;
+}
+
+CouchItemList* Artist::childItems()
 {
     return &m_albums;
 }
