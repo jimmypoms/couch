@@ -3,8 +3,15 @@
 
 #include "couch/playbackhandler.h"
 
+#include <qobjectdefs.h>
+
 class MediaPlaybackHandler : public PlaybackHandler
 {
+Q_OBJECT
+
+Q_PLUGIN_METADATA(IID "org.couch.playback.media")
+Q_INTERFACES(PlaybackHandlerInterface)
+
 public:
     MediaPlaybackHandler();
     virtual ~MediaPlaybackHandler() = default;

@@ -1,9 +1,7 @@
 TEMPLATE = subdirs
 
 SUBDIRS = \
-    src/core \
-    src/provider \
-    src/playback \
-    src/app
+    media \
+    youtube
 
 CONFIG += ordered thread debug_and_release

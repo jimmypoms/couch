@@ -1,10 +1,10 @@
 #include "mediaplaybackhandler.h"
 
+#include "couch/source.h"
+
 #include <qmediaplayer.h>
 #include <qmimetype.h>
 #include <qstring.h>
-
-#include "couch/source.h"
 
 MediaPlaybackHandler::MediaPlaybackHandler() :
         PlaybackHandler("media")

@@ -19,7 +19,7 @@ class VodoProvider : public MovieNetworkProvider
 {
 Q_OBJECT
 
-Q_PLUGIN_METADATA(IID "org.couch.provider.movie")
+Q_PLUGIN_METADATA(IID "org.couch.provider.vodo.movie")
 Q_INTERFACES(MovieProviderInterface)
 
 public:

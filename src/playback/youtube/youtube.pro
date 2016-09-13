@@ -1,14 +1,8 @@
-TEMPLATE = app
-TARGET = couch
-
-CLIBDESTDIR = ../../lib/couch
-CBINDESTDIR = ../../bin
-CINCLUDEPATH = ../../include
+TEMPLATE = lib
+TARGET = youtubeplaybackhandler
 
 CONFIG(debug, debug|release) {
     CBUILDDIR = ./build/debug
-    QMAKE_RPATHDIR += $$CLIBDESTDIR
-    QMAKE_RPATHDIR += lib/couch
 } else {
     CBUILDDIR = ./build/release
 }
@@ -18,26 +12,27 @@ MOC_DIR = $$CBUILDDIR/.moc
 RCC_DIR = $$CBUILDDIR/.rcc
 UI_DIR = $$CBUILDDIR/.ui
 
-QT += core gui qml quick multimedia network
-QMAKE_RPATHDIR += ../lib/couch
+CLIBDESTDIR = ../../../lib/couch
+CINCLUDEPATH = ../../../include
+
+QT += core multimedia
 
 CONFIG += c++11
+CONFIG += plugin
 CONFIG += debug_and_release
-DESTDIR = $$CBINDESTDIR
+CONFIG += no_keywords
+DESTDIR = $$CLIBDESTDIR/playback
 
 DEPENDPATH += $$CINCLUDEPATH
 INCLUDEPATH += $$CINCLUDEPATH
 LIBS += -L$$CLIBDESTDIR -lcouch
 
-SOURCES += main.cpp \
-    couch.cpp
+SOURCES += \
+    src/youtubeplaybackhandler.cpp
 
 HEADERS += \
-    couch.h
-
-RESOURCES = view/resources.qrc
+    src/youtubeplaybackhandler.h
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
-
 OTHER_FILES +=

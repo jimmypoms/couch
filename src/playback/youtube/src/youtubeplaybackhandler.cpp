@@ -1,5 +1,7 @@
 #include "youtubeplaybackhandler.h"
 
+#include "couch/source.h"
+
 #include <qbytearray.h>
 #include <qchar.h>
 #include <qdebug.h>
@@ -12,8 +14,6 @@
 #include <qstringlist.h>
 #include <qurl.h>
 #include <qurlquery.h>
-
-#include "couch/source.h"
 
 QString YoutubePlaybackHandler::s_supportedHost("www.youtube.com");
 

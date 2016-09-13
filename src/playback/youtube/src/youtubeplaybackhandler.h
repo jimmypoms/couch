@@ -1,16 +1,20 @@
 #ifndef YOUTUBEPLAYBACKHANDLER_H
 #define YOUTUBEPLAYBACKHANDLER_H
 
+#include "couch/playbackhandler.h"
+
 #include <qmap.h>
 #include <qnetworkaccessmanager.h>
 #include <qnetworkreply.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
 
-#include "couch/playbackhandler.h"
-
 class YoutubePlaybackHandler : public PlaybackHandler
 {
+Q_OBJECT
+
+Q_PLUGIN_METADATA(IID "org.couch.playback.youtube")
+Q_INTERFACES(PlaybackHandlerInterface)
 
 private:
     enum Quality

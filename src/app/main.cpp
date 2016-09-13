@@ -1,12 +1,10 @@
 #include "couch.h"
 #include "pluginloader.h"
 
-#include "playback/media/mediaplaybackhandler.h"
-#include "playback/youtube/youtubeplaybackhandler.h"
-
 #include "couch/couchplayer.h"
 #include "couch/movie/movieservice.h"
 #include "couch/music/musicservice.h"
+#include "couch/playbackhandler.h"
 #include "couch/provider.h"
 
 #include <qglobal.h>
@@ -27,10 +25,6 @@ int main(int argc, char *argv[])
     playbackLoader.load("playback", [&player](PlaybackHandler *h) {
         player.addPlaybackHandler(h);
     });
-    MediaPlaybackHandler mediaHandler;
-    YoutubePlaybackHandler youtubeHandler;
-    player.addPlaybackHandler(&mediaHandler);
-    player.addPlaybackHandler(&youtubeHandler);
 
     MovieService movieService;
     movieService.setPlayer(&player);
