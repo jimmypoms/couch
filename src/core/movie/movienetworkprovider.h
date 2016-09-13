@@ -29,6 +29,7 @@ Q_OBJECT
 Q_INTERFACES(MovieProviderInterface)
 
 Q_PROPERTY(QString name READ name CONSTANT)
+Q_PROPERTY(QString playIcon READ playIcon CONSTANT)
 
 private:
     QString m_name;

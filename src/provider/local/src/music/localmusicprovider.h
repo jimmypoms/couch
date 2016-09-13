@@ -10,17 +10,17 @@
 
 #include "trackmetadatafetcher.h"
 
-#include <qlist.h>
-#include <qmutex.h>
-#include <qobjectdefs.h>
-#include <qstring.h>
-#include <string>
-
 #include "../common/localprovider.h"
 #include "couch/music/artist.h"
 #include "couch/music/musicfilter.h"
 #include "couch/music/musicprovider.h"
 #include "couch/source.h"
+
+#include <qlist.h>
+#include <qmutex.h>
+#include <qobjectdefs.h>
+#include <qstring.h>
+#include <string>
 
 class LocalMusicProvider : public MusicProvider, public LocalProvider<Artist, MusicFilter>
 {
@@ -54,6 +54,8 @@ private:
 public:
     explicit LocalMusicProvider(QObject* parent = 0);
     virtual ~LocalMusicProvider() = default;
+
+    QString playIcon() const;
 
 public Q_SLOTS:
     CouchSourceList* load(Artist* item);

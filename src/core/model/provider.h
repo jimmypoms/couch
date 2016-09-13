@@ -9,16 +9,15 @@
 #include <qobject.h>
 
 class CouchSourceList;
-class QString;
 
 template<class Item, class Filter>
 class Provider
 {
 public:
-    Provider() = default;
     virtual ~Provider() = default;
 
     virtual const QString &name() const = 0;
+    virtual QString playIcon() const = 0;
 
     virtual CouchSourceList* load(Filter *filter) = 0;
     virtual CouchSourceList* load(Item* item) = 0;

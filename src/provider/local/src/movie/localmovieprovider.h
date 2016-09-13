@@ -64,6 +64,8 @@ public:
     explicit LocalMovieProvider(QObject* parent = 0);
     virtual ~LocalMovieProvider() = default;
 
+    QString playIcon() const;
+
 public Q_SLOTS:
     CouchSourceList* load(Movie* item);
     CouchSourceList* load(MovieFilter *filter);

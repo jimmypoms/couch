@@ -7,6 +7,8 @@
 
 #include "couchproviderlist.h"
 
+#include <qvariant.h>
+
 CouchProviderList::CouchProviderList(QObject *parent) :
         QAbstractListModel(parent)
 {
@@ -21,7 +23,9 @@ QHash<int, QByteArray> CouchProviderList::roleNames() const
 
 int CouchProviderList::rowCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent);
+    if (parent.isValid()) {
+        return 0;
+    }
     return m_providers.count();
 }
 
@@ -34,7 +38,7 @@ QVariant CouchProviderList::data(const QModelIndex& index, int role) const
         QObject *item = m_providers[index.row()];
         return QVariant::fromValue(item);
     }
-    return QVariant();
+    return QVariant::Invalid;
 }
 
 void CouchProviderList::insert(int row, QObject* source)
@@ -44,14 +48,9 @@ void CouchProviderList::insert(int row, QObject* source)
     endInsertRows();
 }
 
-void CouchProviderList::append(const QList<QObject*>& providers)
+void CouchProviderList::append(QObject* provider)
 {
-    if (providers.isEmpty()) {
-        return;
-    }
-    beginInsertRows(QModelIndex(), rowCount(), rowCount() + providers.count() - 1);
-    m_providers.append(providers);
-    endInsertRows();
+    insert(rowCount(), provider);
 }
 
 QList<QObject*>::iterator CouchProviderList::begin()
@@ -72,9 +71,4 @@ QList<QObject*>::const_iterator CouchProviderList::cbegin() const
 QList<QObject*>::const_iterator CouchProviderList::cend() const
 {
     return m_providers.cend();
-}
-
-void CouchProviderList::append(QObject* provider)
-{
-    m_providers.append(provider);
 }

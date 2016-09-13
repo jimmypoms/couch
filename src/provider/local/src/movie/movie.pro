@@ -2,9 +2,9 @@ TEMPLATE = lib
 TARGET = localmovieprovider
 
 CONFIG(debug, debug|release) {
-    CBUILDDIR = ../../../../../build/debug
+    CBUILDDIR = ./build/debug
 } else {
-    CBUILDDIR = ../../../../../build/release
+    CBUILDDIR = ./build/release
 }
 
 OBJECTS_DIR = $$CBUILDDIR/.obj
@@ -37,6 +37,8 @@ HEADERS += \
     ../common/localprovider.h \
     localmovieprovider.h \
     moviemetadatafetcher.h
+
+RESOURCES = resources.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

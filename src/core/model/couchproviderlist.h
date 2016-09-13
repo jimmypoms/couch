@@ -9,6 +9,10 @@
 #define COUCHPROVIDERLIST_H_
 
 #include <qabstractitemmodel.h>
+#include <qbytearray.h>
+#include <qhash.h>
+#include <qlist.h>
+#include <qnamespace.h>
 #include <qobjectdefs.h>
 
 #if defined(COUCH_LIBRARY)
@@ -28,19 +32,18 @@ public:
     CouchProviderList(QObject *parent = 0);
     virtual ~CouchProviderList() = default;
 
+    QHash<int, QByteArray> roleNames() const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+
     QList<QObject*>::iterator begin();
     QList<QObject*>::iterator end();
 
     QList<QObject*>::const_iterator cbegin() const;
     QList<QObject*>::const_iterator cend() const;
 
-    QHash<int, QByteArray> roleNames() const;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-
 public Q_SLOTS:
     void insert(int row, QObject* provider);
-    void append(const QList<QObject*> &providers);
     void append(QObject* provider);
 };
 

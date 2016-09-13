@@ -7,12 +7,15 @@
 
 #include "localmovieprovider.h"
 
+#include "couch/couchsourcelist.h"
+#include "couch/movie/moviemetadata.h"
+#include "couch/serializableclass.h"
+
 #include <qbytearray.h>
 #include <qdatastream.h>
 #include <qfuture.h>
 #include <qfuturewatcher.h>
 #include <qiodevice.h>
-#include <qmetaobject.h>
 #include <qobject.h>
 #include <qstandardpaths.h>
 #include <qstringlist.h>
@@ -23,10 +26,6 @@
 #include <xapian/query.h>
 #include <xapian/queryparser.h>
 #include <xapian/termgenerator.h>
-
-#include "couch/couchsourcelist.h"
-#include "couch/movie/moviemetadata.h"
-#include "couch/serializableclass.h"
 
 const QStringList LocalMovieProvider::s_filenameFilters = {
         "*.mp4",
@@ -47,6 +46,7 @@ LocalMovieProvider::LocalMovieProvider(QObject* parent) :
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
                                 + "/database/movie", "/misc/movies")
 {
+    Q_INIT_RESOURCE(resources);
 }
 
 QStringList LocalMovieProvider::filenameFilters() const
@@ -156,6 +156,11 @@ CouchSourceList* LocalMovieProvider::load(Movie* movie)
     watcher->setFuture(future);
 
     return list;
+}
+
+QString LocalMovieProvider::playIcon() const
+{
+    return "qrc:localmovieprovider/icons/play.svg";
 }
 
 CouchSourceList* LocalMovieProvider::load(MovieFilter* movieFilter)

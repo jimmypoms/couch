@@ -59,7 +59,7 @@ FocusScope {
             model: item ? item.providers() : ([])
             delegate: CouchIconButton {
                 size: dp(40)
-                source: "../images/icon-play.svg"
+                source: modelData.playIcon
 
                 onClicked: {
                 }

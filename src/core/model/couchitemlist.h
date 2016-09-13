@@ -59,16 +59,16 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
-public Q_SLOTS:
-    void addItems(const QList<std::shared_ptr<Item> > &items, const QString &id = "");
-    virtual void insert(int row, const std::shared_ptr<Item> &item);
-    void append(const std::shared_ptr<Item> &item);
-
     QList<std::shared_ptr<Item> >::iterator begin();
     QList<std::shared_ptr<Item> >::iterator end();
 
     QList<std::shared_ptr<Item> >::const_iterator cbegin() const;
     QList<std::shared_ptr<Item> >::const_iterator cend() const;
+
+public Q_SLOTS:
+    void addItems(const QList<std::shared_ptr<Item> > &items, const QString &id = "");
+    virtual void insert(int row, const std::shared_ptr<Item> &item);
+    void append(const std::shared_ptr<Item> &item);
 };
 
 class COUCH_LIBRARY_EXPORT SortedCouchItemList : public CouchItemList

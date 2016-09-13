@@ -70,6 +70,11 @@ QString VodoProvider::orderToString(MovieFilter::Order order) const
     return "";
 }
 
+QString VodoProvider::playIcon() const
+{
+    return "";
+}
+
 QList<Source*> VodoProvider::parseReply(QNetworkReply* reply) const
 {
     QByteArray jsonData = reply->readAll();

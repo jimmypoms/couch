@@ -7,11 +7,21 @@
 
 #include "localmusicprovider.h"
 
+#include "couch/couchsourcelist.h"
+#include "couch/filter.h"
+#include "couch/music/album.h"
+#include "couch/music/trackmetadata.h"
+#include "couch/serializableclass.h"
+
 #include <qbytearray.h>
 #include <qdatastream.h>
+#include <qdatetime.h>
+#include <qdebug.h>
 #include <qfuture.h>
 #include <qfuturewatcher.h>
+#include <qglobal.h>
 #include <qiodevice.h>
+#include <qlogging.h>
 #include <qobject.h>
 #include <qstandardpaths.h>
 #include <qstringlist.h>
@@ -22,13 +32,6 @@
 #include <xapian/query.h>
 #include <xapian/queryparser.h>
 #include <xapian/termgenerator.h>
-
-#include "couch/couchsourcelist.h"
-#include "couch/filter.h"
-#include "couch/movie/movieprovider.h"
-#include "couch/music/album.h"
-#include "couch/music/trackmetadata.h"
-#include "couch/serializableclass.h"
 
 const QStringList LocalMusicProvider::s_filenameFilters = {"*.mp3", "*.ogg", "*.aac", "*.wma",
         "*.mpeg"};
@@ -44,6 +47,7 @@ LocalMusicProvider::LocalMusicProvider(QObject* parent) :
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
                                 + "/database/music", "/misc/music")
 {
+    Q_INIT_RESOURCE(resources);
 }
 
 QStringList LocalMusicProvider::filenameFilters() const
@@ -130,6 +134,11 @@ void LocalMusicProvider::indexFile(Xapian::WritableDatabase& writer, Xapian::Ter
     m_mutex.lock();
     writer.add_document(doc);
     m_mutex.unlock();
+}
+
+QString LocalMusicProvider::playIcon() const
+{
+    return "qrc:localmusicprovider/icons/play.svg";
 }
 
 CouchSourceList* LocalMusicProvider::load(MusicFilter* filter)

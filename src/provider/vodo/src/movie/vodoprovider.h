@@ -27,6 +27,7 @@ public:
     virtual ~VodoProvider() = default;
 
     QString orderToString(MovieFilter::Order order) const;
+    QString playIcon() const;
 
 public Q_SLOTS:
     void buildRequest(CouchRequest *request, const MovieFilter *filter) const;
