@@ -119,7 +119,7 @@ inline Xapian::MSet LocalProvider<Item, Filter>::searchDatabase(const Filter *fi
 template<class Item, class Filter>
 inline void LocalProvider<Item, Filter>::loadDatabase()
 {
-    QThread::sleep(1000);
+    QThread::sleep(1);
     Xapian::WritableDatabase writer(m_database.toStdString(), Xapian::DB_OPEN);
     Xapian::TermGenerator indexer;
     Xapian::Stem stemmer("english");
