@@ -4,6 +4,11 @@
 #include "playback/media/mediaplaybackhandler.h"
 #include "playback/youtube/youtubeplaybackhandler.h"
 
+#include "couch/couchplayer.h"
+#include "couch/movie/movieservice.h"
+#include "couch/music/musicservice.h"
+#include "couch/provider.h"
+
 #include <qglobal.h>
 #include <qguiapplication.h>
 #include <qobject.h>
@@ -11,11 +16,6 @@
 #include <qqmlcontext.h>
 #include <qscreen.h>
 #include <qurl.h>
-
-#include "couch/couchplayer.h"
-#include "couch/movie/movieservice.h"
-#include "couch/music/musicservice.h"
-#include "couch/provider.h"
 
 int main(int argc, char *argv[])
 {

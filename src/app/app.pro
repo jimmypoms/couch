@@ -6,11 +6,11 @@ CBINDESTDIR = ../../bin
 CINCLUDEPATH = ../../include
 
 CONFIG(debug, debug|release) {
-    CBUILDDIR = ../../build/debug
+    CBUILDDIR = ./build/debug
     QMAKE_RPATHDIR += $$CLIBDESTDIR
     QMAKE_RPATHDIR += lib/couch
 } else {
-    CBUILDDIR = ../../build/release
+    CBUILDDIR = ./build/release
 }
 
 OBJECTS_DIR = $$CBUILDDIR/.obj
