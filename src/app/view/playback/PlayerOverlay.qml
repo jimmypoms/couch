@@ -222,7 +222,7 @@ Item {
 
     CouchAutohide {
         id: autohide
-        inhibit: controlsMouseArea.containsMouse || headerMouseArea.containsMouse || player.playbackStatus != CouchPlayer.Playing
+        inhibit: controlsMouseArea.containsMouse || headerMouseArea.containsMouse || player.playbackStatus !== CouchPlayer.Playing
         onShouldHideChanged: if (shouldHide) {
             overlay.opacity = 0;
         } else {

@@ -188,35 +188,35 @@ ApplicationWindow {
         states: [
             State {
                 name: "buffering"
-                when: (player.sourceStatus == CouchPlayer.Buffering)
+                when: (player.sourceStatus === CouchPlayer.Buffering)
                 StateChangeScript {
                     script: application.buffer()
                 }
             },
             State {
                 name: "loading"
-                when: (player.sourceStatus == CouchPlayer.Loading)
+                when: (player.sourceStatus === CouchPlayer.Loading)
                 StateChangeScript {
                     script: application.load()
                 }
             },
             State {
                 name: "playing"
-                when: (player.playbackStatus == CouchPlayer.Playing)
+                when: (player.playbackStatus === CouchPlayer.Playing)
                 StateChangeScript {
                     script: application.play()
                 }
             },
             State {
                 name: "paused"
-                when: (player.playbackStatus == CouchPlayer.Paused)
+                when: (player.playbackStatus === CouchPlayer.Paused)
                 StateChangeScript {
                     script: application.pause()
                 }
             },
             State {
                 name: "stopped"
-                when: (player.playbackStatus == CouchPlayer.Stopped)
+                when: (player.playbackStatus === CouchPlayer.Stopped)
                 StateChangeScript {
                     script: application.stop()
                 }
