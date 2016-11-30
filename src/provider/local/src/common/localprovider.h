@@ -20,14 +20,7 @@
 #include <qthread.h>
 #include <qurl.h>
 #include <sys/time.h>
-#include <xapian/database.h>
-#include <xapian/enquire.h>
-#include <xapian/error.h>
-#include <xapian/postingiterator.h>
-#include <xapian/query.h>
-#include <xapian/queryparser.h>
-#include <xapian/stem.h>
-#include <xapian/termgenerator.h>
+#include <xapian.h>
 #include <atomic>
 #include <ctime>
 
