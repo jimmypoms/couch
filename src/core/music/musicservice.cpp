@@ -25,13 +25,13 @@ MusicService::MusicService(QObject* parent) :
 
 Artist* MusicService::createItem(const Source* source)
 {
-    Artist *artist = new Artist(this);
     ItemMetadata *metadata = source->itemMetadata();
     TrackMetadata *tm = qobject_cast<TrackMetadata*>(metadata);
     if (!tm) {
         qDebug() << "invalid track metadata of source:" << source->url() << metadata;
         return nullptr;
     }
+    Artist *artist = new Artist(this);
     artist->setName(tm->artist());
     QString key = tm->artist();
     auto i = m_metadataCache.find(key);
