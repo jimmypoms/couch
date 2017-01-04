@@ -10,6 +10,7 @@ ListView {
     property color highlightColor: "green"
     property int highlightHeight: list.focus ? 5 : 2
     property string emptyText: qsTr("list.empty")
+    property bool loading: model ? !!model.loading : false
 
     spacing: 20
     flickableDirection: Flickable.HorizontalFlick
@@ -44,6 +45,13 @@ ListView {
         Keys.onReturnPressed: {
             itemClicked(modelData);
         }
+    }
+
+    footer: BusyIndicator {
+        id: busyIndicator
+
+        height: lineHeight * 4
+        visible: loading
     }
 
     MediumLabel {
