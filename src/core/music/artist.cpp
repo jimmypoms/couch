@@ -69,7 +69,7 @@ CouchItemList *Artist::albums()
     return &m_albums;
 }
 
-CouchItemList* Artist::childItems()
+CouchItemList *Artist::childItems()
 {
     return &m_albums;
 }

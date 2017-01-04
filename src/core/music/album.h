@@ -64,7 +64,7 @@ public:
         Raggae,
     };
 
-    explicit Album(Artist *parent);
+    explicit Album(Artist *parent = 0);
     virtual ~Album() = default;
 
     QUrl cover() const;

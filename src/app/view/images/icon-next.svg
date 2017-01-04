@@ -12,9 +12,9 @@
    version="1.1"
    x="0px"
    y="0px"
-   width="512px"
-   height="512px"
-   viewBox="0 0 512 512"
+   width="412"
+   height="512"
+   viewBox="0 0 412 512"
    enable-background="new 0 0 512 512"
    xml:space="preserve"
    id="svg2"
@@ -37,9 +37,10 @@
      id="namedview5"
      showgrid="false"
      inkscape:zoom="0.46875"
-     inkscape:cx="256"
+     inkscape:cx="-256"
      inkscape:cy="256"
      inkscape:current-layer="svg2" /><path
      id="rewind-5-icon"
-     d="M 50,96.57 50,415.43 280.631,256.001 50,96.57 Z m 412,159.431 -230.631,159.429 0,-70.935 c 66.201,-45.764 128.016,-88.494 128.016,-88.494 0,0 -61.814,-42.731 -128.016,-88.495 l 0,-70.936 L 462,256.001 Z"
-     inkscape:connector-curvature="0" /></svg>
+     d="M 0,96.57 0,415.43 230.631,256.001 0,96.57 Z m 412,159.431 -230.631,159.429 0,-70.935 c 66.201,-45.764 128.016,-88.494 128.016,-88.494 0,0 -61.814,-42.731 -128.016,-88.495 l 0,-70.936 L 412,256.001 Z"
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff" /></svg>

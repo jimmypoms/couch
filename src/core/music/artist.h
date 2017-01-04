@@ -38,7 +38,7 @@ private:
     SortedCouchItemList m_albums;
 
 public:
-    explicit Artist(QObject *parent);
+    explicit Artist(QObject *parent = 0);
     virtual ~Artist() = default;
 
     void addSource(const QObject* provider, Source* source);
@@ -47,7 +47,7 @@ public:
     QList<QUrl> albumCovers() const;
 
     CouchItemList *albums();
-    CouchItemList* childItems();
+    CouchItemList *childItems();
 };
 
 #endif /* ARTIST_H_ */

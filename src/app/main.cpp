@@ -52,13 +52,15 @@ int main(int argc, char *argv[])
             * QGuiApplication::primaryScreen()->devicePixelRatio();
 
     QQmlApplicationEngine engine;
+    engine.addImportPath(app.applicationDirPath() + "/../imports");
+
     engine.rootContext()->setContextProperty(movieService.name(), &movieService);
     engine.rootContext()->setContextProperty(musicService.name(), &musicService);
 
     engine.rootContext()->setContextProperty("couch", &couch);
     engine.rootContext()->setContextProperty("player", &player);
     engine.rootContext()->setContextProperty("screenPixelDensity", screenPixelDensity);
-    engine.load(QUrl("qrc:/main.qml"));
+    engine.load(QUrl("qrc:/Application.qml"));
 
     return app.exec();
 }

@@ -32,9 +32,13 @@ ItemMetadata *Item::metadata() const
     return m_metadata.get();
 }
 
+void Item::setMetadata(ItemMetadata *metadata) {
+    setMetadata(std::shared_ptr<ItemMetadata>(metadata));
+}
+
 void Item::setMetadata(std::shared_ptr<ItemMetadata> metadata)
 {
-    if (metadata && m_metadata != metadata) {
+    if (m_metadata != metadata) {
         m_metadata = metadata;
         Q_EMIT metadataChanged();
     }

@@ -92,6 +92,7 @@ inline CouchItemList* Service<Item, Filter, P>::load(Filter *filter)
             Q_EMIT sourceList->sourcesLoaded();
         }
     }
+    filter->setResult(list);
     return list;
 }
 

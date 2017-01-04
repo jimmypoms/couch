@@ -54,6 +54,7 @@ public:
     const QString &id() const;
     bool loading() const;
     const std::shared_ptr<Item> &itemAt(int index) const;
+    void clear();
 
     QHash<int, QByteArray> roleNames() const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;

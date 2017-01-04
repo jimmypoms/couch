@@ -39,6 +39,11 @@ const std::shared_ptr<Item> &CouchItemList::itemAt(int index) const
     return m_items.at(index);
 }
 
+void CouchItemList::clear()
+{
+    m_items.clear();
+}
+
 QHash<int, QByteArray> CouchItemList::roleNames() const
 {
     QHash<int, QByteArray> roles;

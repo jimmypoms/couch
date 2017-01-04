@@ -47,7 +47,7 @@ private:
     std::atomic_int m_loaded;
 
 public:
-    CouchActionList(int loadingCount, QString id = "");
+    CouchActionList(int loadingCount = 0, QString id = "");
     virtual ~CouchActionList() = default;
 
     const QString &id() const;

@@ -8,6 +8,7 @@ CINCLUDEPATH = ../../include
 CONFIG(debug, debug|release) {
     CBUILDDIR = ./build/debug
     QMAKE_RPATHDIR += $$CLIBDESTDIR
+    QMAKE_RPATHDIR += ../lib/couch
     QMAKE_RPATHDIR += lib/couch
 } else {
     CBUILDDIR = ./build/release
@@ -19,7 +20,6 @@ RCC_DIR = $$CBUILDDIR/.rcc
 UI_DIR = $$CBUILDDIR/.ui
 
 QT += core gui qml quick multimedia network
-QMAKE_RPATHDIR += ../lib/couch
 
 CONFIG += c++11
 CONFIG += debug_and_release
@@ -30,10 +30,12 @@ INCLUDEPATH += $$CINCLUDEPATH
 LIBS += -L$$CLIBDESTDIR -lcouch
 
 SOURCES += main.cpp \
-    couch.cpp
+    couch.cpp \
+    pluginloader.cpp
 
 HEADERS += \
-    couch.h
+    couch.h \
+    pluginloader.h
 
 RESOURCES = view/resources.qrc
 

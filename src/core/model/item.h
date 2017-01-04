@@ -23,7 +23,7 @@ class COUCH_LIBRARY_EXPORT Item : public QObject
 Q_OBJECT
 
 Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-Q_PROPERTY(ItemMetadata* metadata READ metadata NOTIFY metadataChanged)
+Q_PROPERTY(ItemMetadata* metadata READ metadata WRITE setMetadata NOTIFY metadataChanged)
 
 Q_SIGNALS:
     void nameChanged();
@@ -39,13 +39,14 @@ private:
     CouchProviderList* m_providers;
 
 public:
-    explicit Item(QObject* parent);
+    explicit Item(QObject* parent = 0);
     virtual ~Item() = default;
 
     const QString &name() const;
     void setName(const QString &name);
 
     ItemMetadata *metadata() const;
+    void setMetadata(ItemMetadata *metadata);
     void setMetadata(std::shared_ptr<ItemMetadata> metadata);
 
     virtual void addSource(const QObject* provider, Source* source);

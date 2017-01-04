@@ -6,6 +6,8 @@
 #include <qobjectdefs.h>
 #include <qstring.h>
 
+class CouchItemList;
+
 #if defined(COUCH_LIBRARY)
 #  define COUCH_LIBRARY_EXPORT Q_DECL_EXPORT
 #else
@@ -21,12 +23,14 @@ Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
 Q_PROPERTY(Filter::Order order READ order WRITE setOrder NOTIFY orderChanged)
 Q_PROPERTY(int limit READ limit WRITE setLimit NOTIFY limitChanged)
 Q_PROPERTY(int offset READ offset WRITE setOffset NOTIFY offsetChanged)
+Q_PROPERTY(CouchItemList* result READ result NOTIFY resultChanged)
 
 Q_SIGNALS:
     void textChanged();
     void orderChanged();
     void limitChanged();
     void offsetChanged();
+    void resultChanged();
 
 public:
     enum Order
@@ -41,6 +45,7 @@ private:
     Filter::Order m_order;
     int m_offset;
     int m_limit;
+    CouchItemList *m_result;
 
 public:
     explicit Filter(QObject *parent = 0, int offset = 0, int limit = 20);
@@ -57,6 +62,9 @@ public:
 
     int offset() const;
     void setOffset(int m_offset);
+
+    CouchItemList* result() const;
+    void setResult(CouchItemList* result);
 };
 
 Q_DECLARE_METATYPE(const Filter*)

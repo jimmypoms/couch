@@ -1,7 +1,9 @@
 #include "filter.h"
 
+#include "couchitemlist.h"
+
 Filter::Filter(QObject *parent, int offset, int limit) :
-        QObject(parent), m_order(Order::None), m_offset(offset), m_limit(limit)
+        QObject(parent), m_order(Order::None), m_offset(offset), m_limit(limit), m_result(nullptr)
 {
 }
 
@@ -54,5 +56,20 @@ void Filter::setOffset(int offset)
     if (m_offset != offset) {
         m_offset = offset;
         Q_EMIT offsetChanged();
+    }
+}
+
+CouchItemList* Filter::result() const
+{
+    return m_result;
+}
+
+void Filter::setResult(CouchItemList* result)
+{
+    if (m_result != result) {
+        delete m_result;
+        result->setParent(this);
+        m_result = result;
+        Q_EMIT resultChanged();
     }
 }

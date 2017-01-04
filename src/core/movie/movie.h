@@ -36,7 +36,8 @@ public:
         Documentary
     };
 
-    explicit Movie(QObject* parent);
+    explicit Movie(QObject* parent = 0);
+    virtual ~Movie() = default;
 
     MovieMetadata *metadata() const;
     Source *trailerSource();
