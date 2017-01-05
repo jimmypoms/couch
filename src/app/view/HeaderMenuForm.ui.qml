@@ -25,7 +25,16 @@ FocusScope {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.top: parent.top
-        model: ["close"]
+
         KeyNavigation.down: headerMenu.KeyNavigation.down
+
+        DropdownItem {
+            text: "settings"
+        }
+
+        DropdownItem {
+            text: "close"
+            onClicked: Qt.quit()
+        }
     }
 }

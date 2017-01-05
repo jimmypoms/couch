@@ -9,7 +9,13 @@ T.ComboBox {
     property color highlightColor: "green"
     property color color: "white"
 
+    default property alias contentModel: model.children
+    property alias listview: listview
+
     implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding + indicator.implicitWidth + 5
+    model: VisualItemModel {
+        id: model
+    }
 
     bottomPadding: 10
     rightPadding: 10
@@ -17,13 +23,6 @@ T.ComboBox {
     topPadding: 10
 
     font.pointSize: 12
-
-    delegate: ItemDelegate {
-        width: control.popup.width
-        text: modelData
-        font.weight: control.currentIndex === index ? Font.DemiBold : Font.Normal
-        highlighted: control.highlightedIndex == index
-    }
 
     contentItem: Text {
         id: text
@@ -57,6 +56,8 @@ T.ComboBox {
     }
 
     popup: T.Popup {
+        id: popup
+
         y: control.height - (control.visualFocus ? 0 : 1)
         x: control.width - width
         width: 180
@@ -68,8 +69,7 @@ T.ComboBox {
             id: listview
             clip: true
             implicitHeight: contentHeight
-            model: control.popup.visible ? control.delegateModel : null
-            currentIndex: control.highlightedIndex
+            model: control.model
             highlightRangeMode: ListView.ApplyRange
             highlightMoveDuration: 0
 
@@ -80,6 +80,10 @@ T.ComboBox {
                 height: listview.height
                 color: "transparent"
                 border.color: "#bdbebf"
+            }
+
+            highlight: Rectangle {
+                color: "#bdbebf"
             }
 
             T.ScrollIndicator.vertical: ScrollIndicator { }
