@@ -32,6 +32,10 @@ PlaybackControlsForm {
         }
     }
 
+    slider.onValueManuallyChanged: {
+        player.seek(slider.value);
+    }
+
     stopButton.onClicked: {
         player.stop();
     }
