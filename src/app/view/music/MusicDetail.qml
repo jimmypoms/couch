@@ -7,6 +7,10 @@ MusicDetailForm {
         play(item);
     }
 
+    playAllButton.onClicked: {
+        play(artist);
+    }
+
     actions.onFocusChanged: {
         if (actions.focus) {
             scrollTo(info);

@@ -12,6 +12,7 @@ Detail {
     property variant artist: Artist {}
     property int lineHeight: 40
     property int listHeight: lineHeight * 6
+    property alias playAllButton: playAllButton
     property alias info: info
     property alias actions: actions
     property alias albumList: albums
@@ -35,6 +36,8 @@ Detail {
 
         RowLayout {
             Button {
+                id: playAllButton
+
                 text: qsTr("play all")
                 focus: true
 
