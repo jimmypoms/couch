@@ -16,13 +16,25 @@ FocusScope {
         anchors.fill: parent
 
         Button {
-            id: type
+            id: typeButton
 
             Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
             text: "123"
 
             onClicked: {
                 control.type = control.type === control.typeAlphabetical ? control.typeNumerical : control.typeAlphabetical;
+            }
+
+            Behavior on text {
+                SequentialAnimation {
+                    PauseAnimation {
+                        duration: 100
+                    }
+                    PropertyAction {}
+                    PauseAnimation {
+                        duration: 100
+                    }
+                }
             }
         }
 
@@ -61,7 +73,7 @@ FocusScope {
                 }
             }
 
-            KeyNavigation.left: type
+            KeyNavigation.left: typeButton
             KeyNavigation.right: backspace
         }
 
@@ -82,7 +94,7 @@ FocusScope {
             name: "numerical"
             when: control.type === control.typeNumerical
             PropertyChanges {
-                target: type
+                target: typeButton
                 text: "ABC"
             }
         }
