@@ -23,6 +23,20 @@ MusicForm {
     property Component detailComponent: Qt.createComponent("MusicDetail.qml")
 
     featuredList.model: music.load(popularFilter)
+    featuredList.onAboutToReachEnd: {
+        if (popularFilter.hasMore) {
+            popularFilter.offset += popularFilter.limit;
+            featuredList.model = music.load(popularFilter);
+        }
+    }
+
+    genreList.onAboutToReachEnd: {
+        if (genreFilter.hasMore) {
+            genreFilter.offset += genreFilter.limit;
+            genreList.model = music.load(genreFilter);
+        }
+    }
+
     search.service: music
     search.filter: MusicFilter {
         order: Filter.Popular
@@ -117,6 +131,7 @@ MusicForm {
         genreList.model = music.load(genreFilter);
 
         genreComboBox.currentIndexChanged.connect(function() {
+            genreFilter.offset = 0;
             genreFilter.genre = genres.get(genreComboBox.currentIndex).genre;
             genreList.model = music.load(genreFilter);
         });

@@ -41,7 +41,9 @@ const std::shared_ptr<Item> &CouchItemList::itemAt(int index) const
 
 void CouchItemList::clear()
 {
+    beginRemoveRows(QModelIndex(), 0, rowCount());
     m_items.clear();
+    endRemoveRows();
 }
 
 QHash<int, QByteArray> CouchItemList::roleNames() const

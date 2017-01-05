@@ -1,6 +1,7 @@
 #ifndef FILTER_H
 #define FILTER_H
 
+#include <qhash.h>
 #include <qmetatype.h>
 #include <qobject.h>
 #include <qobjectdefs.h>
@@ -24,13 +25,16 @@ Q_PROPERTY(Filter::Order order READ order WRITE setOrder NOTIFY orderChanged)
 Q_PROPERTY(int limit READ limit WRITE setLimit NOTIFY limitChanged)
 Q_PROPERTY(int offset READ offset WRITE setOffset NOTIFY offsetChanged)
 Q_PROPERTY(CouchItemList* result READ result NOTIFY resultChanged)
+Q_PROPERTY(bool hasMore READ hasMore NOTIFY hasMoreChanged)
 
 Q_SIGNALS:
     void textChanged();
     void orderChanged();
     void limitChanged();
     void offsetChanged();
+    void dirtyChanged();
     void resultChanged();
+    void hasMoreChanged();
 
 public:
     enum Order
@@ -45,7 +49,9 @@ private:
     Filter::Order m_order;
     int m_offset;
     int m_limit;
+    bool m_dirty;
     CouchItemList *m_result;
+    QHash<const QObject*, bool> m_hasMoreMap;
 
 public:
     explicit Filter(QObject *parent = 0, int offset = 0, int limit = 20);
@@ -63,8 +69,15 @@ public:
     int offset() const;
     void setOffset(int m_offset);
 
+    bool isDirty() const;
+    void setDirty(bool dirty);
+
     CouchItemList* result() const;
     void setResult(CouchItemList* result);
+
+    bool hasMore() const;
+    bool hasMore(const QObject* provider) const;
+    void setHasMore(const QObject* provider, bool hasMore);
 };
 
 Q_DECLARE_METATYPE(const Filter*)

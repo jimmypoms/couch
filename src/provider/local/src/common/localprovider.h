@@ -105,7 +105,8 @@ inline Xapian::MSet LocalProvider<Item, Filter>::searchDatabase(const Filter *fi
         }
     }
 
-    qDebug() << "loading provider:" << QString::fromStdString(enquire.get_description());
+    qDebug() << "loading provider:" << QString::fromStdString(enquire.get_description())
+            << "offset:" << filter->offset() << "limit:" << filter->limit();
     return enquire.get_mset(filter->offset(), filter->limit());
 }
 

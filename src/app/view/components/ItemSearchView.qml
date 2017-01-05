@@ -13,6 +13,13 @@ ItemSearchViewForm {
         });
     }
 
+    list.onAboutToReachEnd: {
+        if (filter.hasMore) {
+            filter.offset += filter.limit;
+            list.model = service.load(filter);
+        }
+    }
+
     Component.onCompleted: {
         filter.textChanged.connect(search);
     }
@@ -29,7 +36,7 @@ ItemSearchViewForm {
     ]
 
     function search() {
-        // TODO
+        filter.offset = 0;
         list.model = service.load(filter);
     }
 }

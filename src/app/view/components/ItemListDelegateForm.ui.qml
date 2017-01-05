@@ -21,7 +21,7 @@ Item {
 
     Image {
         id: image
-        source: item.cover ? item.cover : (item.metadata ? item.metadata.image : "")
+        source: item ? (item.cover ? item.cover : (item.metadata ? item.metadata.image : "")) : ""
         fillMode: Image.PreserveAspectFit
         horizontalAlignment: Image.AlignHCenter
         verticalAlignment: Image.AlignVCenter
@@ -61,7 +61,7 @@ Item {
     MediumLabel {
         id: title
         height: delegate.lineHeight * 2
-        text: item.name
+        text: item ? item.name : ""
         verticalAlignment: Text.AlignTop
         anchors.top: image.bottom
         anchors.topMargin: 10

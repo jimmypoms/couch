@@ -1,11 +1,13 @@
 #include "service.h"
 
 #include "couchplayaction.h"
+#include "filter.h"
 #include "item.h"
 #include "itemmetadata.h"
 #include "source.h"
 
-#include <multimedia/couchplayer.h>
+#include "couch/couchplayer.h"
+
 #include <qdebug.h>
 #include <qlogging.h>
 #include <qobject.h>
@@ -72,6 +74,10 @@ void ServiceImpl::reduceSources()
     }
     m_mutex.unlock();
     CouchItemList* itemList = qobject_cast<CouchItemList*>(sourcesList->parent());
+    Filter* filter = qobject_cast<Filter*>(itemList->parent());
+    if (filter) {
+        filter->setHasMore(provider, sourcesList->rowCount() >= filter->limit());
+    }
     if (itemList) {
         QString id = itemList->id();
         Q_EMIT itemsReady(list, id);

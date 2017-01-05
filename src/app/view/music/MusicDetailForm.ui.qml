@@ -17,7 +17,7 @@ Detail {
     property alias actions: actions
     property alias albumList: albums
 
-    title: artist.metadata ? artist.metadata.name : artist.name
+    title: artist.name
 
     RowLayout {
         id: info

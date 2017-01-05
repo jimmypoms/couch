@@ -2,8 +2,10 @@
 
 #include "couchitemlist.h"
 
+#include <qlist.h>
+
 Filter::Filter(QObject *parent, int offset, int limit) :
-        QObject(parent), m_order(Order::None), m_offset(offset), m_limit(limit), m_result(nullptr)
+        QObject(parent), m_order(Order::None), m_offset(offset), m_limit(limit), m_dirty(false), m_result(nullptr)
 {
 }
 
@@ -16,6 +18,7 @@ void Filter::setText(const QString &text)
 {
     if (m_text != text) {
         m_text = text;
+        setDirty(true);
         Q_EMIT textChanged();
     }
 }
@@ -29,6 +32,7 @@ void Filter::setOrder(Filter::Order order)
 {
     if (m_order != order) {
         m_order = order;
+        setDirty(true);
         Q_EMIT orderChanged();
     }
 }
@@ -59,6 +63,19 @@ void Filter::setOffset(int offset)
     }
 }
 
+void Filter::setDirty(bool dirty)
+{
+    if (m_dirty != dirty) {
+        m_dirty = dirty;
+        Q_EMIT dirtyChanged();
+    }
+}
+
+bool Filter::isDirty() const
+{
+    return m_dirty;
+}
+
 CouchItemList* Filter::result() const
 {
     return m_result;
@@ -72,4 +89,38 @@ void Filter::setResult(CouchItemList* result)
         m_result = result;
         Q_EMIT resultChanged();
     }
+}
+
+bool Filter::hasMore() const
+{
+    for (bool hasMore : m_hasMoreMap.values()) {
+        if (hasMore) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Filter::hasMore(const QObject* provider) const
+{
+    if (!m_result || m_result->loading()) {
+        return false;
+    }
+    if (m_hasMoreMap.contains(provider)) {
+        return m_hasMoreMap[provider];
+    }
+
+    return false;
+}
+
+void Filter::setHasMore(const QObject* provider, bool hasMore)
+{
+    if (!m_hasMoreMap.contains(provider)) {
+        m_hasMoreMap.insert(provider, hasMore);
+    } else {
+        m_hasMoreMap[provider] = hasMore;
+    }
+
+    Q_EMIT hasMoreChanged();
 }

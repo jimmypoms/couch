@@ -80,8 +80,15 @@ public:
 template<class Item, class Filter, class P>
 inline CouchItemList* Service<Item, Filter, P>::load(Filter *filter)
 {
-    CouchItemList* list = new CouchItemList(providers().count());
-    connect(this, &ServiceImpl::itemsReady, list, &CouchItemList::addItems);
+    CouchItemList* list = filter->result();
+    if (!list) {
+        list = new CouchItemList(providers().count());
+        connect(this, &ServiceImpl::itemsReady, list, &CouchItemList::addItems);
+    }
+    if (filter->isDirty()) {
+        list->clear();
+        filter->setDirty(false);
+    }
     for (const QObject *object : providers()) {
         P* provider = qobject_cast<P*>(object);
         CouchSourceList* sourceList = provider->load(filter);
