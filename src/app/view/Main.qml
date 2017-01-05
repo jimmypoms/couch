@@ -13,8 +13,8 @@ MainForm {
     }
 
     function play(item) {
-        player.play(item);
         showPlayback();
+        player.play(item);
     }
 
     Component.onCompleted: {
