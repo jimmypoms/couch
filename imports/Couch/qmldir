@@ -1,3 +1,0 @@
-module Couch
-ItemList 1.0 ItemList.qml
-plugin qmlcouchplugin
