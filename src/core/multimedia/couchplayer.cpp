@@ -353,7 +353,11 @@ void CouchPlayer::onHandlerStateChanged(QMediaPlayer::State state)
     }
     switch (state) {
         case QMediaPlayer::StoppedState:
-            setPlaybackStatus(PlaybackStatus::Stopped);
+            if (hasNext()) {
+                next();
+            } else {
+                setPlaybackStatus(PlaybackStatus::Stopped);
+            }
             break;
         case QMediaPlayer::PlayingState:
             setPlaybackStatus(PlaybackStatus::Playing);
