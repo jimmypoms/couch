@@ -121,7 +121,7 @@ public:
 
     virtual void play()
     {
-        if (m_mediaPlayer->state() != QMediaPlayer::PausedState) {
+        if (m_mediaPlayer->media().canonicalUrl() != m_source->url()) {
             connectPlayerError();
             m_mediaPlayer->setMedia(m_source->url());
             connectPlayerSignals();

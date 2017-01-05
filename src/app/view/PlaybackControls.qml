@@ -17,8 +17,14 @@ PlaybackControlsForm {
     }
 
     previousButton.onEnabledChanged: {
-        if (previousButton.focus) {
+        if (!previousButton.focus) {
+            return;
+        }
+
+        if (nextButton.enabled) {
             nextButton.focus = true;
+        } else {
+            playButton.focus = true;
         }
     }
 
@@ -27,8 +33,14 @@ PlaybackControlsForm {
     }
 
     nextButton.onEnabledChanged: {
-        if (nextButton.focus) {
+        if (!nextButton.focus) {
+            return;
+        }
+
+        if (previousButton.enabled) {
             previousButton.focus = true;
+        } else {
+            playButton.focus = true;
         }
     }
 

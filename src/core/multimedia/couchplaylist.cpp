@@ -33,6 +33,12 @@ void CouchPlaylist::clear()
     m_sources.clear();
 }
 
+Source* CouchPlaylist::first()
+{
+    m_currentMapIndex = 0;
+    return m_sources[currentIndex()];
+}
+
 Source* CouchPlaylist::next()
 {
     if (!hasNext()) {
@@ -41,7 +47,7 @@ Source* CouchPlaylist::next()
     int size = m_sources.size();
     ++m_currentMapIndex;
     m_currentMapIndex = m_currentMapIndex%size;
-    return m_sources[m_indexMap[m_currentMapIndex]];
+    return m_sources[currentIndex()];
 }
 
 bool CouchPlaylist::hasNext() const
@@ -60,7 +66,7 @@ Source* CouchPlaylist::previous()
     int size = m_sources.size();
     --m_currentMapIndex;
     m_currentMapIndex = (m_currentMapIndex%size+size)%size;
-    return m_sources[m_indexMap[m_currentMapIndex]];
+    return m_sources[currentIndex()];
 }
 
 bool CouchPlaylist::hasPrevious() const

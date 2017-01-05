@@ -67,6 +67,7 @@ public:
     void clear();
     int currentIndex();
 
+    Source* first();
     Source* next();
     bool hasNext() const;
 

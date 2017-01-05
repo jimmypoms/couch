@@ -117,7 +117,7 @@ void CouchPlayer::play(Source *source)
 void CouchPlayer::play(Item* item)
 {
     setPlaylistItem(item);
-    play(*(m_playlist.cbegin()));
+    play(m_playlist.first());
 }
 
 void CouchPlayer::play()
