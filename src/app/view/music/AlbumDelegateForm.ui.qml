@@ -45,7 +45,7 @@ FocusScope {
 
         clip: true
         model: album.tracks
-        height: mainFlickable.height - (component.lineHeight * 5)
+        height: mainFlickable.height - (component.lineHeight * 5.4)
         visible: albumDelegate.viewFocused
         orientation: ListView.Vertical
         highlightMoveDuration: 200
