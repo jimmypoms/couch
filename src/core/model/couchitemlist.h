@@ -57,6 +57,13 @@ public:
     const QString &id() const;
     bool loading() const;
     const std::shared_ptr<Item> &itemAt(int index) const;
+
+    /** \brief clears all Item instances and attached CouchSourceList instances
+     *
+     * Even though the CouchSourceList instances are deleted using Qt's deleteLater
+     * it is wise to make sure that those instances are not used anymore prior to
+     * calling this method.
+     */
     void clear();
 
     void addSourceList(CouchSourceList* sourceList);

@@ -39,12 +39,6 @@ const std::shared_ptr<Item> &CouchItemList::itemAt(int index) const
     return m_items.at(index);
 }
 
-/** \brief clears all Item instances and attached CouchSourceList instances
- *
- * Even though the CouchSourceList instances are deleted using Qt's deleteLater
- * it is wise to make sure that those instances are not used anymore prior to
- * calling this method.
- */
 void CouchItemList::clear()
 {
     for (CouchSourceList* list : m_sourceLists) {

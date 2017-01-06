@@ -77,15 +77,6 @@ bool Filter::isDirty() const
     return m_dirty;
 }
 
-/** \brief Resets the Filter to it's initial state if it is dirty.
- *         If the Filter is not dirty this method does nothing.
- *
- * Resetting means:
- *  - resetting the hasMore internal values for providers
- *  - clearing the CouchItemList (beware of CouchItemList::clear() considerations)
- *  - setting the offset to zero
- *  - setting the dirty flag to false
- */
 void Filter::reset()
 {
     if (!m_dirty) {
@@ -131,11 +122,6 @@ bool Filter::hasMore() const
     return false;
 }
 
-/** \brief Returns true if the filter expects more results for a given provider.
- *
- * We do assume that there are more results when a provider has never
- * returned any results.
- */
 bool Filter::hasMore(const QObject* provider) const
 {
     if (m_hasMoreMap.contains(provider)) {

@@ -73,12 +73,28 @@ public:
     void setOffset(int m_offset);
 
     bool isDirty() const;
+
+    /** \brief Resets the Filter to it's initial state if it is dirty.
+     *         If the Filter is not dirty this method does nothing.
+     *
+     * Resetting means:
+     *  - resetting the hasMore internal values for providers
+     *  - clearing the CouchItemList (beware of CouchItemList::clear() considerations)
+     *  - setting the offset to zero
+     *  - setting the dirty flag to false
+     */
     void reset();
 
     CouchItemList* result() const;
     void setResult(CouchItemList* result);
 
     bool hasMore() const;
+
+    /** \brief Returns true if the filter expects more results for a given provider.
+     *
+     * We do assume that there are more results when a provider has never
+     * returned any results.
+     */
     bool hasMore(const QObject* provider) const;
     void setHasMore(const QObject* provider, bool hasMore);
 };
