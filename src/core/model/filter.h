@@ -53,6 +53,9 @@ private:
     CouchItemList *m_result;
     QHash<const QObject*, bool> m_hasMoreMap;
 
+protected:
+    void setDirty(bool dirty);
+
 public:
     explicit Filter(QObject *parent = 0, int offset = 0, int limit = 20);
     virtual ~Filter() = default;
@@ -70,7 +73,7 @@ public:
     void setOffset(int m_offset);
 
     bool isDirty() const;
-    void setDirty(bool dirty);
+    void reset();
 
     CouchItemList* result() const;
     void setResult(CouchItemList* result);

@@ -86,8 +86,11 @@ inline CouchItemList* Service<Item, Filter, P>::load(Filter *filter)
         connect(this, &ServiceImpl::itemsReady, list, &CouchItemList::addItems);
     }
     if (filter->isDirty()) {
-        list->clear();
-        filter->setDirty(false);
+        for (CouchSourceList* sourceList : list->sourceLists()) {
+            disconnect(sourceList, &CouchSourceList::sourcesLoaded, this,
+                    &ServiceImpl::reduceSources);
+        }
+        filter->reset();
     }
     for (const QObject *object : providers()) {
         if (!filter->hasMore(object)) {
@@ -96,10 +99,10 @@ inline CouchItemList* Service<Item, Filter, P>::load(Filter *filter)
 
         P* provider = qobject_cast<P*>(object);
         CouchSourceList* sourceList = provider->load(filter);
-        sourceList->setParent(list);
+        list->addSourceList(sourceList);
         connect(sourceList, &CouchSourceList::sourcesLoaded, this, &ServiceImpl::reduceSources);
 
-        if (sourceList->sources().count() > 0) {
+        if (!sourceList->loading()) {
             Q_EMIT sourceList->sourcesLoaded();
         }
     }

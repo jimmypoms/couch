@@ -39,8 +39,18 @@ const std::shared_ptr<Item> &CouchItemList::itemAt(int index) const
     return m_items.at(index);
 }
 
+/** \brief clears all Item instances and attached CouchSourceList instances
+ *
+ * Even though the CouchSourceList instances are deleted using Qt's deleteLater
+ * it is wise to make sure that those instances are not used anymore prior to
+ * calling this method.
+ */
 void CouchItemList::clear()
 {
+    for (CouchSourceList* list : m_sourceLists) {
+        list->deleteLater();
+    }
+    m_sourceLists.clear();
     beginRemoveRows(QModelIndex(), 0, rowCount());
     m_items.clear();
     endRemoveRows();
@@ -109,6 +119,17 @@ void CouchItemList::insert(int row, const std::shared_ptr<Item> &item)
     endInsertRows();
 }
 
+void CouchItemList::addSourceList(CouchSourceList* sourceList)
+{
+    sourceList->setParent(this);
+    m_sourceLists.append(sourceList);
+}
+
+QList<CouchSourceList*> CouchItemList::sourceLists() const
+{
+    return m_sourceLists;
+}
+
 void CouchItemList::append(const std::shared_ptr<Item> &item)
 {
     insert(rowCount(), item);
@@ -156,9 +177,10 @@ void SortedCouchItemList::insert(int row, const std::shared_ptr<Item>& item)
 {
     Q_UNUSED(row);
     QList<std::shared_ptr<Item> >::const_iterator i;
-    auto lessThan = [item](const std::shared_ptr<Item>& left, const std::shared_ptr<Item>& right) -> bool {
-        return left->metadata()->lessThan(right->metadata());
-    };
+    auto lessThan =
+            [item](const std::shared_ptr<Item>& left, const std::shared_ptr<Item>& right) -> bool {
+                return left->metadata()->lessThan(right->metadata());
+            };
     if (m_order == Qt::AscendingOrder) {
         i = qLowerBound(m_items.cbegin(), m_items.cend(), item, lessThan);
     } else {

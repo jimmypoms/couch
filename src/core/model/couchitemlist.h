@@ -8,6 +8,8 @@
 #ifndef COUCHITEMLIST_H_
 #define COUCHITEMLIST_H_
 
+#include "couchsourcelist.h"
+
 #include <qabstractitemmodel.h>
 #include <qbytearray.h>
 #include <qhash.h>
@@ -43,6 +45,7 @@ private:
 
     int m_loadingCount;
     std::atomic_int m_loaded;
+    QList<CouchSourceList*> m_sourceLists;
 
 protected:
     QList<std::shared_ptr<Item> > m_items;
@@ -55,6 +58,9 @@ public:
     bool loading() const;
     const std::shared_ptr<Item> &itemAt(int index) const;
     void clear();
+
+    void addSourceList(CouchSourceList* sourceList);
+    QList<CouchSourceList*> sourceLists() const;
 
     QHash<int, QByteArray> roleNames() const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -85,7 +91,8 @@ private:
     Qt::SortOrder m_order;
 
 public:
-    SortedCouchItemList(int loadingCount = 0, QString id = "", Qt::SortOrder order = Qt::AscendingOrder);
+    SortedCouchItemList(int loadingCount = 0, QString id = "", Qt::SortOrder order =
+            Qt::AscendingOrder);
     virtual ~SortedCouchItemList() = default;
 
     Qt::SortOrder order() const;
