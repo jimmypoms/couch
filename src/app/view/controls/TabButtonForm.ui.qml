@@ -10,6 +10,8 @@ T.TabButton {
     property color checkedColor: "white"
     property color highlightColor: "green"
 
+    property alias icon: icon
+
     topPadding: 10
     bottomPadding: 10
     rightPadding: 10
@@ -23,6 +25,16 @@ T.TabButton {
     contentItem: Row {
         anchors.left: parent.left
         spacing: 5
+
+        Image {
+            id: icon
+            source: "../images/search-indicator.svg"
+            sourceSize.height: 15
+            fillMode: Image.PreserveAspectCrop
+            width: control.checked ? 15 : 0
+
+            anchors.verticalCenter: text.verticalCenter
+        }
 
         Text {
             id: text
@@ -45,14 +57,6 @@ T.TabButton {
             PropertyChanges {
                 target: control
                 color: control.checkedColor
-            }
-        },
-        State {
-            name: "focused"
-            when: control.focus
-            PropertyChanges {
-                target: control
-                color: control.highlightColor
             }
         }
     ]
