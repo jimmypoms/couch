@@ -51,8 +51,12 @@ public:
     void setItemMetadata(ItemMetadata* metadata)
     {
         if (metadata != m_itemMetadata) {
-            delete m_itemMetadata;
-            metadata->setParent(this);
+            if (m_itemMetadata) {
+                m_itemMetadata->deleteLater();
+            }
+            if (metadata) {
+                metadata->setParent(this);
+            }
             m_itemMetadata = metadata;
             Q_EMIT itemMetadataChanged();
         }

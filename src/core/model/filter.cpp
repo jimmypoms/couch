@@ -109,7 +109,9 @@ CouchItemList* Filter::result() const
 void Filter::setResult(CouchItemList* result)
 {
     if (m_result != result) {
-        delete m_result;
+        if (m_result) {
+            m_result->deleteLater();
+        }
         if (result) {
             result->setParent(this);
         }
