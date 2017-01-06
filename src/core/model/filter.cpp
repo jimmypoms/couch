@@ -141,3 +141,14 @@ void Filter::setHasMore(const QObject* provider, bool hasMore)
 
     Q_EMIT hasMoreChanged();
 }
+
+int Filter::hasMoreCount(const QList<QObject*>& providers) const
+{
+    int count = 0;
+    for (const QObject *provider : providers) {
+        if (hasMore(provider)) {
+            ++count;
+        }
+    }
+    return count;
+}

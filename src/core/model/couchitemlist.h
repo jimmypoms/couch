@@ -39,6 +39,7 @@ Q_SIGNALS:
     void loadingChanged();
     void itemsChanged();
     void itemsLoaded();
+    void loadingCountChanged();
 
 private:
     QString m_id;
@@ -66,6 +67,7 @@ public:
      */
     void clear();
 
+    void setLoadingCount(int loadingCount);
     void addSourceList(CouchSourceList* sourceList);
     QList<CouchSourceList*> sourceLists() const;
 

@@ -92,6 +92,7 @@ inline CouchItemList* Service<Item, Filter, P>::load(Filter *filter)
         }
         filter->reset();
     }
+    list->setLoadingCount(filter->hasMoreCount(providers()));
     for (const QObject *object : providers()) {
         if (!filter->hasMore(object)) {
             continue;
@@ -118,10 +119,10 @@ inline CouchItemList* Service<Item, Filter, P>::load(Item *item)
     for (const QObject *object : providers()) {
         P* provider = qobject_cast<P*>(object);
         CouchSourceList* sourceList = provider->load(item);
-        sourceList->setParent(list);
+        list->addSourceList(sourceList);
         connect(sourceList, &CouchSourceList::sourcesLoaded, this, &ServiceImpl::reduceSources);
 
-        if (sourceList->sources().count() > 0) {
+        if (!sourceList->loading()) {
             Q_EMIT sourceList->sourcesLoaded();
         }
     }

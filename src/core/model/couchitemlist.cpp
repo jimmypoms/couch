@@ -124,6 +124,14 @@ QList<CouchSourceList*> CouchItemList::sourceLists() const
     return m_sourceLists;
 }
 
+void CouchItemList::setLoadingCount(int loadingCount)
+{
+    if (m_loadingCount != loadingCount) {
+        m_loadingCount = loadingCount;
+        Q_EMIT loadingCountChanged();
+    }
+}
+
 void CouchItemList::append(const std::shared_ptr<Item> &item)
 {
     insert(rowCount(), item);

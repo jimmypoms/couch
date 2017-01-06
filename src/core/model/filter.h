@@ -97,6 +97,7 @@ public:
      */
     bool hasMore(const QObject* provider) const;
     void setHasMore(const QObject* provider, bool hasMore);
+    int hasMoreCount(const QList<QObject*> &providers) const;
 };
 
 Q_DECLARE_METATYPE(const Filter*)
