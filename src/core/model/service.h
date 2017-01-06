@@ -90,6 +90,10 @@ inline CouchItemList* Service<Item, Filter, P>::load(Filter *filter)
         filter->setDirty(false);
     }
     for (const QObject *object : providers()) {
+        if (!filter->hasMore(object)) {
+            continue;
+        }
+
         P* provider = qobject_cast<P*>(object);
         CouchSourceList* sourceList = provider->load(filter);
         sourceList->setParent(list);

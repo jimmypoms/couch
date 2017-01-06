@@ -5,7 +5,8 @@
 #include <qlist.h>
 
 Filter::Filter(QObject *parent, int offset, int limit) :
-        QObject(parent), m_order(Order::None), m_offset(offset), m_limit(limit), m_dirty(false), m_result(nullptr)
+                QObject(parent), m_order(Order::None), m_offset(offset), m_limit(limit),
+                m_dirty(false), m_result(nullptr)
 {
 }
 
@@ -102,16 +103,18 @@ bool Filter::hasMore() const
     return false;
 }
 
+/** \brief Returns true if the filter expects more results for a given provider.
+ *
+ * We do assume that there are more results when a provider has never
+ * returned any results.
+ */
 bool Filter::hasMore(const QObject* provider) const
 {
-    if (!m_result || m_result->loading()) {
-        return false;
-    }
     if (m_hasMoreMap.contains(provider)) {
         return m_hasMoreMap[provider];
     }
 
-    return false;
+    return true;
 }
 
 void Filter::setHasMore(const QObject* provider, bool hasMore)
