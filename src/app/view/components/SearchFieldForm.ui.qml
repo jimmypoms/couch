@@ -34,6 +34,7 @@ FocusScope {
         x: control.leftPadding
         y: control.topPadding + 2
         source: "../images/search-indicator.svg"
+        sourceSize.width: 15
         height: textField.contentHeight - 4
         fillMode: Image.PreserveAspectFit
     }
@@ -74,7 +75,7 @@ FocusScope {
         KeyNavigation.up: control
         KeyNavigation.down: control.KeyNavigation.down
 
-        closePolicy: T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutsideParent
+        closePolicy: T.Popup.NoAutoClose
     }
 
     states: [
