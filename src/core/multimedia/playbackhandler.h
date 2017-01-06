@@ -84,13 +84,13 @@ protected:
         disconnect(m_mediaPlayer, &QMediaPlayer::durationChanged, this,
                 &PlaybackHandler::durationChanged);
     }
+
 public Q_SLOTS:
     void onPlayerError(QMediaPlayer::Error e)
     {
-        disconnectPlayerSignals();
-        disconnectPlayerError();
         Q_EMIT error(e);
     }
+
 public:
     explicit PlaybackHandler(QString name) :
             m_name(name), m_mediaPlayer(nullptr), m_source(nullptr)
@@ -106,11 +106,15 @@ public:
     virtual void setMediaPlayer(QMediaPlayer* p)
     {
         if (m_mediaPlayer) {
+            disconnectPlayerError();
+            disconnectPlayerSignals();
             disconnectLoadingSignals();
         }
         m_mediaPlayer = p;
         if (m_mediaPlayer) {
             connectLoadingSignals();
+            connectPlayerSignals();
+            connectPlayerError();
         }
     }
 
@@ -122,9 +126,7 @@ public:
     virtual void play()
     {
         if (m_mediaPlayer->media().canonicalUrl() != m_source->url()) {
-            connectPlayerError();
             m_mediaPlayer->setMedia(m_source->url());
-            connectPlayerSignals();
         }
         m_mediaPlayer->play();
     }
@@ -132,8 +134,7 @@ public:
     virtual void stop()
     {
         m_mediaPlayer->stop();
-        disconnectPlayerSignals();
-        disconnectPlayerError();
+        m_mediaPlayer->setMedia(QMediaContent());
     }
 
     virtual void pause()

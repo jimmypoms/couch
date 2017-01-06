@@ -140,14 +140,16 @@ void CouchPlayer::togglePlay()
 
 void CouchPlayer::stop()
 {
-    if (m_handler) {
-        m_handler->stop();
-        m_handler = nullptr;
-    }
     setPlaybackStatus(PlaybackStatus::Stopped);
     setSourceStatus(SourceStatus::NoSource);
     setCurrentSource(nullptr);
     setCurrentItem(nullptr);
+    setPlaylistItem(nullptr);
+
+    if (m_handler) {
+        m_handler->stop();
+        m_handler = nullptr;
+    }
 }
 
 void CouchPlayer::pause()
@@ -337,6 +339,9 @@ void CouchPlayer::onHandlerMediaStatusChanged(QMediaPlayer::MediaStatus status)
             break;
         case QMediaPlayer::EndOfMedia:
             setSourceStatus(SourceStatus::EndOfSource);
+            if (hasNext()) {
+                next();
+            }
             break;
         case QMediaPlayer::InvalidMedia:
             setSourceStatus(SourceStatus::InvalidSource);
@@ -353,11 +358,7 @@ void CouchPlayer::onHandlerStateChanged(QMediaPlayer::State state)
     }
     switch (state) {
         case QMediaPlayer::StoppedState:
-            if (hasNext()) {
-                next();
-            } else {
-                setPlaybackStatus(PlaybackStatus::Stopped);
-            }
+            setPlaybackStatus(PlaybackStatus::Stopped);
             break;
         case QMediaPlayer::PlayingState:
             setPlaybackStatus(PlaybackStatus::Playing);
