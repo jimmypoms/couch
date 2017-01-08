@@ -4,11 +4,14 @@ import QtQuick.Templates 2.0 as T
 T.TabBar {
     id: control
 
+    property TabView tabView: TabView {}
     property color color: "white"
     property color highlightColor: "green"
     property int highlightHeight: 2
 
     spacing: 5
+
+    KeyNavigation.down: tabView
 
     contentItem: ListView {
         id: list
@@ -25,8 +28,8 @@ T.TabBar {
         flickableDirection: Flickable.AutoFlickIfNeeded
         snapMode: ListView.SnapToItem
 
-        highlightMoveDuration: 250
-        highlightResizeDuration: 0
+        highlightMoveDuration: 200
+        highlightResizeDuration: 200
         highlightFollowsCurrentItem: true
         highlightRangeMode: ListView.ApplyRange
         preferredHighlightBegin: 48

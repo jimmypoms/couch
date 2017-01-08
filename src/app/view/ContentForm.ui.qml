@@ -28,8 +28,7 @@ FocusScope {
             anchors.top: parent.top
             anchors.topMargin: content.lineHeight * 3
             height: lineHeight
-
-            KeyNavigation.down: contentTabView
+            tabView: contentTabView
 
             TabButton {
                 text: qsTr("Music")
@@ -47,9 +46,6 @@ FocusScope {
             anchors.right: parent.right
             anchors.left: parent.left
             anchors.top: contentTabBar.bottom
-            currentIndex: contentTabBar.currentIndex
-
-            KeyNavigation.up: contentTabBar
 
             Music {
                 anchors.fill: parent
