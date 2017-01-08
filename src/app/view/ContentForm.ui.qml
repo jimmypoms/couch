@@ -33,9 +33,11 @@ FocusScope {
 
             TabButton {
                 text: qsTr("Music")
+                icon.source: "images/search-indicator.svg"
             }
             TabButton {
                 text: qsTr("Radio")
+                icon.source: "images/search-indicator.svg"
             }
         }
 

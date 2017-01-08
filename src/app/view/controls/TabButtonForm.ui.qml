@@ -28,10 +28,9 @@ T.TabButton {
 
         Image {
             id: icon
-            source: "../images/search-indicator.svg"
             sourceSize.height: 15
             fillMode: Image.PreserveAspectCrop
-            width: control.checked ? 15 : 0
+            width: control.checked && icon.status == Image.Ready ? 15 : 0
 
             anchors.verticalCenter: text.verticalCenter
         }
