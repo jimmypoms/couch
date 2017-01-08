@@ -8,6 +8,7 @@ FocusScope {
 
     property string title: ""
     property alias flickable: flickable
+    property alias spacing: columnLayout.spacing
     default property alias contentChildren: columnLayout.children
 
     LargeLabel {

@@ -5,7 +5,8 @@ import "controls"
 FocusScope {
     id: headerMenu
 
-    property alias menuButton: menuButton
+    property alias settingsButton: settingsButton
+    property alias closeButton: closeButton
     property int contentMargin: 0
 
     DateTimeLabel {
@@ -29,12 +30,15 @@ FocusScope {
         KeyNavigation.down: headerMenu.KeyNavigation.down
 
         DropdownItem {
-            text: "settings"
+            id: settingsButton
+
+            text: qsTr("Settings")
         }
 
         DropdownItem {
-            text: "close"
-            onClicked: Qt.quit()
+            id: closeButton
+
+            text: qsTr("Exit")
         }
     }
 }

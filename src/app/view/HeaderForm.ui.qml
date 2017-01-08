@@ -4,7 +4,7 @@ FocusScope {
     id: header
 
     property bool playing: false
-    property alias header: headerMenu
+    property alias headerMenu: headerMenu
     property alias playback: playback
     property int contentMargin: 0
 
