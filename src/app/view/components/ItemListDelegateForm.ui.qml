@@ -12,7 +12,7 @@ Item {
     property bool viewFocused: false
     property real lineHeight: 50
     property url placeholder: "../images/media-placeholder.svg"
-    property bool focused: delegate.focus && delegate.viewFocused
+    property bool focused: delegate.activeFocus && delegate.viewFocused
     property variant item: ListElement {
     }
 

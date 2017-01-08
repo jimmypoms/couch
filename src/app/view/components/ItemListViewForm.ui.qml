@@ -6,7 +6,7 @@ ListView {
     id: list
 
     property real lineHeight: 40
-    property bool focused: list.focus
+    property bool focused: list.activeFocus
     property color color: list.focused ? highlightColor : "grey"
     property color highlightColor: "green"
     property int highlightHeight: list.focused ? 5 : 2

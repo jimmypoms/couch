@@ -23,7 +23,7 @@ TabBarForm {
     }
 
     function focusTabView() {
-        tabView.children[control.currentIndex].focus = true;
+        tabView.focus = true;
     }
 
     function pushCurrentIndex() {
