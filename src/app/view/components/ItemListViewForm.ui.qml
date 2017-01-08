@@ -6,9 +6,10 @@ ListView {
     id: list
 
     property real lineHeight: 40
-    property color color: list.focus ? highlightColor : "grey"
+    property bool focused: list.focus
+    property color color: list.focused ? highlightColor : "grey"
     property color highlightColor: "green"
-    property int highlightHeight: list.focus ? 5 : 2
+    property int highlightHeight: list.focused ? 5 : 2
     property string emptyText: qsTr("list.empty")
     property bool loading: model ? !!model.loading : false
 
@@ -37,7 +38,7 @@ ListView {
     delegate: ItemListDelegate {
         lineHeight: list.lineHeight
         item: modelData
-        viewFocused: list.focus
+        viewFocused: list.focused
 
         Keys.onEnterPressed: {
             itemClicked(modelData);
@@ -68,7 +69,7 @@ ListView {
             anchors.right: emptyLabel.right
             height: 5
             color: "green"
-            visible: list.focus
+            visible: list.focused
         }
     }
 
