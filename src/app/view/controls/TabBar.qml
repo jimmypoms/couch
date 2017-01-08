@@ -16,9 +16,18 @@ TabBarForm {
         tabView.Keys.onUpPressed.connect(function() {
             control.focus = true;
         });
-        control.currentIndexChanged.connect(function() {
-            tabView.currentIndex = control.currentIndex;
-        })
+        control.Keys.onDownPressed.disconnect(focusTabView);
+        control.Keys.onDownPressed.connect(focusTabView)
+        control.currentIndexChanged.disconnect(pushCurrentIndex);
+        control.currentIndexChanged.connect(pushCurrentIndex)
+    }
+
+    function focusTabView() {
+        tabView.children[control.currentIndex].focus = true;
+    }
+
+    function pushCurrentIndex() {
+        tabView.currentIndex = control.currentIndex;
     }
 
     Keys.onEnterPressed: clicked();

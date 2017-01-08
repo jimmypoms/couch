@@ -11,8 +11,6 @@ T.TabBar {
 
     spacing: 5
 
-    KeyNavigation.down: tabView
-
     contentItem: ListView {
         id: list
 
