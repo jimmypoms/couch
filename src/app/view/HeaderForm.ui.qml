@@ -8,7 +8,7 @@ FocusScope {
 
     property bool playing: false
     property alias playback: playback
-    property int contentMargin: 8
+    property int contentMargin: 16
 
     opacity: playing ? 1 : 0
 

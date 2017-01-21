@@ -3,6 +3,6 @@ import QtQuick 2.4
 Label {
     id: control
 
-    font.pixelSize: 14
+    font.pixelSize: 16
 }
 
