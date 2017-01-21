@@ -11,7 +11,7 @@ ItemListViewForm {
     }
 
     onContentXChanged: {
-        if (contentWidth - contentX < width) {
+        if (contentWidth - contentX - width/2 < width) {
             aboutToReachEnd();
         }
     }

@@ -10,49 +10,42 @@ Detail {
     id: component
 
     property variant artist: Artist {}
-    property int lineHeight: 40
-    property int listHeight: lineHeight * 6
     property alias playAllButton: playAllButton
-    property alias info: info
     property alias actions: actions
-    property alias albumList: albums
+    property alias albums: albums
 
     title: artist.name
+    image: artist.cover ? artist.cover : (artist.metadata ? artist.metadata.image : "")
 
-    RowLayout {
-        id: info
-
-        height: lineHeight * 6
+    MediumLabel {
+        text: ""
     }
 
     FocusScope {
         id: actions
 
         focus: true
-        height: lineHeight * 2
+        height: actionsRow.height + 72
         Layout.fillWidth: true
 
         KeyNavigation.down: albums
 
         RowLayout {
-            Button {
+            id: actionsRow
+
+            ItemListDelegate {
                 id: playAllButton
 
-                text: qsTr("play all")
                 focus: true
+                focused: playAllButton.activeFocus
+                item: component.artist
+                name: qsTr("play all")
 
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
             }
 
             ListView {
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-
-                delegate: Button {
-                    text: modelData.text
-                    visible: modelData.enabled
-
-                    highlightColor: "chocolate"
-                }
             }
         }
     }
@@ -66,23 +59,7 @@ Detail {
 
         Layout.fillWidth: true
         model: artist.albums
-        lineHeight: component.lineHeight
 
         KeyNavigation.up: actions
-
-        delegate: AlbumDelegate {
-            list: ListView.view
-            viewFocused: albums.currentIndex === index
-            lineHeight: albums.lineHeight
-            trackList.width: albums.width
-            album: modelData
-
-            Keys.onEnterPressed: {
-                itemClicked(modelData);
-            }
-            Keys.onReturnPressed: {
-                itemClicked(modelData);
-            }
-        }
     }
 }

@@ -1,20 +1,36 @@
 import QtQuick 2.4
+import QtQuick.Controls.Material 2.0
+import QtGraphicalEffects 1.0
 
 Button {
     id: control
 
-    property alias icon: icon.source
-    property alias iconHeight: icon.sourceSize.height
+    property alias source: icon.source
+    property alias iconSize: icon.iconSize
 
-    leftPadding: 5
-    rightPadding: 5
-    topPadding: 5
-    bottomPadding: 5
+    padding: iconSize / 2
+    topPadding: padding
+    bottomPadding: padding
+    leftPadding: padding
+    rightPadding: padding
 
-    contentItem: Image {
+    contentItem: Icon {
         id: icon
-        sourceSize.height: 18
-        fillMode: Image.PreserveAspectCrop
-        opacity: control.enabled ? 1 : 0.3
+
+        topPadding: control.topPadding
+        bottomPadding: control.bottomPadding
+        leftPadding: control.leftPadding
+        rightPadding: control.rightPadding
+
+        color: !control.enabled ? control.Material.hintTextColor :
+                control.flat && control.highlighted ? control.Material.accentColor :
+                control.highlighted ? control.Material.primaryHighlightedTextColor : control.Material.primaryTextColor
     }
+
+    background.width: icon.width
+    background.height: icon.height
+    background.implicitHeight: control.contentItem.implicitHeight
+    background.implicitWidth: control.contentItem.implicitWidth
+    background.x: control.leftPadding
+    background.y: control.topPadding
 }

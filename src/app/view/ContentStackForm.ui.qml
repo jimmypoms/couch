@@ -4,13 +4,9 @@ import "controls"
 StackView {
     id: control
 
-    property real lineHeight: 40
-
     initialItem: content
 
     Content {
         id: content
-
-        lineHeight: control.lineHeight
     }
 }

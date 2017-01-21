@@ -1,11 +1,7 @@
 import QtQuick 2.4
 
 ContentForm {
-    tabBar.onClicked: {
-        var musicView = tabView.children[tabView.currentIndex];
-        musicView.searchVisible = true;
-        musicView.searchField.focus = true;
-    }
+    property int centerY: tabView.y
 
     function scrollTo(item, offset) {
         if (!offset) {
@@ -18,12 +14,17 @@ ContentForm {
     }
 
     function scrollToMiddle(item) {
-        scrollTo(item, lineHeight * 6);
+        scrollTo(item, centerY);
     }
 
     Behavior on flickable.contentY {
         SmoothedAnimation {
             duration: 300
+        }
+    }
+    Behavior on overlay.opacity {
+        OpacityAnimator {
+            duration: 100
         }
     }
 }

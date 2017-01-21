@@ -1,44 +1,34 @@
 import QtQuick 2.4
+import QtQuick.Controls.Material 2.0
 
 import "../controls"
 
 ListView {
-    id: list
+    id: component
 
-    property real lineHeight: 40
-    property bool focused: list.activeFocus
-    property color color: list.focused ? highlightColor : "grey"
-    property color highlightColor: "green"
-    property int highlightHeight: list.focused ? 5 : 2
-    property string emptyText: qsTr("list.empty")
+    property bool focused: component.activeFocus
     property bool loading: model ? !!model.loading : false
+    property alias emptyText: emptyLabel.text
 
-    spacing: 20
+    spacing: 8
     flickableDirection: Flickable.HorizontalFlick
     orientation: ListView.Horizontal
+    displayMarginBeginning: 48
+    displayMarginEnd: 48
+    height: 336
 
     highlightMoveDuration: 200
-    highlightResizeDuration: 200
     highlightFollowsCurrentItem: true
-    highlightRangeMode: ListView.StrictlyEnforceRange
-    preferredHighlightBegin: 0
-    preferredHighlightEnd: 96
+    highlightRangeMode: ListView.ApplyRange
+    preferredHighlightBegin: component.width / 2 - 24
+    preferredHighlightEnd: component.width / 2 + 24
 
     highlight: Item {
-        z: 2
-        Rectangle {
-            height: list.highlightHeight
-            anchors.left: parent.left
-            anchors.right: parent.right
-            y: list.lineHeight * 4
-            color: list.color
-        }
     }
 
     delegate: ItemListDelegate {
-        lineHeight: list.lineHeight
         item: modelData
-        viewFocused: list.focused
+        viewFocused: component.focused
 
         Keys.onEnterPressed: {
             itemClicked(modelData);
@@ -51,7 +41,8 @@ ListView {
     footer: BusyIndicator {
         id: busyIndicator
 
-        height: lineHeight * 4
+        height: 216
+        width: 72
         visible: loading
     }
 
@@ -59,24 +50,14 @@ ListView {
         id: emptyLabel
 
         anchors.centerIn: parent
-        text: emptyText
+        text: qsTr("list.empty")
         visible: false
-
-        Rectangle {
-            anchors.topMargin: 5
-            anchors.top: emptyLabel.bottom
-            anchors.left: emptyLabel.left
-            anchors.right: emptyLabel.right
-            height: 5
-            color: "green"
-            visible: list.focused
-        }
     }
 
     states: [
         State {
             name: "empty"
-            when: !list.model || list.model.length === 0
+            when: !component.model || component.model.length === 0
             PropertyChanges {
                 target: emptyLabel
                 visible: true

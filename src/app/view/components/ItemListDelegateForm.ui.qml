@@ -1,100 +1,59 @@
 import QtQuick 2.4
-import QtQuick.Layouts 1.3
+import QtQuick.Controls.Material 2.0
+
 import "../controls"
 
-Item {
-    id: delegate
+Pane {
+    id: component
 
     property alias image: image
-    property alias errorImage: errorImage
-    property alias placeholderImage: placeholderImage
-    property alias indicator: busyIndicator
     property bool viewFocused: false
-    property real lineHeight: 50
-    property url placeholder: "../images/media-placeholder.svg"
-    property bool focused: delegate.activeFocus && delegate.viewFocused
-    property variant item: ListElement {
-    }
+    property alias placeholder: image.placeholder
+    property bool focused: component.activeFocus && component.viewFocused
+    property string name: item ? item.name : ""
+    property variant item
 
-    height: lineHeight * 6
-    opacity: focused ? 1 : 0.5
+    padding: 0
+    implicitHeight: image.height + content.height
+    implicitWidth: image.implicitWidth
+    z: component.focused ? 3 : 1
+    y: component.focused ? -5 : 0
+    scale: component.focused ? 1.1 : 1
+    transformOrigin: Item.Top
 
-    Image {
+    Material.elevation: component.focused ? 8 : 2
+
+    PlaceholderImage {
         id: image
+
+        anchors.top: parent.top
+        anchors.left: parent.left
+
         source: item.cover ? item.cover : (item.metadata ? item.metadata.image : "")
-        fillMode: Image.PreserveAspectFit
-        horizontalAlignment: Image.AlignHCenter
-        verticalAlignment: Image.AlignVCenter
-        anchors.top: parent.top
-        height: lineHeight * 4
+        placeholder: "../images/media-placeholder.svg"
+        height: 216
+        opacity: component.focused ? 1 : 0.5
     }
 
-    Image {
-        id: errorImage
-        source: placeholder
-        fillMode: Image.PreserveAspectFit
-        horizontalAlignment: Image.AlignHCenter
-        verticalAlignment: Image.AlignVCenter
-        anchors.top: parent.top
-        height: lineHeight * 4
-        visible: false
-    }
+    Rectangle {
+        id: content
 
-    Image {
-        id: placeholderImage
-        source: placeholder
-        fillMode: Image.PreserveAspectFit
-        horizontalAlignment: Image.AlignHCenter
-        verticalAlignment: Image.AlignVCenter
-        anchors.top: parent.top
-        height: lineHeight * 4
-        visible: false
-    }
-
-    BusyIndicator {
-        id: busyIndicator
-
-        anchors.verticalCenter: image.verticalCenter
-        visible: false
-    }
-
-    MediumLabel {
-        id: title
-        height: delegate.lineHeight * 2
-        text: item.name
-        verticalAlignment: Text.AlignTop
         anchors.top: image.bottom
-        anchors.topMargin: 10
-        visible: focused ? true : false
-        opacity: focused ? 1 : 0
-    }
 
-    states: [
-        State {
-            name: "loading"
-            when: image.status == Image.Loading
-            PropertyChanges {
-                target: busyIndicator
-                visible: true
-                running: true
-                width: 100
-            }
-        },
-        State {
-            name: "empty"
-            when: image.status == Image.Null
-            PropertyChanges {
-                target: placeholderImage
-                visible: true
-            }
-        },
-        State {
-            name: "error"
-            when: image.status == Image.Error
-            PropertyChanges {
-                target: errorImage
-                visible: true
-            }
+        height: 72
+        width: component.width
+        opacity: component.focused ? 1 : 0.5
+
+        color: Material.primary
+
+        MediumLabel {
+            id: title
+
+            text: component.name
+            anchors.fill: parent
+            padding: 16
+            verticalAlignment: Text.AlignTop
+            elide: Text.ElideRight
         }
-    ]
+    }
 }

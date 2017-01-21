@@ -12,44 +12,16 @@ PlaybackControlsForm {
         player.togglePlay();
     }
 
-    previousButton.onClicked: {
-        player.previous();
+    Keys.onReturnPressed: {
+        player.togglePlay();
     }
 
-    previousButton.onEnabledChanged: {
-        if (!previousButton.focus) {
-            return;
-        }
-
-        if (nextButton.enabled) {
-            nextButton.focus = true;
-        } else {
-            playButton.focus = true;
-        }
-    }
-
-    nextButton.onClicked: {
+    Keys.onRightPressed: {
         player.next();
     }
 
-    nextButton.onEnabledChanged: {
-        if (!nextButton.focus) {
-            return;
-        }
-
-        if (previousButton.enabled) {
-            previousButton.focus = true;
-        } else {
-            playButton.focus = true;
-        }
-    }
-
-    slider.onValueManuallyChanged: {
-        player.seek(slider.value);
-    }
-
-    stopButton.onClicked: {
-        player.stop();
+    Keys.onLeftPressed: {
+        player.previous();
     }
 
     onDurationChanged: {
@@ -71,10 +43,10 @@ PlaybackControlsForm {
         var minutes = Math.floor((seconds - (hours * 3600)) / 60);
         seconds = seconds - (hours * 3600) - (minutes * 60);
 
-        if (hours < 10) {hours = '0'+hours;}
-        if (minutes < 10) {minutes = '0'+minutes;}
+        if (hours && hours < 10) {hours = '0'+hours;}
+        if (hours && minutes < 10) {minutes = '0'+minutes;}
         if (seconds < 10) {seconds = '0'+seconds;}
-        if (hours !== '00') {
+        if (hours && hours !== '00') {
             return hours+':'+minutes+':'+seconds;
         }
         return minutes+':'+seconds;

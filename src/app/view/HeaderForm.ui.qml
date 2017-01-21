@@ -1,28 +1,39 @@
 import QtQuick 2.4
+import QtQuick.Layouts 1.3
+
+import "components"
 
 FocusScope {
     id: header
 
     property bool playing: false
-    property alias headerMenu: headerMenu
     property alias playback: playback
-    property int contentMargin: 0
+    property int contentMargin: 8
 
-    HeaderMenu {
-        id: headerMenu
+    opacity: playing ? 1 : 0
 
-        focus: true
-        contentMargin: header.contentMargin
+    RowLayout {
+        anchors.bottom: header.top
+        anchors.left: header.left
+        anchors.right: header.right
+        anchors.leftMargin: contentMargin
+        anchors.rightMargin: contentMargin
+        anchors.bottomMargin: contentMargin
 
-        anchors.fill: parent
-        KeyNavigation.down: header.KeyNavigation.down
+        PlaybackInfo {
+            currentItem: player.currentItem
+            Layout.alignment: Qt.AlignLeft
+        }
+        PlaybackActions {
+            Layout.alignment: Qt.AlignRight
+        }
     }
 
     PlaybackControls {
         id: playback
 
-        visible: false
-        contentMargin: mainFlickable.contentMargin
+        height: 0
+        opacity: 0
 
         anchors.fill: parent
     }
@@ -32,14 +43,9 @@ FocusScope {
             name: "playback"
             when: header.playing
             PropertyChanges {
-                target: headerMenu
-                visible: false
-                focus: false
-            }
-            PropertyChanges {
                 target: playback
-                visible: true
                 focus: true
+                opacity: 1
             }
         }
     ]

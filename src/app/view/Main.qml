@@ -2,10 +2,10 @@ import QtQuick 2.4
 import Couch 1.0
 
 MainForm {
+    id: main
+
     Loader {
         id: settingsLoader
-
-        property int lineHeight: content.lineHeight
 
         active: false
         source: "settings/Settings.qml"
@@ -18,13 +18,15 @@ MainForm {
         }
     }
 
+    signal showSettings();
+
     function showPlayback() {
-        contentY = -height + header.height;
+        main.contentY = -height;
         header.focus = true;
     }
 
     function hidePlayback() {
-        contentY = 0;
+        main.contentY = header.playing ? -header.height : 0;
         content.focus = true;
     }
 
@@ -33,7 +35,7 @@ MainForm {
         player.play(item);
     }
 
-    header.onShowSettings: {
+    onShowSettings: {
         settingsLoader.active = true;
         settingsLoader.visible = true;
         settingsLoader.opacity = 1;

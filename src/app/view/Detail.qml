@@ -1,6 +1,8 @@
 import QtQuick 2.4
 
 DetailForm {
+    property int centerY: content.y
+
     function scrollTo(item, offset) {
         if (!offset) {
             offset = 0;
@@ -12,7 +14,7 @@ DetailForm {
     }
 
     function scrollToMiddle(item) {
-        scrollTo(item, lineHeight * 5);
+        scrollTo(item, centerY);
     }
 
     Behavior on flickable.contentY {

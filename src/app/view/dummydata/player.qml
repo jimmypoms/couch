@@ -16,7 +16,9 @@ QtObject {
     property string error: ""
     
     function play(item) {
-        currentItem = item;
+        if (item) {
+            currentItem = item;
+        }
         playbackStatus = Player.Playing;
         playing = true;
     }

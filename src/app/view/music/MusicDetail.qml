@@ -13,7 +13,17 @@ MusicDetailForm {
 
     actions.onFocusChanged: {
         if (actions.focus) {
-            scrollTo(info);
+            scrollToMiddle(actions);
         }
+    }
+
+    albums.onFocusChanged: {
+        if (albums.focus) {
+            scrollToMiddle(albums);
+        }
+    }
+
+    albums.onItemClicked: {
+        play(item);
     }
 }

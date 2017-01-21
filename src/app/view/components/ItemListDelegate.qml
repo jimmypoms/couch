@@ -1,15 +1,28 @@
 import QtQuick 2.4
 
 ItemListDelegateForm {
-    width: state === "error"
-           ? errorImage.implicitWidth
-           : state === "empty"
-           ? placeholderImage.implicitWidth
-           : Math.max(image.implicitWidth, indicator.width)
+    id: component
 
-    Behavior on width {
-        SmoothedAnimation {
-            duration: 200
+    signal clicked()
+
+    Keys.onEnterPressed: {
+        clicked();
+    }
+
+    Keys.onReturnPressed: {
+        clicked();
+    }
+
+    Behavior on y {
+        YAnimator {
+            duration: 100
+            easing.type: Easing.InOutCubic
+        }
+    }
+    Behavior on scale {
+        ScaleAnimator {
+            duration: 100
+            easing.type: Easing.InOutCubic
         }
     }
 }

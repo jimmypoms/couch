@@ -1,62 +1,24 @@
 import QtQuick 2.6
-import QtQuick.Templates 2.0 as T
+import QtQuick.Controls 2.0
+import QtQuick.Controls.Material 2.0
 
-T.TabButton {
+TabButton {
     id: control
 
-    text: ""
+    property bool secondary: false
 
-    property color color: "grey"
-    property color checkedColor: "white"
-    property color highlightColor: "green"
+    width: implicitWidth
 
-    property alias icon: icon
-
-    topPadding: 10
-    bottomPadding: 10
-    rightPadding: 10
-    font.pointSize: 16
-
-    width: implicitWidth + leftPadding + rightPadding
-    height: implicitHeight + topPadding + bottomPadding
-    implicitWidth: contentItem.implicitWidth
-    implicitHeight: contentItem.implicitHeight
-
-    contentItem: Row {
-        anchors.left: parent.left
-        spacing: 5
-
-        Image {
-            id: icon
-            sourceSize.height: 15
-            fillMode: Image.PreserveAspectCrop
-            width: control.checked && icon.status == Image.Ready ? 15 : 0
-
-            anchors.verticalCenter: text.verticalCenter
-        }
-
-        Text {
-            id: text
-            text: control.text
-            font: control.font
-            elide: Text.ElideRight
-            color: control.color
-            horizontalAlignment: Text.AlignLeft
-            verticalAlignment: Text.AlignVCenter
-        }
+    contentItem: MediumLabel {
+        text: control.secondary ? control.text : control.text.toUpperCase()
+        font: control.font
+        elide: Text.ElideRight
+        color: !control.enabled ? control.Material.hintTextColor
+                                : control.down || control.checked ? control.Material.accentColor
+                                                                  : control.Material.primaryTextColor
+        hint: !control.enabled
+        secondary: !control.down && !control.checked
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
     }
-
-    background: Item {
-    }
-
-    states: [
-        State {
-            name: "checked"
-            when: control.checked
-            PropertyChanges {
-                target: control
-                color: control.checkedColor
-            }
-        }
-    ]
 }

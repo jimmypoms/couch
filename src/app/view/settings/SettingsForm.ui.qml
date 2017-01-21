@@ -7,14 +7,13 @@ import ".."
 Detail {
     id: content
 
-    property int lineHeight: 50
     property variant services: couch.services
 
     title: qsTr("Settings")
     spacing: 0
 
     Item {
-        height: content.lineHeight * 2
+        height: 144
     }
 
     TabBar {

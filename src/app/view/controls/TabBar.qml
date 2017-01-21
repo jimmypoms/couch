@@ -3,10 +3,11 @@ import QtQuick 2.4
 TabBarForm {
     id: control
 
-    implicitWidth: Math.max(background ? background.implicitWidth : 0,
-                            contentItem.implicitWidth + leftPadding + rightPadding)
-    implicitHeight: Math.max(background ? background.implicitHeight : 0,
-                             contentItem.implicitHeight + topPadding + bottomPadding)
+    Binding {
+        target: background
+        property: "color"
+        value: "transparent"
+    }
 
     onFocusChanged: {
         contentItem.focus = focus;
@@ -29,7 +30,4 @@ TabBarForm {
     function pushCurrentIndex() {
         tabView.currentIndex = control.currentIndex;
     }
-
-    Keys.onEnterPressed: clicked();
-    Keys.onReturnPressed: clicked();
 }

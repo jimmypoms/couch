@@ -2,19 +2,20 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.3
 
 FocusScope {
-    default property alias contentChildren: stack.children
+    default property alias contentData: stack.data
     property alias currentIndex: stack.currentIndex
-    property alias stack: stack
+    property StackLayout stack: StackLayout {
+        id: stack
+        anchors.fill: parent
+    }
 
     x: stack.x
     y: stack.y
-    width: stack.implicitWidth
-    height: stack.implicitHeight
+    implicitWidth: stack.implicitWidth
+    implicitHeight: stack.implicitHeight
 
-    StackLayout {
-        id: stack
-        focus: true
-        anchors.fill: parent
-    }
+    children: [
+        stack
+    ]
 }
 
