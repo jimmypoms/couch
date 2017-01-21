@@ -48,9 +48,6 @@ int main(int argc, char *argv[])
         }
     });
 
-    qreal screenPixelDensity = QGuiApplication::primaryScreen()->physicalDotsPerInch()
-            * QGuiApplication::primaryScreen()->devicePixelRatio();
-
     QQmlApplicationEngine engine;
     engine.addImportPath(app.applicationDirPath() + "/../imports");
 
@@ -59,7 +56,6 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("couch", &couch);
     engine.rootContext()->setContextProperty("player", &player);
-    engine.rootContext()->setContextProperty("screenPixelDensity", screenPixelDensity);
     engine.load(QUrl("qrc:/Application.qml"));
 
     return app.exec();
