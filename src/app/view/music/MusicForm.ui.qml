@@ -35,7 +35,6 @@ Master {
         Repeater {
             id: genreTabViewRepeater
             delegate: TabButton {
-                font.pixelSize: 12
                 text: name
                 secondary: true
             }

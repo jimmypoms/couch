@@ -12,7 +12,6 @@ TabButton {
     contentItem: MediumLabel {
         text: control.secondary ? control.text : control.text.toUpperCase()
         font: control.font
-        elide: Text.ElideRight
         color: !control.enabled ? control.Material.hintTextColor
                                 : control.down || control.checked ? control.Material.accentColor
                                                                   : control.Material.primaryTextColor
