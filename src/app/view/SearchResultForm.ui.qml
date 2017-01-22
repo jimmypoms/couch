@@ -10,7 +10,8 @@ FocusScope {
     property variant filter
     property string searchText
     property alias searchList: searchList
-    property alias emptyText: searchList.emptyText
+    property string emptyText: qsTr("type to search")
+    property string noResultsText: qsTr("no results found")
 
     ItemListView {
         id: searchList
@@ -20,6 +21,6 @@ FocusScope {
         anchors.right: parent.right
 
         focus: component.focus
-        emptyText: qsTr("type to search")
+        emptyText: searchText.length > 0 ? component.noResultsText : component.emptyText
     }
 }
