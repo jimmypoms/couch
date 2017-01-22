@@ -86,5 +86,11 @@
         <file>controls/LabelForm.ui.qml</file>
         <file>Master.qml</file>
         <file>MasterForm.ui.qml</file>
+        <file>components/MenuPage.qml</file>
+        <file>components/MenuPageForm.ui.qml</file>
+        <file>controls/HugeLabel.qml</file>
+        <file>controls/HugeLabelForm.ui.qml</file>
+        <file>MainMenu.qml</file>
+        <file>MainMenuForm.ui.qml</file>
     </qresource>
 </RCC>

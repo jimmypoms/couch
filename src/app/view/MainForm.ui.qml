@@ -2,46 +2,52 @@ import QtQuick 2.7
 import QtQuick.Controls.Material 2.0
 import Couch 1.0 as C
 
-Flickable {
-    id: mainFlickable
+FocusScope {
 
+    property alias flickable: mainFlickable
     property alias header: header
     property alias content: content
 
-    interactive: false
-    boundsBehavior: Flickable.StopAtBounds
-    flickableDirection: Flickable.VerticalFlick
+    Flickable {
+        id: mainFlickable
 
-    Player {
-        color: Material.background
         anchors.fill: parent
-    }
 
-    Header {
-        id: header
+        interactive: false
+        boundsBehavior: Flickable.StopAtBounds
+        flickableDirection: Flickable.VerticalFlick
 
-        playing: player.playbackStatus !== C.Player.Stopped
-        height: 72
-        z: 5
+        Player {
+            color: Material.background
+            anchors.fill: parent
+        }
 
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.top
+        Header {
+            id: header
 
-        KeyNavigation.down: content
-    }
+            playing: player.playbackStatus !== C.Player.Stopped
+            height: 72
+            z: 5
 
-    ContentStack {
-        id: content
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.top
 
-        clip: true
-        focus: true
+            KeyNavigation.down: content
+        }
 
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        anchors.left: parent.left
+        ContentStack {
+            id: content
 
-        KeyNavigation.up: header.playing ? header : null
+            clip: true
+            focus: true
+
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.left: parent.left
+
+            KeyNavigation.up: header.playing ? header : null
+        }
     }
 }
