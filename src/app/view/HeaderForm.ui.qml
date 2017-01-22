@@ -34,6 +34,7 @@ FocusScope {
 
         height: 0
         opacity: 0
+        focus: true
 
         anchors.fill: parent
     }
@@ -44,7 +45,6 @@ FocusScope {
             when: header.playing
             PropertyChanges {
                 target: playback
-                focus: true
                 opacity: 1
             }
         }
