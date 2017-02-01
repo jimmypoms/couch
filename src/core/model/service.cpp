@@ -60,6 +60,9 @@ void ServiceImpl::reduceSources()
                 continue;
             }
             auto item = createItem(source);
+            if (!item) {
+                continue;
+            }
             item->addSource(provider, source);
             m_items.append(std::shared_ptr<Item>(item));
             if (m_items.size() > m_maxItemCacheSize) {
