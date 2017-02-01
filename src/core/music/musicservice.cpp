@@ -27,7 +27,7 @@ Artist* MusicService::createItem(const Source* source)
 {
     ItemMetadata *metadata = source->itemMetadata();
     TrackMetadata *tm = qobject_cast<TrackMetadata*>(metadata);
-    if (!tm) {
+    if (!tm || tm->artist().isEmpty() || tm->artist().isNull()) {
         qDebug() << "invalid track metadata of source:" << source->url() << metadata;
         return nullptr;
     }
@@ -39,6 +39,7 @@ Artist* MusicService::createItem(const Source* source)
         artist->setMetadata(i->second);
     } else {
         artist->setMetadata(m_metadataCache.insert(key, new ArtistMetadata()));
+        artist->metadata()->setArtist(tm->artist());
     }
     return artist;
 }
@@ -47,7 +48,9 @@ QList<std::shared_ptr<Item> >::const_iterator MusicService::findItem(Source *sou
 {
     return std::find_if(m_items.cbegin(), m_items.cend(),
             [source](std::shared_ptr<Item> item)->bool {
-                return item->metadata()->name() == source->itemMetadata()->name();
+                const ArtistMetadata *a = qobject_cast<const ArtistMetadata*>(item->metadata());
+                const TrackMetadata *t = qobject_cast<const TrackMetadata*>(source->itemMetadata());
+                return a && t && a->artist() == t->artist();
             });
 }
 

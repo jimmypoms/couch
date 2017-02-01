@@ -45,7 +45,7 @@ void CouchItemList::clear()
         list->deleteLater();
     }
     m_sourceLists.clear();
-    beginRemoveRows(QModelIndex(), 0, rowCount());
+    beginRemoveRows(QModelIndex(), 0, m_items.count() - 1);
     m_items.clear();
     endRemoveRows();
 }
