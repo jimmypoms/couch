@@ -1,5 +1,5 @@
 import QtQuick 2.4
 
 Label {
-    font.pixelSize: 72
+    font.pixelSize: 48
 }

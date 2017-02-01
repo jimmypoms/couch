@@ -92,5 +92,9 @@
         <file>controls/HugeLabelForm.ui.qml</file>
         <file>MainMenu.qml</file>
         <file>MainMenuForm.ui.qml</file>
+        <file>controls/ItemDelegate.qml</file>
+        <file>controls/ItemDelegateForm.ui.qml</file>
+        <file>components/MenuItem.qml</file>
+        <file>components/MenuItemForm.ui.qml</file>
     </qresource>
 </RCC>

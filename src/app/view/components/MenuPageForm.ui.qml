@@ -3,24 +3,32 @@ import QtQuick.Controls.Material 2.0
 
 import "../controls"
 
-Flickable {
+FocusScope {
     id: component
 
+    property int contentMargin: 16
     property alias title: title.text
     property alias description: description.text
-    property alias actions: actions.data
+    property alias menuItems: actionsModel.children
+    property alias contentPange: contentPane
+    property alias actionsPane: actionsPane
 
-    Rectangle {
-        id: contentSection
+    Pane {
+        id: contentPane
 
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        padding: 3 * contentMargin
 
-        color: Material.background
+        width: 2 * parent.width / 3
 
         Column {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
+
+            spacing: 16
 
             HugeLabel {
                 id: title
@@ -32,24 +40,31 @@ Flickable {
         }
     }
 
-    Rectangle {
-        id: actionsSection
+    Pane {
+        id: actionsPane
 
         anchors.top: parent.top
         anchors.right: parent.right
+        anchors.left: contentPane.right
         anchors.bottom: parent.bottom
 
-        width: parent.width / 3
-        color: Material.primary
+        focus: true
+        padding: 0
 
-        Column {
+        ListView {
             id: actions
 
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
 
+            displayMarginBeginning: actionsPane.height / 2
+            displayMarginEnd: actionsPane.height / 2
+
             focus: true
+            model: VisualItemModel {
+                id: actionsModel
+            }
         }
     }
 }

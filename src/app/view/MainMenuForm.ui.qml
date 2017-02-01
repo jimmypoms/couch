@@ -5,15 +5,18 @@ import "controls"
 MenuPage {
     id: mainMenu
 
-    actions: [
-        Button {
+    title: qsTr("This is a title")
+    description: qsTr("this is the description")
+
+    menuItems: [
+        MenuItem {
             text: qsTr("back to couch")
             onClicked: stack.push(main)
         },
-        Button {
+        MenuItem {
             text: qsTr("configure")
         },
-        Button {
+        MenuItem {
             text: qsTr("exit")
             onClicked: Qt.quit()
         }
