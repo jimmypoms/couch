@@ -55,6 +55,15 @@ SearchContainerForm {
         value: component.filter
     }
 
+    Keys.onEscapePressed: {
+        if (searchBar.activeSearch) {
+            searchBar.text = "";
+            content.focus = true;
+        } else {
+            event.accepted = false;
+        }
+    }
+
     onSearchResultChanged: {
         searchResult.searchList.itemClicked.connect(content.openDetail);
     }
