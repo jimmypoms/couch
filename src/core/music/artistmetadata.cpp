@@ -20,8 +20,8 @@ const QString &ArtistMetadata::artist() const
 void ArtistMetadata::setArtist(const QString& artist)
 {
     if (ItemMetadata::name() != artist) {
-        Q_EMIT artistChanged();
         ItemMetadata::setName(artist);
+        Q_EMIT artistChanged();
     }
 }
 
