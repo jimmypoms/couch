@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import "controls"
 import Couch 1.0
 
 MainForm {
@@ -15,6 +16,12 @@ MainForm {
     function play(item) {
         showPlayback();
         player.play(item);
+    }
+
+    onVisibleChanged: {
+        if (visible && player.playbackStatus !== Player.Stopped) {
+            flickable.contentY = -header.height;
+        }
     }
 
     Component.onCompleted: {
