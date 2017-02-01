@@ -86,6 +86,8 @@ FocusScope {
 
             MediumLabel {
                 id: positionLabel
+
+                secondary: true
             }
             ProgressBar {
                 id: progressBar
@@ -99,6 +101,8 @@ FocusScope {
             }
             MediumLabel {
                 id: durationLabel
+
+                secondary: true
             }
         }
     }
