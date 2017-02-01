@@ -30,12 +30,8 @@ ListView {
         item: modelData
         viewFocused: component.focused
 
-        Keys.onEnterPressed: {
-            itemClicked(modelData);
-        }
-        Keys.onReturnPressed: {
-            itemClicked(modelData);
-        }
+        Keys.onEnterPressed: itemClicked(modelData);
+        Keys.onReturnPressed: itemClicked(modelData);
     }
 
     footer: BusyIndicator {
