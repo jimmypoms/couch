@@ -46,7 +46,6 @@ void Item::setMetadata(std::shared_ptr<ItemMetadata> metadata)
 
 void Item::addSource(const QObject* provider, Source* source)
 {
-    source->setParent(this);
     if (!m_sources.contains(provider)) {
         CouchSourceList *list = new CouchSourceList(provider);
         list->setParent(this);
@@ -59,6 +58,7 @@ void Item::addSource(const QObject* provider, Source* source)
                 return *source == *s;
             });
     if (it == m_sources[provider]->cend()) {
+        source->setParent(this);
         m_sources[provider]->append(source);
         m_metadata->merge(source->itemMetadata());
         Q_EMIT sourcesChanged();
