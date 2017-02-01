@@ -1,7 +1,7 @@
 import QtQuick 2.4
 
 ContentForm {
-    property int centerY: tabView.y
+    property int centerY: 2 * flickable.height / 3
 
     function scrollTo(item, offset) {
         if (!offset) {
@@ -14,7 +14,7 @@ ContentForm {
     }
 
     function scrollToMiddle(item) {
-        scrollTo(item, centerY);
+        scrollTo(item, centerY - item.height / 2);
     }
 
     Behavior on flickable.contentY {
