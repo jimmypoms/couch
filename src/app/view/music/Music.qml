@@ -53,9 +53,7 @@ MusicForm {
     }
 
     onFocusChanged: {
-        if (focus) {
-            featuredList.focus = true;
-        }
+        featuredList.focus = true;
     }
 
     featuredList.onItemClicked: openDetail(item)
