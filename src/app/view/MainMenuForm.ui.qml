@@ -1,12 +1,10 @@
 import QtQuick 2.4
 import "components"
 import "controls"
+import "settings"
 
 MenuPage {
     id: mainMenu
-
-    title: qsTr("This is a title")
-    description: qsTr("this is the description")
 
     menuItems: [
         MenuItem {
@@ -15,6 +13,7 @@ MenuPage {
         },
         MenuItem {
             text: qsTr("configure")
+            onClicked: stack.push(settings)
         },
         MenuItem {
             text: qsTr("exit")

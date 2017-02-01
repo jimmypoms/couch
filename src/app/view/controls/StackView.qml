@@ -18,7 +18,7 @@ StackViewForm {
 
     onCurrentItemChanged: {
         if (currentItem) {
-            currentItem.focus = true;
+            currentItem.forceActiveFocus();
         }
     }
 }

@@ -10,8 +10,10 @@ FocusScope {
     property alias title: title.text
     property alias description: description.text
     property alias menuItems: actionsModel.children
+    property alias model: actions.model
     property alias contentPange: contentPane
     property alias actionsPane: actionsPane
+    property alias list: actions
 
     Pane {
         id: contentPane

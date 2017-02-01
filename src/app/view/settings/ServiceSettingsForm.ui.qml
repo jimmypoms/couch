@@ -1,54 +1,17 @@
 import QtQuick 2.4
-import QtQuick.Layouts 1.3
+import "../components"
 
-import "../controls"
-
-SubSettings {
+MenuPage {
     property variant service: QtObject {}
-    property variant providers: service.providers
 
-    property alias tabBar: serviceSettingsTabBar
-    property alias tabView: serviceSettingsTabView
+    title: service.name
 
-    TabBar {
-        id: serviceSettingsTabBar
-
-        focus: true
-        anchors.left: parent.left
-        currentIndex: 0
-        tabView: serviceSettingsTabView
-
-        TabButton {
-            text: qsTr("General")
-            font.pointSize: 12
-            font.weight: Font.Light
+    menuItems: [
+        MenuItem {
+            text: qsTr("general")
+            onClicked: stack.push(Qt.createComponent("SettingsList.qml"), {
+                settings: service.settings
+            })
         }
-
-        Repeater {
-            model: providers
-            delegate: TabButton {
-                text: modelData.name
-                font.pointSize: 12
-                font.weight: Font.Light
-            }
-        }
-    }
-
-    TabView {
-        id: serviceSettingsTabView
-
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-
-        SettingsList {
-            settings: service.settings
-        }
-
-        Repeater {
-            model: providers
-            delegate: ProviderSettings {
-                provider: modelData
-            }
-        }
-    }
+    ]
 }

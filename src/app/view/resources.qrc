@@ -40,8 +40,6 @@
         <file>settings/ProviderSettingsForm.ui.qml</file>
         <file>settings/SettingsList.qml</file>
         <file>settings/SettingsListForm.ui.qml</file>
-        <file>settings/SubSettings.qml</file>
-        <file>settings/SubSettingsForm.ui.qml</file>
         <file>music/Music.qml</file>
         <file>music/MusicForm.ui.qml</file>
         <file>music/MusicDetail.qml</file>
