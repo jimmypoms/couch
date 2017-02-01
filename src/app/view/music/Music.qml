@@ -76,19 +76,19 @@ MusicForm {
     }
 
     function initFocusListeners() {
-        featuredList.focusChanged.connect(function() {
+        featuredList.activeFocusChanged.connect(function() {
             if (featuredList.focus) {
                 scrollToMiddle(featuredList);
             }
         });
 
-        genreTabView.focusChanged.connect(function() {
+        genreTabView.activeFocusChanged.connect(function() {
             if (genreTabView.focus) {
                 scrollToMiddle(genreList);
             }
         });
 
-        genreList.focusChanged.connect(function() {
+        genreList.activeFocusChanged.connect(function() {
             if (genreList.focus) {
                 scrollToMiddle(genreList);
             }
