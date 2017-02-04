@@ -15,17 +15,14 @@
 #include <qdatastream.h>
 #include <qfuture.h>
 #include <qfuturewatcher.h>
+#include <qglobal.h>
 #include <qiodevice.h>
 #include <qobject.h>
 #include <qstandardpaths.h>
 #include <qstringlist.h>
 #include <qtconcurrentrun.h>
-#include <xapian/database.h>
 #include <xapian/document.h>
-#include <xapian/enquire.h>
-#include <xapian/query.h>
-#include <xapian/queryparser.h>
-#include <xapian/termgenerator.h>
+#include <xapian.h>
 
 const QStringList LocalMovieProvider::s_filenameFilters = {
         "*.mp4",
@@ -44,7 +41,7 @@ LocalMovieProvider::LocalMovieProvider(QObject* parent) :
                 MovieProvider(parent, "local"),
                 LocalProvider(
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-                                + "/database/movie", "/misc/movies")
+                                + "/database/movie", "~/Videos")
 {
     Q_INIT_RESOURCE(resources);
 }

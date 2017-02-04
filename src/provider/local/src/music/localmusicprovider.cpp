@@ -16,24 +16,22 @@
 #include <qbytearray.h>
 #include <qdatastream.h>
 #include <qdatetime.h>
-#include <qdebug.h>
 #include <qfuture.h>
 #include <qfuturewatcher.h>
 #include <qglobal.h>
 #include <qiodevice.h>
-#include <qlogging.h>
 #include <qobject.h>
 #include <qstandardpaths.h>
 #include <qstringlist.h>
 #include <qtconcurrentrun.h>
-#include <xapian/database.h>
 #include <xapian/document.h>
-#include <xapian/enquire.h>
-#include <xapian/query.h>
-#include <xapian/queryparser.h>
-#include <xapian/termgenerator.h>
+#include <xapian.h>
 
-const QStringList LocalMusicProvider::s_filenameFilters = {"*.mp3", "*.ogg", "*.aac", "*.wma",
+const QStringList LocalMusicProvider::s_filenameFilters = {
+        "*.mp3",
+        "*.ogg",
+        "*.aac",
+        "*.wma",
         "*.mpeg"};
 const std::string LocalMusicProvider::s_prefixTitle = "S";
 const std::string LocalMusicProvider::s_prefixAlbum = "G";
@@ -45,7 +43,7 @@ LocalMusicProvider::LocalMusicProvider(QObject* parent) :
                 MusicProvider(parent, "local"),
                 LocalProvider(
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-                                + "/database/music", "/misc/music")
+                                + "/database/music", "~/Music")
 {
     Q_INIT_RESOURCE(resources);
 }

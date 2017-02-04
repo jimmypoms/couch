@@ -10,6 +10,7 @@
 
 #include "couch/source.h"
 
+#include <qchar.h>
 #include <qdebug.h>
 #include <qdir.h>
 #include <qdiriterator.h>
@@ -38,6 +39,7 @@ protected:
     Xapian::MSet searchDatabase(const Filter *filter);
 
 private:
+    QString expandHomeDir(const QString &dir);
     void loadDatabase();
 
     virtual QStringList filenameFilters() const = 0;
@@ -111,6 +113,16 @@ inline Xapian::MSet LocalProvider<Item, Filter>::searchDatabase(const Filter *fi
 }
 
 template<class Item, class Filter>
+inline QString LocalProvider<Item, Filter>::expandHomeDir(const QString &dir)
+{
+    if (dir.at(0) == '~') {
+        return QDir::homePath() + dir.mid(1);
+    }
+
+    return dir;
+}
+
+template<class Item, class Filter>
 inline void LocalProvider<Item, Filter>::loadDatabase()
 {
     QThread::sleep(1);
@@ -121,7 +133,8 @@ inline void LocalProvider<Item, Filter>::loadDatabase()
 
     std::clock_t start;
     double duration;
-    qDebug() << "starting indexing of files in library path:" << m_library;
+    QString library = expandHomeDir(m_library);
+    qDebug() << "starting indexing of files in library path:" << library;
     m_isIndexing = true;
     int count = 0;
     start = std::clock();
@@ -130,7 +143,8 @@ inline void LocalProvider<Item, Filter>::loadDatabase()
     for (auto i = writer.postlist_begin(""); i != writer.postlist_end(""); ++i) {
         writer.delete_document(*i);
     }
-    QDirIterator it(m_library, filenameFilters(), QDir::Files, QDirIterator::Subdirectories);
+    QDirIterator it(library, filenameFilters(), QDir::Files,
+            QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
     while (it.hasNext()) {
         ++count;
         QString filePath = it.next();
@@ -143,7 +157,7 @@ inline void LocalProvider<Item, Filter>::loadDatabase()
 
     duration = (std::clock() - start) / (double) CLOCKS_PER_SEC;
     m_isIndexing = false;
-    qDebug() << "finished indexing" << count << "files in path:" << m_library << duration << 's';
+    qDebug() << "finished indexing" << count << "files in path:" << library << duration << 's';
 }
 
 #endif /* LOCALPROVIDER_H_ */
