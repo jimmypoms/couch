@@ -10,8 +10,10 @@ FocusScope {
     property variant filter
     property string searchText
     property alias searchList: searchList
-    property string emptyText: qsTr("type to search")
-    property string noResultsText: qsTr("no results found")
+    //% "type to search"
+    property string emptyText: qsTrId("couch.search.type")
+    //% "no results found"
+    property string noResultsText: qsTrId("couch.search.empty")
 
     ItemListView {
         id: searchList

@@ -4,11 +4,13 @@ import "../components"
 MenuPage {
     id: component
 
-    title: qsTr("Settings")
+    //% "Settings"
+    title: qsTrId("settings.title")
 
     menuItems: [
         MenuItem {
-            text: qsTr("general")
+            //% "general"
+            text: qsTrId("settings.general")
             onClicked: stack.push(Qt.createComponent("GeneralSettings.qml"))
         }
     ]

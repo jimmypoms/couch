@@ -39,6 +39,15 @@ HEADERS += \
 
 RESOURCES = view/resources.qrc
 
+TRANSLATIONS = view/translations/app.ts
+lupdate_only{
+SOURCES = view/*.qml \
+          view/components/*.qml \
+          view/controls/*.qml \
+          view/settings/*.qml \
+          view/music/*.qml
+}
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 

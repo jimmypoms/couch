@@ -45,7 +45,8 @@ FocusScope {
         anchors.verticalCenter: icon.verticalCenter
         anchors.left: icon.right
 
-        text: qsTr("search content")
+        //% "search content"
+        text: qsTrId("couch.search.title")
         opacity: component.active ? 0 : hintOpacity
     }
 

@@ -19,7 +19,8 @@ Master {
     MediumLabel {
         id: featuredLabel
 
-        text: qsTr("Featured")
+        //% "Featured"
+        text: qsTrId("list.featured")
     }
     ItemListView {
         id: featuredList

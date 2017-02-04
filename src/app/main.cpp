@@ -7,20 +7,19 @@
 #include "couch/playbackhandler.h"
 #include "couch/provider.h"
 
+#include <execinfo.h>
 #include <qguiapplication.h>
+#include <qlocale.h>
 #include <qobject.h>
 #include <qqmlapplicationengine.h>
 #include <qqmlcontext.h>
 #include <qstring.h>
+#include <qtranslator.h>
 #include <qurl.h>
-
-#include <execinfo.h>
 #include <signal.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <ucontext.h>
-#include <unistd.h>
+#include <cstdio>
+#include <cstring>
 
 /* This structure mirrors the one found in /usr/include/asm/ucontext.h */
 typedef struct _sig_ucontext {
@@ -85,6 +84,12 @@ int main(int argc, char *argv[])
     installSignal(SIGSEGV);
 
     QGuiApplication app(argc, argv);
+
+    QTranslator translator;
+    if (translator.load(QLocale(), "app", "_", ":/translations", ".qm")) {
+        app.installTranslator(&translator);
+    }
+
     Couch couch;
     CouchPlayer player;
 

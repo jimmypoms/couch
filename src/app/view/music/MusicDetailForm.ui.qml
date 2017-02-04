@@ -39,7 +39,8 @@ Detail {
                 focus: true
                 focused: playAllButton.activeFocus
                 item: component.artist
-                name: qsTr("play all")
+                //% "play all"
+                name: qsTrId("couch.playall")
 
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
             }
@@ -51,7 +52,8 @@ Detail {
     }
 
     MediumLabel {
-        text: qsTr("Albums")
+        //% "Albums"
+        text: qsTrId("music.albums")
     }
 
     ItemListView {

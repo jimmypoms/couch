@@ -46,7 +46,8 @@ ListView {
         id: emptyLabel
 
         anchors.centerIn: parent
-        text: qsTr("list.empty")
+        //% "no results"
+        text: qsTrId("list.empty")
         visible: false
     }
 

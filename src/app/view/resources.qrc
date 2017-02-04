@@ -94,5 +94,6 @@
         <file>controls/ItemDelegateForm.ui.qml</file>
         <file>components/MenuItem.qml</file>
         <file>components/MenuItemForm.ui.qml</file>
+        <file>translations/app.qm</file>
     </qresource>
 </RCC>

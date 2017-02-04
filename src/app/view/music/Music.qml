@@ -8,19 +8,23 @@ MusicForm {
     ListModel {
         id: genres
         ListElement {
-            name: qsTr("Rock")
+            //% "Rock"
+            name: qsTrId("music.genre.rock")
             genre: Album.Rock
         }
         ListElement {
-            name: qsTr("Blues")
+            //% "Blues"
+            name: qsTrId("music.genre.blues")
             genre: Album.Blues
         }
         ListElement {
-            name: qsTr("Jazz")
+            //% "Jazz"
+            name: qsTrId("music.genre.jazz")
             genre: Album.Jazz
         }
         ListElement {
-            name: qsTr("House")
+            //% "House"
+            name: qsTrId("music.genre.house")
             genre: Album.House
         }
     }

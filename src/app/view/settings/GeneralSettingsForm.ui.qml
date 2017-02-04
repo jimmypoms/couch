@@ -2,11 +2,13 @@ import QtQuick 2.4
 import "../components"
 
 MenuPage {
-    title: qsTr("general")
+    //% "general"
+    title: qsTrId("settings.general")
 
     menuItems: [
         MenuItem {
-            text: qsTr("appearence")
+            //% "appearence"
+            text: qsTrId("settings.appearence")
             onClicked: stack.push(Qt.createComponent("SettingsList.qml"), {
                 settings: couch.settings
             })

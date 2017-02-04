@@ -60,7 +60,8 @@ FocusScope {
             KeyNavigation.up: searchBar
 
             TabButton {
-                text: qsTr("Music")
+                //% "Music"
+                text: qsTrId("music.title")
             }
         }
 
@@ -81,7 +82,8 @@ FocusScope {
                     order: MusicFilter.Popular
                 }
                 searchResult: SearchResult {
-                    emptyText: qsTr("type to search music")
+                    //% "type to search music"
+                    emptyText: qsTrId("music.search.type")
                 }
                 content: Music {
                 }

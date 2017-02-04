@@ -8,7 +8,8 @@ MenuPage {
 
     menuItems: [
         MenuItem {
-            text: qsTr("general")
+            //% "general"
+            text: qsTrId("settings.general")
             onClicked: stack.push(Qt.createComponent("SettingsList.qml"), {
                 settings: service.settings
             })

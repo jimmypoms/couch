@@ -8,15 +8,18 @@ MenuPage {
 
     menuItems: [
         MenuItem {
-            text: qsTr("back to couch")
+            //% "back to couch"
+            text: qsTrId("couch.back")
             onClicked: stack.push(main)
         },
         MenuItem {
-            text: qsTr("configure")
+            //% "configure"
+            text: qsTrId("couch.configure")
             onClicked: stack.push(settings)
         },
         MenuItem {
-            text: qsTr("exit")
+            //% "exit"
+            text: qsTrId("couch.exit")
             onClicked: Qt.quit()
         }
     ]
