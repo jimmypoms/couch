@@ -1,104 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="en_GB">
 <context>
     <name></name>
     <message id="music.title">
         <location filename="../ContentForm.ui.qml" line="64"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Music</translation>
     </message>
     <message id="music.search.type">
         <location filename="../ContentForm.ui.qml" line="86"/>
         <source>type to search music</source>
-        <translation type="unfinished"></translation>
+        <translation>Type to search artists</translation>
     </message>
     <message id="couch.back">
         <location filename="../MainMenuForm.ui.qml" line="12"/>
         <source>back to couch</source>
-        <translation type="unfinished"></translation>
+        <translation>Back to couch</translation>
     </message>
     <message id="couch.configure">
         <location filename="../MainMenuForm.ui.qml" line="17"/>
         <source>configure</source>
-        <translation type="unfinished"></translation>
+        <translation>Configure</translation>
     </message>
     <message id="couch.exit">
         <location filename="../MainMenuForm.ui.qml" line="22"/>
         <source>exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Quit</translation>
     </message>
     <message id="couch.search.type">
         <location filename="../SearchResultForm.ui.qml" line="14"/>
         <source>type to search</source>
-        <translation type="unfinished"></translation>
+        <translation>Type to search content</translation>
     </message>
     <message id="couch.search.empty">
         <location filename="../SearchResultForm.ui.qml" line="16"/>
         <source>no results found</source>
-        <translation type="unfinished"></translation>
+        <translation>Your search did not match any results</translation>
     </message>
     <message id="list.empty">
         <location filename="../components/ItemListViewForm.ui.qml" line="50"/>
         <source>no results</source>
-        <translation type="unfinished"></translation>
+        <translation>Nothing to see here</translation>
     </message>
     <message id="couch.search.title">
         <location filename="../components/SearchBarForm.ui.qml" line="49"/>
         <source>search content</source>
-        <translation type="unfinished"></translation>
+        <translation>Search for content</translation>
     </message>
     <message id="music.genre.rock">
         <location filename="../music/Music.qml" line="12"/>
         <source>Rock</source>
-        <translation type="unfinished"></translation>
+        <translation>Rock</translation>
     </message>
     <message id="music.genre.blues">
         <location filename="../music/Music.qml" line="17"/>
         <source>Blues</source>
-        <translation type="unfinished"></translation>
+        <translation>Blues</translation>
     </message>
     <message id="music.genre.jazz">
         <location filename="../music/Music.qml" line="22"/>
         <source>Jazz</source>
-        <translation type="unfinished"></translation>
+        <translation>Jazz</translation>
     </message>
     <message id="music.genre.house">
         <location filename="../music/Music.qml" line="27"/>
         <source>House</source>
-        <translation type="unfinished"></translation>
+        <translation>House</translation>
     </message>
     <message id="couch.playall">
         <location filename="../music/MusicDetailForm.ui.qml" line="43"/>
         <source>play all</source>
-        <translation type="unfinished"></translation>
+        <translation>Play all</translation>
     </message>
     <message id="music.albums">
         <location filename="../music/MusicDetailForm.ui.qml" line="56"/>
         <source>Albums</source>
-        <translation type="unfinished"></translation>
+        <translation>Albums</translation>
     </message>
     <message id="list.featured">
         <location filename="../music/MusicForm.ui.qml" line="23"/>
         <source>Featured</source>
-        <translation type="unfinished"></translation>
+        <translation>Featured</translation>
     </message>
     <message id="settings.general">
         <location filename="../settings/GeneralSettingsForm.ui.qml" line="6"/>
         <location filename="../settings/ServiceSettingsForm.ui.qml" line="12"/>
         <location filename="../settings/SettingsForm.ui.qml" line="13"/>
         <source>general</source>
-        <translation type="unfinished"></translation>
+        <translation>General settings</translation>
     </message>
     <message id="settings.appearence">
         <location filename="../settings/GeneralSettingsForm.ui.qml" line="11"/>
         <source>appearence</source>
-        <translation type="unfinished"></translation>
+        <translation>Appearence settings</translation>
     </message>
     <message id="settings.title">
         <location filename="../settings/SettingsForm.ui.qml" line="8"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Settings</translation>
     </message>
 </context>
 <context>
