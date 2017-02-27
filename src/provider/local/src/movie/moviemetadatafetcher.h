@@ -22,17 +22,17 @@ class MovieMetadataFetcher
 {
     MediaInfoDLL::MediaInfo m_mediaInfoHandle;
 
-    bool fetchNfoMetadata(MovieMetadata &metadata, const QFileInfo &fileInfo);
-    void readMovieTag(QXmlStreamReader &xml, MovieMetadata &metadata);
-    void readActorTag(QXmlStreamReader &xml, MovieMetadata &metadata);
-    void readFanartTag(QXmlStreamReader &xml, MovieMetadata &metadata);
-    QUrl readTrailerTag(QXmlStreamReader &xml);
-    QString readStringTag(QXmlStreamReader &xml);
-    QUrl readUrlTag(QXmlStreamReader &xml);
-    int readIntTag(QXmlStreamReader &xml);
-    double readDoubleTag(QXmlStreamReader &xml);
+    static bool fetchNfoMetadata(MovieMetadata &metadata, const QFileInfo &fileInfo);
+    static void readMovieTag(QXmlStreamReader &xml, MovieMetadata &metadata);
+    static void readActorTag(QXmlStreamReader &xml, MovieMetadata &metadata);
+    static void readFanartTag(QXmlStreamReader &xml, MovieMetadata &metadata);
+    static QUrl readTrailerTag(QXmlStreamReader &xml);
+    static QString readStringTag(QXmlStreamReader &xml);
+    static QUrl readUrlTag(QXmlStreamReader &xml);
+    static int readIntTag(QXmlStreamReader &xml);
+    static double readDoubleTag(QXmlStreamReader &xml);
 
-    bool fetchFileMetadata(MovieMetadata &metadata, const QFileInfo &fileInfo);
+    static bool fetchFileMetadata(MovieMetadata &metadata, const QFileInfo &fileInfo);
 
 public:
     MovieMetadataFetcher();

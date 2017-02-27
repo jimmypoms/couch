@@ -39,7 +39,7 @@ protected:
     Xapian::MSet searchDatabase(const Filter *filter);
 
 private:
-    QString expandHomeDir(const QString &dir);
+    static QString expandHomeDir(const QString &dir);
     void loadDatabase();
 
     virtual QStringList filenameFilters() const = 0;

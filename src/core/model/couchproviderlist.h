@@ -29,7 +29,7 @@ private:
     QList<QObject*> m_providers;
 
 public:
-    CouchProviderList(QObject *parent = 0);
+    explicit CouchProviderList(QObject *parent = 0);
     virtual ~CouchProviderList() = default;
 
     QHash<int, QByteArray> roleNames() const;

@@ -81,10 +81,9 @@ void ServiceImpl::reduceSources()
     if (filter) {
         filter->setHasMore(provider, sourcesList->rowCount() >= filter->limit());
     }
-    if (itemList) {
-        QString id = itemList->id();
-        Q_EMIT itemsReady(list, id);
-    }
+
+    QString id = itemList->id();
+    Q_EMIT itemsReady(list, id);
 }
 
 QList<std::shared_ptr<Item> >::const_iterator ServiceImpl::findItem(Source *source)
