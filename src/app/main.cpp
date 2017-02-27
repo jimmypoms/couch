@@ -10,6 +10,7 @@
 #include <execinfo.h>
 #include <qguiapplication.h>
 #include <qlocale.h>
+#include <qnamespace.h>
 #include <qobject.h>
 #include <qqmlapplicationengine.h>
 #include <qqmlcontext.h>
@@ -83,6 +84,7 @@ int main(int argc, char *argv[])
 {
     installSignal(SIGSEGV);
 
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
     QTranslator translator;
