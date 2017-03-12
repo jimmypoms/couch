@@ -27,4 +27,9 @@ ContentForm {
             duration: 100
         }
     }
+    Behavior on tabBar.anchors.topMargin {
+        SmoothedAnimation {
+            duration: 300
+        }
+    }
 }

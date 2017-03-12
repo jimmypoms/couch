@@ -8,6 +8,8 @@
 #include "couch/provider.h"
 
 #include <execinfo.h>
+#include <qbytearray.h>
+#include <qglobal.h>
 #include <qguiapplication.h>
 #include <qlocale.h>
 #include <qnamespace.h>
@@ -82,6 +84,7 @@ void installSignal(int __sig) {
 
 int main(int argc, char *argv[])
 {
+    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     installSignal(SIGSEGV);
 
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);

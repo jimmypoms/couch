@@ -23,6 +23,7 @@ QT += core gui qml quick multimedia network
 
 CONFIG += c++11
 CONFIG += debug_and_release
+CONFIG += disable-desktop
 DESTDIR = $$CBINDESTDIR
 
 DEPENDPATH += $$CINCLUDEPATH

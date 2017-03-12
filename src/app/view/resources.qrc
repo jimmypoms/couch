@@ -95,5 +95,7 @@
         <file>components/MenuItem.qml</file>
         <file>components/MenuItemForm.ui.qml</file>
         <file>translations/app.qm</file>
+        <file>Keyboard.qml</file>
+        <file>KeyboardForm.ui.qml</file>
     </qresource>
 </RCC>

@@ -56,7 +56,9 @@ SearchContainerForm {
     }
 
     Keys.onEscapePressed: {
-        if (searchBar.activeSearch) {
+        if (Qt.inputMethod.visible) {
+            Qt.inputMethod.hide();
+        } else if (searchBar.activeSearch) {
             searchBar.text = "";
             content.focus = true;
         } else {

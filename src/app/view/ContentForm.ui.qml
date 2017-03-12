@@ -50,7 +50,7 @@ FocusScope {
 
             anchors.top: searchBar.bottom
             anchors.left: parent.left
-            anchors.topMargin: 104
+            anchors.topMargin: Qt.inputMethod.visible ? 72 : 104
             anchors.leftMargin: content.contentMargin
 
             focus: true
