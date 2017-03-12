@@ -1,15 +1,13 @@
 import QtQuick 2.4
-import QtQuick.Controls.Material 2.0
 import QtQuick.VirtualKeyboard 2.1
 
-Rectangle {
+Item {
     id: component
 
     readonly property int maxHeight: 250
     property alias inputPanel: inputPanel
 
     height: state === "visible" ? maxHeight : 0
-    color: Material.primary
 
     InputPanel {
         id: inputPanel

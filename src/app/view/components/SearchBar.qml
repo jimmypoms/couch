@@ -2,12 +2,10 @@ import QtQuick 2.4
 
 SearchBarForm {
     Keys.onEscapePressed: {
-        if (Qt.inputMethod.visible) {
-            Qt.inputMethod.hide();
-            return;
+        if (!Qt.inputMethod.visible) {
+            text = "";
         }
 
-        text = "";
         if (KeyNavigation.down) {
             KeyNavigation.down.forceActiveFocus();
         }
