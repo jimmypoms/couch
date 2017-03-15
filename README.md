@@ -2,9 +2,8 @@
 
 Couch is a home theater software which allows you to combine different content provider into one convenient interface.
 
-```
-Please beware that Couch is still very much in alpha. This means that a lot of very basic features are not yet ready to be used.
-```
+> Please beware that Couch is still very much in alpha. 
+> This means that a lot of very basic features are not yet ready to be used.
 
 ## Goals
 
