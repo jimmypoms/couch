@@ -7,6 +7,8 @@
 #include "couchsourcelist.h"
 #include "provider.h"
 
+#include "couch/settings/settinglist.h"
+
 #include <qlist.h>
 #include <qmutex.h>
 #include <qobjectdefs.h>
@@ -35,12 +37,14 @@ private:
     QMutex m_mutex;
 
     virtual Item* createItem(const Source *source) = 0;
+
 protected:
     CouchPlayer* m_player;
     QList<QObject*> m_providers;
     QList<std::shared_ptr<Item> > m_items;
 
     virtual QList<std::shared_ptr<Item> >::const_iterator findItem(Source* source);
+
 public Q_SLOTS:
     void reduceSources();
     void onActionTriggered();
@@ -56,6 +60,8 @@ public:
 
     const CouchPlayer* player() const;
     void setPlayer(CouchPlayer* player);
+
+    virtual SettingList* buildSettings(const SettingList *parent = 0) = 0;
 };
 
 template<class Item, class Filter, class P = Provider<Item, Filter> >
@@ -75,6 +81,8 @@ public:
     CouchItemList *load(Filter *filter);
     CouchItemList *load(Item *item);
     CouchActionList *actions(Item *item);
+
+    SettingList* buildSettings(const SettingList *parent = 0);
 };
 
 template<class Item, class Filter, class P>
@@ -142,5 +150,24 @@ inline CouchActionList* Service<Item, Filter, P>::actions(Item* item)
     }
     return list;
 }
+
+template<class Item, class Filter, class P>
+SettingList* Service<Item, Filter, P>::buildSettings(const SettingList* parent)
+{
+    SettingList* list = new SettingList(this, parent, name());
+
+    for (QObject* object : m_providers) {
+        Provider<Item, Filter>* provider = qobject_cast<Provider<Item, Filter>*>(object);
+        if (provider) {
+            SettingList* providerSettings = provider->buildSettings(list);
+            if (providerSettings) {
+                list->setSettingList(object, providerSettings);
+            }
+        }
+    }
+
+    return list;
+}
+
 
 #endif // SERVICE_H

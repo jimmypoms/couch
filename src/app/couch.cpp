@@ -1,22 +1,7 @@
 #include "couch.h"
 
-#include "couch/couchactionlist.h"
-#include "couch/couchitemlist.h"
-#include "couch/couchplayer.h"
-#include "couch/couchproviderlist.h"
-#include "couch/couchsourcelist.h"
-#include "couch/itemmetadata.h"
-#include "couch/movie/movie.h"
-#include "couch/movie/moviefilter.h"
-#include "couch/movie/movienetworkprovider.h"
-#include "couch/movie/movieprovider.h"
-#include "couch/music/artist.h"
-#include "couch/music/musicfilter.h"
-#include "couch/music/musicnetworkprovider.h"
-#include "couch/music/musicprovider.h"
-#include "couch/source.h"
-
-#include <qqml.h>
+#include "couch/service.h"
+#include "couch/settings/settinglist.h"
 
 Couch::Couch(QObject *parent) :
         QObject(parent)
@@ -32,4 +17,18 @@ void Couch::addService(QObject* service)
 const QList<QObject*>& Couch::services() const
 {
     return m_services;
+}
+
+SettingList* Couch::buildSettings()
+{
+    SettingList* list = new SettingList(this, nullptr, "");
+
+    for (QObject *object : m_services) {
+        ServiceImpl *service = qobject_cast<ServiceImpl*>(object);
+        if (service) {
+            list->setSettingList(service, service->buildSettings(list));
+        }
+    }
+
+    return list;
 }

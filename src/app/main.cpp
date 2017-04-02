@@ -6,6 +6,7 @@
 #include "couch/music/musicservice.h"
 #include "couch/playbackhandler.h"
 #include "couch/provider.h"
+#include "couch/settings/settinglist.h"
 
 #include <execinfo.h>
 #include <qbytearray.h>
@@ -87,6 +88,10 @@ int main(int argc, char *argv[])
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     installSignal(SIGSEGV);
 
+    QCoreApplication::setOrganizationName("Couch");
+    QCoreApplication::setOrganizationDomain("couch.org");
+    QCoreApplication::setApplicationName("Couch");
+
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
@@ -125,6 +130,8 @@ int main(int argc, char *argv[])
         }
     });
 
+    SettingList * settings = couch.buildSettings();
+    settings->load();
     QQmlApplicationEngine engine;
     engine.addImportPath(app.applicationDirPath() + "/../imports");
 
@@ -133,6 +140,7 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("couch", &couch);
     engine.rootContext()->setContextProperty("player", &player);
+    engine.rootContext()->setContextProperty("settings", settings);
     engine.load(QUrl("qrc:/Application.qml"));
 
     return app.exec();

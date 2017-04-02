@@ -160,6 +160,11 @@ QString LocalMovieProvider::playIcon() const
     return "qrc:localmovieprovider/icons/play.svg";
 }
 
+SettingList* LocalMovieProvider::buildSettings(const SettingList* parent)
+{
+    return nullptr;
+}
+
 CouchSourceList* LocalMovieProvider::load(MovieFilter* movieFilter)
 {
     if (!m_isIndexing) {

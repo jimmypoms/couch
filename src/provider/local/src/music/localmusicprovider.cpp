@@ -139,6 +139,11 @@ QString LocalMusicProvider::playIcon() const
     return "qrc:localmusicprovider/icons/play.svg";
 }
 
+SettingList* LocalMusicProvider::buildSettings(const SettingList* parent)
+{
+    return nullptr;
+}
+
 CouchSourceList* LocalMusicProvider::load(MusicFilter* filter)
 {
     if (!m_isIndexing) {

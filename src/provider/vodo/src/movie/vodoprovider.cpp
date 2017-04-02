@@ -75,6 +75,11 @@ QString VodoProvider::playIcon() const
     return "";
 }
 
+SettingList* VodoProvider::buildSettings(const SettingList* parent)
+{
+    return nullptr;
+}
+
 QList<Source*> VodoProvider::parseReply(QNetworkReply* reply) const
 {
     QByteArray jsonData = reply->readAll();

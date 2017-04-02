@@ -56,6 +56,7 @@ public:
     virtual ~LocalMusicProvider() = default;
 
     QString playIcon() const;
+    SettingList* buildSettings(const SettingList* parent = 0);
 
 public Q_SLOTS:
     CouchSourceList* load(Artist* item);

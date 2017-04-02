@@ -5,6 +5,8 @@
 #include <qobject.h>
 #include <qobjectdefs.h>
 
+class SettingList;
+
 class Couch : public QObject
 {
 Q_OBJECT
@@ -20,6 +22,8 @@ public:
 
     const QList<QObject*> &services() const;
     void addService(QObject *service);
+    
+    SettingList* buildSettings();
 };
 
 #endif // COUCH_H

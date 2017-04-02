@@ -45,6 +45,8 @@ SOURCES += \
     model/item.cpp \
     model/itemmetadata.cpp \
     model/metadataplugin.cpp \
+    settings/setting.cpp \
+    settings/settinglist.cpp \
     multimedia/playbackhandler.cpp \
     multimedia/playbackhandlerinterface.cpp \
     multimedia/couchplayer.cpp \
@@ -84,6 +86,8 @@ HEADERS += \
     model/item.h \
     model/itemmetadata.h \
     model/metadataplugin.h \
+    settings/setting.h \
+    settings/settinglist.h \
     multimedia/playbackhandler.h \
     multimedia/playbackhandlerinterface.h \
     multimedia/couchplayer.h \

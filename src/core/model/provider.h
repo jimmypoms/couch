@@ -8,6 +8,8 @@
 
 #include <qobject.h>
 
+class SettingList;
+
 class CouchSourceList;
 
 template<class Item, class Filter>
@@ -21,6 +23,8 @@ public:
 
     virtual CouchSourceList* load(Filter *filter) = 0;
     virtual CouchSourceList* load(Item* item) = 0;
+
+    virtual SettingList* buildSettings(const SettingList* parent) = 0;
 };
 
 typedef Provider<Movie, MovieFilter> MovieProviderInterface;

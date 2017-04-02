@@ -10,17 +10,17 @@
 
 #include "moviemetadatafetcher.h"
 
-#include <qlist.h>
-#include <qmutex.h>
-#include <qobjectdefs.h>
-#include <qstring.h>
-#include <string>
-
 #include "../common/localprovider.h"
 #include "couch/movie/movie.h"
 #include "couch/movie/moviefilter.h"
 #include "couch/movie/movieprovider.h"
 #include "couch/source.h"
+
+#include <qlist.h>
+#include <qmutex.h>
+#include <qobjectdefs.h>
+#include <qstring.h>
+#include <string>
 
 namespace Xapian
 {
@@ -65,6 +65,7 @@ public:
     virtual ~LocalMovieProvider() = default;
 
     QString playIcon() const;
+    SettingList *buildSettings(const SettingList* parent = 0);
 
 public Q_SLOTS:
     CouchSourceList* load(Movie* item);

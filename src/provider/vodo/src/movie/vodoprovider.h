@@ -28,6 +28,7 @@ public:
 
     QString orderToString(MovieFilter::Order order) const;
     QString playIcon() const;
+    SettingList* buildSettings(const SettingList* parent = 0);
 
 public Q_SLOTS:
     void buildRequest(CouchRequest *request, const MovieFilter *filter) const;
