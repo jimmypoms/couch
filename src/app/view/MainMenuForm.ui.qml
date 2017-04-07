@@ -10,16 +10,22 @@ MenuPage {
         MenuItem {
             //% "back to couch"
             text: qsTrId("couch.back")
+            //% "return to couch screen"
+            description: qsTrId("couch.back.description")
             onClicked: stack.push(main)
         },
         MenuItem {
             //% "configure"
             text: qsTrId("couch.configure")
-            onClicked: stack.push(settings)
+            //% "configure couch, services and providers"
+            description: qsTrId("couch.configure.description")
+            onClicked: stack.push(settingsMenu)
         },
         MenuItem {
             //% "exit"
             text: qsTrId("couch.exit")
+            //% "quit couch"
+            description: qsTrId("couch.exit.description")
             onClicked: Qt.quit()
         }
     ]

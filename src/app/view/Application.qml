@@ -15,7 +15,7 @@ ApplicationWindow {
         initialItem: mainMenu
 
         Settings {
-            id: settings
+            id: settingsMenu
 
             visible: false
         }

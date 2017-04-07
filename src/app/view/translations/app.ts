@@ -18,15 +18,30 @@
         <source>back to couch</source>
         <translation>Back to couch</translation>
     </message>
+    <message id="couch.back.description">
+        <location filename="../MainMenuForm.ui.qml" line="14"/>
+        <source>return to couch screen</source>
+        <translation>Return to the application</translation>
+    </message>
     <message id="couch.configure">
-        <location filename="../MainMenuForm.ui.qml" line="17"/>
+        <location filename="../MainMenuForm.ui.qml" line="19"/>
         <source>configure</source>
         <translation>Configure</translation>
     </message>
+    <message id="couch.configure.description">
+        <location filename="../MainMenuForm.ui.qml" line="21"/>
+        <source>configure couch, services and providers</source>
+        <translation>Configure the application</translation>
+    </message>
     <message id="couch.exit">
-        <location filename="../MainMenuForm.ui.qml" line="22"/>
+        <location filename="../MainMenuForm.ui.qml" line="26"/>
         <source>exit</source>
         <translation>Quit</translation>
+    </message>
+    <message id="couch.exit.description">
+        <location filename="../MainMenuForm.ui.qml" line="28"/>
+        <source>quit couch</source>
+        <translation>Quit the application</translation>
     </message>
     <message id="couch.search.type">
         <location filename="../SearchResultForm.ui.qml" line="14"/>
@@ -84,34 +99,60 @@
         <translation>Featured</translation>
     </message>
     <message id="settings.general">
-        <location filename="../settings/GeneralSettingsForm.ui.qml" line="6"/>
-        <location filename="../settings/ServiceSettingsForm.ui.qml" line="12"/>
-        <location filename="../settings/SettingsForm.ui.qml" line="13"/>
+        <source>general</source>
+        <translation type="vanished">General settings</translation>
+    </message>
+    <message id="settings.appearence">
+        <source>appearence</source>
+        <translation type="vanished">Appearence settings</translation>
+    </message>
+    <message id="settings.title">
+        <source>Settings</source>
+        <translation type="vanished">Settings</translation>
+    </message>
+    <message id="settings.provider.description">
+        <location filename="../settings/ServiceSettings.qml" line="17"/>
+        <source>Configure aspects of the %1 provider</source>
+        <oldsource>Configure aspects of the %s provider</oldsource>
+        <translation>Configure settings of the %1 provider</translation>
+    </message>
+    <message id="settings.service.general">
+        <location filename="../settings/ServiceSettingsForm.ui.qml" line="16"/>
         <source>general</source>
         <translation>General settings</translation>
     </message>
-    <message id="settings.appearence">
-        <location filename="../settings/GeneralSettingsForm.ui.qml" line="11"/>
-        <source>appearence</source>
-        <translation>Appearence settings</translation>
+    <message id="settings.service.general.description">
+        <location filename="../settings/ServiceSettingsForm.ui.qml" line="18"/>
+        <source>Configure general settings of the %1 service</source>
+        <oldsource>Configure general settings of the %s service</oldsource>
+        <translation>Configure the %1 service</translation>
     </message>
-    <message id="settings.title">
-        <location filename="../settings/SettingsForm.ui.qml" line="8"/>
+    <message id="settings.service.description">
+        <location filename="../settings/Settings.qml" line="17"/>
+        <source>Configure aspects of the %1 service</source>
+        <oldsource>Configure aspects of the %s service</oldsource>
+        <translation>Configure the %1 service as well as its providers</translation>
+    </message>
+    <message id="settings.couch">
+        <location filename="../settings/SettingsForm.ui.qml" line="11"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Configure</translation>
     </message>
-</context>
-<context>
-    <name>SettingsListForm.ui</name>
-    <message>
-        <location filename="../settings/SettingsListForm.ui.qml" line="9"/>
-        <source>not yet supported</source>
-        <translation type="unfinished"></translation>
+    <message id="settings.couch.description">
+        <location filename="../settings/SettingsForm.ui.qml" line="13"/>
+        <source>Configure aspects of the application</source>
+        <oldsource>Configure aspects of the %s service</oldsource>
+        <translation>Configure the application</translation>
     </message>
-    <message>
-        <location filename="../settings/SettingsListForm.ui.qml" line="10"/>
-        <source>setting are not yet supported :(</source>
-        <translation type="unfinished"></translation>
+    <message id="settings.couch.general">
+        <location filename="../settings/SettingsForm.ui.qml" line="20"/>
+        <source>Couch settings</source>
+        <translation>General Settings</translation>
+    </message>
+    <message id="settings.couch.general.description">
+        <location filename="../settings/SettingsForm.ui.qml" line="22"/>
+        <source>Configure general aspects of couch</source>
+        <translation>Configure the application</translation>
     </message>
 </context>
 </TS>

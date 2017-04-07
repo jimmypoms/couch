@@ -4,14 +4,27 @@ import "../components"
 MenuPage {
     id: component
 
+    property variant services: couch.services
+    property variant settingsList: settings
+
     //% "Settings"
-    title: qsTrId("settings.title")
+    title: qsTrId("settings.couch")
+    //% "Configure aspects of the application"
+    description: qsTrId("settings.couch.description")
 
     menuItems: [
         MenuItem {
-            //% "general"
-            text: qsTrId("settings.general")
-            onClicked: stack.push(Qt.createComponent("GeneralSettings.qml"))
+            id: couchSettings
+
+            //% "Couch settings"
+            text: qsTrId("settings.couch.general")
+            //% "Configure general aspects of couch"
+            description: qsTrId("settings.couch.general.description")
+            onClicked: stack.push(Qt.createComponent("SettingsList.qml"), {
+                title: couchSettings.text,
+                description: couchSettings.description,
+                settingList: component.settingsList
+            })
         }
     ]
 }

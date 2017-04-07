@@ -32,12 +32,8 @@
         <file>components/PlaybackInfoForm.ui.qml</file>
         <file>settings/Settings.qml</file>
         <file>settings/SettingsForm.ui.qml</file>
-        <file>settings/GeneralSettings.qml</file>
-        <file>settings/GeneralSettingsForm.ui.qml</file>
         <file>settings/ServiceSettings.qml</file>
         <file>settings/ServiceSettingsForm.ui.qml</file>
-        <file>settings/ProviderSettings.qml</file>
-        <file>settings/ProviderSettingsForm.ui.qml</file>
         <file>settings/SettingsList.qml</file>
         <file>settings/SettingsListForm.ui.qml</file>
         <file>music/Music.qml</file>

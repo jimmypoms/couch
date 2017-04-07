@@ -7,4 +7,7 @@ MenuPageForm {
         property: "color"
         value: Material.primary
     }
+    Component.onCompleted: {
+        list.currentIndex = 0
+    }
 }

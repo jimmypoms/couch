@@ -4,25 +4,26 @@ import "../components"
 ServiceSettingsForm {
     id: component
 
-    property variant providers: service.providers
-
     Repeater {
         id: repeater
 
         visible: false
-        model: providers
+        model: service.providers
         delegate: MenuItem {
+            id: providerSettings
+
             text: modelData.name
-            onClicked: stack.push(Qt.createComponent("ProviderSettings.qml"), {
-                provider: modelData
+            //% "Configure aspects of the %1 provider"
+            description: qsTrId("settings.provider.description").arg(modelData.name)
+            onClicked: stack.push(Qt.createComponent("SettingsList.qml"), {
+                title: providerSettings.text,
+                description: providerSettings.description,
+                settingList: component.settingList.settingList(modelData)
             })
         }
 
         onItemAdded: {
             component.list.model.append(item)
         }
-    }
-    Component.onCompleted: {
-        list.currentIndex = 0
     }
 }

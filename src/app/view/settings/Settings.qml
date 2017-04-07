@@ -4,17 +4,22 @@ import "../components"
 SettingsForm {
     id: component
 
-    property variant services: couch.services
-
     Repeater {
         id: repeater
 
         visible: false
         model: services
         delegate: MenuItem {
+            id: serviceSettings
+
             text: modelData.name
+            //% "Configure aspects of the %1 service"
+            description: qsTrId("settings.service.description").arg(modelData.name)
             onClicked: stack.push(Qt.createComponent("ServiceSettings.qml"), {
-                service: modelData
+                service: modelData,
+                title: serviceSettings.text,
+                description: serviceSettings.description,
+                settingList: settings.settingList(modelData)
             })
         }
 

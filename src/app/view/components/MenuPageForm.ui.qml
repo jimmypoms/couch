@@ -56,12 +56,16 @@ FocusScope {
         ListView {
             id: actions
 
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
 
             displayMarginBeginning: actionsPane.height / 2
             displayMarginEnd: actionsPane.height / 2
+            preferredHighlightBegin: parent.height / 2
+            preferredHighlightEnd: preferredHighlightBegin + 48
+            highlightRangeMode: ListView.StrictlyEnforceRange
 
             focus: true
             model: VisualItemModel {
