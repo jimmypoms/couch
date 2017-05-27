@@ -30,6 +30,7 @@ Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
 public:
     enum Type
     {
+        Folder
     };
 
 private:

@@ -46,8 +46,8 @@ const QVariant &Setting::value() const
 
 void Setting::setValue(const QVariant &value)
 {
-    if (isValid(value)) {
-        throw QString("invalid type %s").arg(value.typeName());
+    if (!isValid(value)) {
+        throw QString("invalid type %s").arg(QString(value.typeName()));
     }
     if (m_value != value) {
         m_value = value;

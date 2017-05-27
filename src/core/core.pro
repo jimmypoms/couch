@@ -47,6 +47,7 @@ SOURCES += \
     model/metadataplugin.cpp \
     settings/setting.cpp \
     settings/settinglist.cpp \
+    settings/foldersetting.cpp \
     multimedia/playbackhandler.cpp \
     multimedia/playbackhandlerinterface.cpp \
     multimedia/couchplayer.cpp \
@@ -88,6 +89,7 @@ HEADERS += \
     model/metadataplugin.h \
     settings/setting.h \
     settings/settinglist.h \
+    settings/foldersetting.h \
     multimedia/playbackhandler.h \
     multimedia/playbackhandlerinterface.h \
     multimedia/couchplayer.h \
