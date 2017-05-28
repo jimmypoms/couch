@@ -95,8 +95,9 @@ int main(int argc, char *argv[])
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
+    QLocale locale;
     QTranslator translator;
-    if (translator.load(QLocale(), "app", "_", ":/translations", ".qm")) {
+    if (translator.load(locale, "app", "_", ":/translations", ".qm")) {
         app.installTranslator(&translator);
     }
 
@@ -112,10 +113,11 @@ int main(int argc, char *argv[])
     movieService.setPlayer(&player);
     couch.addService(&movieService);
     PluginLoader<MovieProviderInterface> movieProviderLoader;
-    movieProviderLoader.load("provider", [&movieService](QObject *p) {
+    movieProviderLoader.load("provider", [&movieService, &app, &locale](QObject *p) {
         MovieProviderInterface *interface = qobject_cast<MovieProviderInterface *>(p);
         if (interface) {
             movieService.addProvider(p);
+            app.installTranslator(interface->pluginTranslator(locale));
         }
     });
 
@@ -123,10 +125,11 @@ int main(int argc, char *argv[])
     musicService.setPlayer(&player);
     couch.addService(&musicService);
     PluginLoader<MusicProviderInterface> musicProviderLoader;
-    musicProviderLoader.load("provider", [&musicService](QObject *p) {
+    musicProviderLoader.load("provider", [&musicService, &app, &locale](QObject *p) {
         MusicProviderInterface *interface = qobject_cast<MusicProviderInterface *>(p);
         if (interface) {
             musicService.addProvider(p);
+            app.installTranslator(interface->pluginTranslator(locale));
         }
     });
 

@@ -6,7 +6,10 @@
 #include "couch/music/artist.h"
 #include "couch/music/musicfilter.h"
 
+#include <qlocale.h>
 #include <qobject.h>
+
+class QTranslator;
 
 class SettingList;
 
@@ -25,6 +28,7 @@ public:
     virtual CouchSourceList* load(Item* item) = 0;
 
     virtual SettingList* buildSettings(const SettingList* parent) = 0;
+    virtual QTranslator* pluginTranslator(const QLocale &locale) = 0;
 };
 
 typedef Provider<Movie, MovieFilter> MovieProviderInterface;

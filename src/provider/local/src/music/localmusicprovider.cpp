@@ -155,6 +155,11 @@ SettingList* LocalMusicProvider::buildSettings(const SettingList* parent)
     return settings;
 }
 
+QTranslator* LocalMusicProvider::pluginTranslator(const QLocale& locale)
+{
+    return nullptr;
+}
+
 CouchSourceList* LocalMusicProvider::load(MusicFilter* filter)
 {
     if (!m_isIndexing) {

@@ -9,6 +9,7 @@
 #define VODOPROVIDER_H_
 
 #include <qlist.h>
+#include <qlocale.h>
 #include <qobjectdefs.h>
 
 #include "couch/movie/moviefilter.h"
@@ -29,6 +30,7 @@ public:
     QString orderToString(MovieFilter::Order order) const;
     QString playIcon() const;
     SettingList* buildSettings(const SettingList* parent = 0);
+    QTranslator* pluginTranslator(const QLocale &locale);
 
 public Q_SLOTS:
     void buildRequest(CouchRequest *request, const MovieFilter *filter) const;

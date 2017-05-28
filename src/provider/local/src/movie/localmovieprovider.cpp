@@ -165,6 +165,11 @@ SettingList* LocalMovieProvider::buildSettings(const SettingList* parent)
     return nullptr;
 }
 
+QTranslator* LocalMovieProvider::pluginTranslator(const QLocale& locale)
+{
+    return nullptr;
+}
+
 CouchSourceList* LocalMovieProvider::load(MovieFilter* movieFilter)
 {
     if (!m_isIndexing) {

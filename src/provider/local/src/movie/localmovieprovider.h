@@ -17,6 +17,7 @@
 #include "couch/source.h"
 
 #include <qlist.h>
+#include <qlocale.h>
 #include <qmutex.h>
 #include <qobjectdefs.h>
 #include <qstring.h>
@@ -66,6 +67,7 @@ public:
 
     QString playIcon() const;
     SettingList *buildSettings(const SettingList* parent = 0);
+    QTranslator *pluginTranslator(const QLocale &locale);
 
 public Q_SLOTS:
     CouchSourceList* load(Movie* item);
