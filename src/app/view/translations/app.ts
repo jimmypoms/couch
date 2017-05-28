@@ -154,5 +154,16 @@
         <source>Configure general aspects of couch</source>
         <translation>Configure the application</translation>
     </message>
+    <message id="settings.widget.folder.empty.select(%1)">
+        <location filename="../settings/FolderSetting.qml" line="86"/>
+        <source>This folder is empty. Press the selection key to choose &apos;%1&apos;.</source>
+        <translation>This folder is empty. Press the selection key to choose &apos;%1&apos;.</translation>
+    </message>
+    <message id="settings.widget.folder.navigation">
+        <location filename="../settings/FolderSettingForm.ui.qml" line="9"/>
+        <source>Use the arrow keys to navigate. Use the selection key to choose the current folder.</source>
+        <oldsource>Use the arrow keys to navigate. Use the selction key to choose the current folder.</oldsource>
+        <translation>Use the arrow keys to navigate. Use the selection key to choose the current folder.</translation>
+    </message>
 </context>
 </TS>

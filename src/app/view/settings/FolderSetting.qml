@@ -16,6 +16,7 @@ FolderSettingForm {
             });
         }
     }
+    stack.onCurrentItemChanged: currentFolderListModel = stack.currentItem.model
 
     Component {
         id: folderListComponent
@@ -45,7 +46,7 @@ FolderSettingForm {
                 }
 
                 stack.push(folderListComponent, {
-                    folder: (folderListView.folder === '/' ? '' : folderListView.folder) + '/' + currentItem.text
+                    folder: folderListView.folder + currentItem.text + '/'
                 })
             }
 
@@ -76,6 +77,31 @@ FolderSettingForm {
             delegate: MenuItem {
                 text: fileName
             }
+
+            MediumLabel {
+                id: emptyLabel
+
+                anchors.topMargin: 48
+                anchors.fill: parent
+                //% "This folder is empty. Press the selection key to choose '%1'."
+                text: qsTrId("settings.widget.folder.empty.select(%1)").arg(selectedFolder)
+                secondary: true
+                wrapMode: Text.Wrap
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                visible: false
+            }
+
+            states: [
+                State {
+                    name: "empty"
+                    when: !folderListView.model || folderListView.model.count === 0
+                    PropertyChanges {
+                        target: emptyLabel
+                        visible: true
+                    }
+                }
+            ]
         }
     }
 }

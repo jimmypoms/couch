@@ -4,9 +4,13 @@ import "../components"
 import "../controls"
 
 MenuPage {
-    description: qsTrId("settings.widget.folder.navigation")
+    description: selectedFolder
+    //% "Use the arrow keys to navigate. Use the selection key to choose the current folder."
+    additionalDescription: qsTrId("settings.widget.folder.navigation")
     content: stack
 
+    property FolderListModel currentFolderListModel: null
+    property string selectedFolder: currentFolderListModel.folder
     property variant setting: QtObject {}
     readonly property alias stack: stack
 

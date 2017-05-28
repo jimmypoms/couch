@@ -9,6 +9,7 @@ FocusScope {
     property int contentMargin: 16
     property alias title: title.text
     property alias description: description.text
+    property alias additionalDescription: additionalDescription.text
     property alias contentPange: contentPane
     property alias actionsPane: actionsPane
     property variant content: Item {}
@@ -32,10 +33,20 @@ FocusScope {
 
             HugeLabel {
                 id: title
+                elide: Text.ElideRight
+                width: parent.width
             }
             LargeLabel {
                 id: description
                 secondary: true
+                elide: Text.ElideRight
+                width: parent.width
+            }
+            MediumLabel {
+                id: additionalDescription
+                secondary: true
+                wrapMode: Text.Wrap
+                width: parent.width
             }
         }
     }
