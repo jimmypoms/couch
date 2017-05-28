@@ -20,6 +20,7 @@
 #include "couch/music/musicfilter.h"
 #include "couch/music/track.h"
 #include "couch/music/trackmetadata.h"
+#include "couch/settings/setting.h"
 #include "couch/settings/settinglist.h"
 #include "couch/source.h"
 
@@ -95,11 +96,13 @@ public:
         qmlRegisterType<CouchActionList>("Couch", 1, 0, "ActionList");
 
         qmlRegisterUncreatableType<Item>("Couch", 1, 0, "ItemPrivate",
-                "impossible to create item form qml");
+                "impossible to create item from qml");
         qmlRegisterUncreatableType<CouchPlayer>("Couch", 1, 0, "Player",
-                "impossible to create player form qml");
+                "impossible to create player from qml");
+        qmlRegisterUncreatableType<Setting>("Couch", 1, 0, "Setting",
+                "impossible to create setting from qml");
         qmlRegisterUncreatableType<SettingList>("Couch", 1, 0, "SettingList",
-                "impossible to create setting list form qml");
+                "impossible to create setting list from qml");
 
         qmlRegisterType<MovieFilter>("Couch", 1, 0, "MovieFilter");
         qmlRegisterType<Movie>("Couch", 1, 0, "Movie");
