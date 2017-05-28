@@ -12,10 +12,16 @@ SettingsListForm {
         delegate: MenuItem {
             text: modelData.title
             description: modelData.value
+            onClicked: {
+                stack.push(Qt.createComponent("FolderSetting.qml"), {
+                    title: modelData.title,
+                    setting: modelData,
+                })
+            }
         }
 
         onItemAdded: {
-            component.list.model.append(item)
+            component.model.append(item)
         }
     }
 }

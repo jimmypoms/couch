@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import "../components"
 
-MenuPage {
+MenuPageList {
     property variant settingList: QtObject {}
 }

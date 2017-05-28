@@ -93,5 +93,9 @@
         <file>translations/app.qm</file>
         <file>Keyboard.qml</file>
         <file>KeyboardForm.ui.qml</file>
+        <file>settings/FolderSetting.qml</file>
+        <file>settings/FolderSettingForm.ui.qml</file>
+        <file>components/MenuPageList.qml</file>
+        <file>components/MenuPageListForm.ui.qml</file>
     </qresource>
 </RCC>

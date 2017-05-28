@@ -9,11 +9,9 @@ FocusScope {
     property int contentMargin: 16
     property alias title: title.text
     property alias description: description.text
-    property alias menuItems: actionsModel.children
-    property alias model: actions.model
     property alias contentPange: contentPane
     property alias actionsPane: actionsPane
-    property alias list: actions
+    property variant content: Item {}
 
     Pane {
         id: contentPane
@@ -53,24 +51,8 @@ FocusScope {
         focus: true
         padding: 0
 
-        ListView {
-            id: actions
-
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            displayMarginBeginning: actionsPane.height / 2
-            displayMarginEnd: actionsPane.height / 2
-            preferredHighlightBegin: parent.height / 2
-            preferredHighlightEnd: preferredHighlightBegin + 48
-            highlightRangeMode: ListView.StrictlyEnforceRange
-
-            focus: true
-            model: VisualItemModel {
-                id: actionsModel
-            }
-        }
+        contentItem.children: [
+            content
+        ]
     }
 }

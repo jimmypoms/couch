@@ -23,7 +23,7 @@ ServiceSettingsForm {
         }
 
         onItemAdded: {
-            component.list.model.append(item)
+            component.model.append(item)
         }
     }
 }

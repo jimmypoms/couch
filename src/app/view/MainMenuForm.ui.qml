@@ -3,7 +3,7 @@ import "components"
 import "controls"
 import "settings"
 
-MenuPage {
+MenuPageList {
     id: mainMenu
 
     menuItems: [

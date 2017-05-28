@@ -24,10 +24,7 @@ SettingsForm {
         }
 
         onItemAdded: {
-            component.list.model.append(item)
+            component.model.append(item)
         }
-    }
-    Component.onCompleted: {
-        list.currentIndex = 0
     }
 }
