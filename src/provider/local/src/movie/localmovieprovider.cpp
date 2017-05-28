@@ -41,7 +41,7 @@ LocalMovieProvider::LocalMovieProvider(QObject* parent) :
                 MovieProvider(parent, "local"),
                 LocalProvider(
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-                                + "/database/movie", "~/Videos")
+                                + "/database/movie")
 {
     Q_INIT_RESOURCE(resources);
 }

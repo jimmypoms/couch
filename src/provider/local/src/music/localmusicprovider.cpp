@@ -12,6 +12,8 @@
 #include "couch/music/album.h"
 #include "couch/music/trackmetadata.h"
 #include "couch/serializableclass.h"
+#include "couch/settings/foldersetting.h"
+#include "couch/settings/settinglist.h"
 
 #include <qbytearray.h>
 #include <qdatastream.h>
@@ -24,6 +26,7 @@
 #include <qstandardpaths.h>
 #include <qstringlist.h>
 #include <qtconcurrentrun.h>
+#include <qvariant.h>
 #include <xapian/document.h>
 #include <xapian.h>
 
@@ -43,7 +46,7 @@ LocalMusicProvider::LocalMusicProvider(QObject* parent) :
                 MusicProvider(parent, "local"),
                 LocalProvider(
                         QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-                                + "/database/music", "~/Music")
+                                + "/database/music")
 {
     Q_INIT_RESOURCE(resources);
 }
@@ -141,7 +144,15 @@ QString LocalMusicProvider::playIcon() const
 
 SettingList* LocalMusicProvider::buildSettings(const SettingList* parent)
 {
-    return nullptr;
+    SettingList* settings = new SettingList(this, parent, name());
+
+    FolderSetting *folder = new FolderSetting(this, "library", "", "title", "description");
+    connect(folder, &FolderSetting::valueChanged, this, [=]() {
+        setLibraryPath(folder->value().toString());
+    });
+    settings->appendSetting(folder);
+
+    return settings;
 }
 
 CouchSourceList* LocalMusicProvider::load(MusicFilter* filter)

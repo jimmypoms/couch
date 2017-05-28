@@ -30,17 +30,18 @@ class LocalProvider
 {
 private:
     QString m_database;
-    QString m_library;
 protected:
     Xapian::Database m_reader;
     std::atomic_bool m_isIndexing;
+
+    void setLibraryPath(const QString &path);
 
     Xapian::MSet searchDatabase(const Item *item);
     Xapian::MSet searchDatabase(const Filter *filter);
 
 private:
     static QString expandHomeDir(const QString &dir);
-    void loadDatabase();
+    void loadDatabase(const QString &path);
 
     virtual QStringList filenameFilters() const = 0;
     virtual Xapian::Query buildQuery(Xapian::QueryParser &qp, const Item *item) = 0;
@@ -49,13 +50,13 @@ private:
             Source &source) = 0;
 
 public:
-    explicit LocalProvider(const QString &database, const QString &library);
+    explicit LocalProvider(const QString &database);
     virtual ~LocalProvider() = default;
 };
 
 template<class Item, class Filter>
-inline LocalProvider<Item, Filter>::LocalProvider(const QString &database, const QString &library) :
-        m_database(database), m_library(library), m_isIndexing(false)
+inline LocalProvider<Item, Filter>::LocalProvider(const QString &database) :
+        m_database(database), m_isIndexing(false)
 {
     try {
         m_reader = Xapian::Database(m_database.toStdString());
@@ -65,8 +66,6 @@ inline LocalProvider<Item, Filter>::LocalProvider(const QString &database, const
         writer.close();
         m_reader = Xapian::Database(m_database.toStdString());
     }
-
-    QtConcurrent::run(this, &LocalProvider::loadDatabase);
 }
 
 template<class Item, class Filter>
@@ -123,9 +122,14 @@ inline QString LocalProvider<Item, Filter>::expandHomeDir(const QString &dir)
 }
 
 template<class Item, class Filter>
-inline void LocalProvider<Item, Filter>::loadDatabase()
+inline void LocalProvider<Item, Filter>::setLibraryPath(const QString &path)
 {
-    QThread::sleep(1);
+    QtConcurrent::run(this, &LocalProvider::loadDatabase, path);
+}
+
+template<class Item, class Filter>
+inline void LocalProvider<Item, Filter>::loadDatabase(const QString &path)
+{
     Xapian::WritableDatabase writer(m_database.toStdString(), Xapian::DB_OPEN);
     Xapian::TermGenerator indexer;
     Xapian::Stem stemmer("english");
@@ -133,7 +137,7 @@ inline void LocalProvider<Item, Filter>::loadDatabase()
 
     std::clock_t start;
     double duration;
-    QString library = expandHomeDir(m_library);
+    QString library = expandHomeDir(path);
     qDebug() << "starting indexing of files in library path:" << library;
     m_isIndexing = true;
     int count = 0;
