@@ -10,13 +10,13 @@ FolderSettingForm {
         var current = '';
         for (var i = 0; i < tmp.length - 1; ++i) {
             current += tmp[i] + '/';
-            var list = stack.push(folderListComponent, {
+            var list = folderStack.push(folderListComponent, {
                 folder: current,
                 initialSelection: tmp[i+1]
             });
         }
     }
-    stack.onCurrentItemChanged: currentFolderListModel = stack.currentItem.model
+    folderStack.onCurrentItemChanged: currentFolderListModel = folderStack.currentItem.model
 
     Component {
         id: folderListComponent
@@ -38,14 +38,14 @@ FolderSettingForm {
             preferredHighlightEnd: preferredHighlightBegin + 48
             highlightRangeMode: ListView.StrictlyEnforceRange
 
-            Keys.onLeftPressed: stack.pop()
+            Keys.onLeftPressed: folderStack.pop()
             Keys.onRightPressed: {
                 if (!currentItem) {
                     event.accepted = false;
                     return;
                 }
 
-                stack.push(folderListComponent, {
+                folderStack.push(folderListComponent, {
                     folder: folderListView.folder + currentItem.text + '/'
                 })
             }
@@ -76,6 +76,11 @@ FolderSettingForm {
 
             delegate: MenuItem {
                 text: fileName
+
+                onClicked: {
+                    setting.value = selectedFolder + (currentItem ? currentItem.text : '');
+                    stack.pop();
+                }
             }
 
             MediumLabel {

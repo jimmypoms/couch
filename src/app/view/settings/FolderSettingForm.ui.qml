@@ -7,15 +7,15 @@ MenuPage {
     description: selectedFolder
     //% "Use the arrow keys to navigate. Use the selection key to choose the current folder."
     additionalDescription: qsTrId("settings.widget.folder.navigation")
-    content: stack
+    content: folderStack
 
     property FolderListModel currentFolderListModel: null
-    property string selectedFolder: currentFolderListModel.folder
+    property string selectedFolder: currentFolderListModel.folder.toString().replace(/^file:\/{2}/, '');
     property variant setting: QtObject {}
-    readonly property alias stack: stack
+    readonly property alias folderStack: folderStack
 
     StackView {
-        id: stack
+        id: folderStack
 
         x: actionsPane.contentItem.x
         y: actionsPane.contentItem.y
