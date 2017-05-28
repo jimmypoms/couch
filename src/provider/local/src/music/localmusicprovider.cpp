@@ -26,6 +26,7 @@
 #include <qstandardpaths.h>
 #include <qstringlist.h>
 #include <qtconcurrentrun.h>
+#include <qtranslator.h>
 #include <qvariant.h>
 #include <xapian/document.h>
 #include <xapian.h>
@@ -146,7 +147,11 @@ SettingList* LocalMusicProvider::buildSettings(const SettingList* parent)
 {
     SettingList* settings = new SettingList(this, parent, name());
 
-    FolderSetting *folder = new FolderSetting(this, "library", "", "title", "description");
+    FolderSetting *folder = new FolderSetting(this, "library", "",
+            //% "Library path"
+            qtTrId("provider.music.local.setting.folder.title"),
+            //% "Choose the local file system path where to search for audio files"
+            qtTrId("provider.music.local.setting.folder.description"));
     connect(folder, &FolderSetting::valueChanged, this, [=]() {
         setLibraryPath(folder->value().toString());
     });
@@ -157,7 +162,11 @@ SettingList* LocalMusicProvider::buildSettings(const SettingList* parent)
 
 QTranslator* LocalMusicProvider::pluginTranslator(const QLocale& locale)
 {
-    return nullptr;
+    QTranslator *translator = new QTranslator(this);
+
+    translator->load(locale, "music", "_", ":/localmusicprovider/translations", ".qm");
+
+    return translator;
 }
 
 CouchSourceList* LocalMusicProvider::load(MusicFilter* filter)

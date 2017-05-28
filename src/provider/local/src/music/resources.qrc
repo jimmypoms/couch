@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/localmusicprovider">
         <file>icons/play.svg</file>
+        <file>translations/music.qm</file>
     </qresource>
 </RCC>
