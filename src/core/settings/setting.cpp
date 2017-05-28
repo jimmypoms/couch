@@ -7,6 +7,8 @@
 
 #include "setting.h"
 
+#include <stdexcept>
+
 Setting::Setting(QObject *parent, Type type, QString key, QVariant defaultValue,
         QString title, QString description) :
                 QObject(parent), m_type(type), m_key(key), m_defaultValue(defaultValue),
@@ -47,7 +49,10 @@ const QVariant &Setting::value() const
 void Setting::setValue(const QVariant &value)
 {
     if (!isValid(value)) {
-        throw QString("invalid type %s").arg(QString(value.typeName()));
+        throw std::invalid_argument(QString("invalid type %1: %2")
+                .arg(value.typeName())
+                .arg(value.toString())
+                .toStdString());
     }
     if (m_value != value) {
         m_value = value;
