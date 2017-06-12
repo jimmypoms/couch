@@ -53,8 +53,7 @@ public:
         if (!pluginsDir.cd(subDir)) {
             return;
         }
-        qDebug() << "loading plugins of type" << typeid(IFace).name() << "in directory"
-                << pluginsDir.absolutePath();
+        qDebug() << "loading plugins in directory" << pluginsDir.absolutePath();
         for (QString fileName : pluginsDir.entryList(QDir::Files | QDir::NoSymLinks)) {
             QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName), m_parent);
             QObject *plugin = pluginLoader.instance();
@@ -92,8 +91,7 @@ public:
         if (!pluginsDir.cd(subDir)) {
             return;
         }
-        qDebug() << "loading plugins of type" << typeid(IFace).name() << "in directory"
-                << pluginsDir.absolutePath();
+        qDebug() << "loading plugins in directory" << pluginsDir.absolutePath();
         for (QString fileName : pluginsDir.entryList(QDir::Files | QDir::NoSymLinks)) {
             QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName), m_parent);
             QObject *plugin = pluginLoader.instance();
