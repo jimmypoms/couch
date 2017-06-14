@@ -21,6 +21,14 @@ Couch is a home theater software which allows you to combine different content p
 
 ## Building
 
+Couch uses qbs as a build tool. Refer to the [official documentation](http://doc.qt.io/qbs/index.html) for installation and usage of qbs.
+
+Use the following command to run couch
+
+    qbs run profile:<profile> <variant>
+
+where `<profile>` is a profile you set up for qbs with Qt (see [Managing Qt Versions](http://doc.qt.io/qbs/qt-versions.html)) and `<variant>` is either debug or release.
+
 ### Dependecies
 
 The following dependencies are needed to build couch on a debian based system.
@@ -38,6 +46,12 @@ Additianally for the local file provider the following packages are needed.
 Couch does support the [Qt Virtual Keyboard](http://doc.qt.io/qt-5/qtvirtualkeyboard-index.html). On debian systems you will need to build it yourself since it is not yet part of the official repositories.
 
 ## Running
+
+Use the following command to run couch
+
+    qbs run profile:<profile> <variant>
+
+where `<profile>` is a profile you set up for qbs with Qt (see [Managing Qt Versions](http://doc.qt.io/qbs/qt-versions.html)) and `<variant>` is either debug or release.
 
 ### Dependencies
 
